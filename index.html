@@ -826,6 +826,25 @@ box-shadow:
 .modal .meta-item strong { font-size: 15px; color: var(--navy); font-weight: 600; }
 .modal-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
 .modal-gallery .gallery-main { height: 200px; background: linear-gradient(135deg,#C9D6E3,#A8B8CC); border-radius: 8px; grid-column: 1/-1; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 13px; }
+
+.gallery-side {
+
+display:flex;
+flex-direction:column;
+gap:10px;
+
+}
+
+.gallery-thumb {
+
+width:100%;
+
+border-radius:14px;
+
+overflow:hidden;
+
+}
+
 .modal-cta { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
 .modal-cta a {
   flex: 1; min-width: 140px; text-align: center; padding: 12px 20px; border-radius: 6px;
@@ -1866,7 +1885,8 @@ function openModal(id) {
   const bg = colors[p.id % colors.length];
   document.getElementById('modal-content').innerHTML = `
     <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-gallery">
+
+<div class="modal-gallery">
 
   <div class="gallery-main">
 
@@ -1882,14 +1902,40 @@ function openModal(id) {
       style="
         width:100%;
         height:100%;
-
         object-fit:cover;
-
+        border-radius:18px;
         display:block;
       "
     >
 
   </div>
+
+  <div class="gallery-side">
+
+    ${(p.imagenes || []).slice(1,5).map(img => `
+
+      <div
+        class="gallery-thumb"
+
+        style="
+          background-image:url('${img}');
+          background-size:cover;
+          background-position:center;
+          border-radius:14px;
+          cursor:pointer;
+          height:120px;
+        "
+
+        onclick="
+          document.getElementById('main-property-image').src='${img}'
+        "
+      ></div>
+
+    `).join('')}
+
+  </div>
+
+</div>
 
   <div class="gallery-side">
 
