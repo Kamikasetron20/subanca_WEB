@@ -158,18 +158,14 @@ position: relative;
 z-index: 2;
 
 width: 100%;
-max-width: 1400px;
+max-width: 1200px;
 
 margin: 0 auto;
 
-display: flex;
-
-align-items: center;
-justify-content: space-between;
-
-gap: 70px;
+text-align: center;
 
 }
+
 .hero-gold {
 
 color: var(--gold);
@@ -232,39 +228,62 @@ font-weight: 300;
 /* SEARCH BOX */
 .search-box {
 
-width: 560px;
+width: 100%;
+
+max-width: 1180px;
+
+margin:
+  70px auto 0;
 
 background:
-  rgba(255,255,255,0.92);
+  rgba(255,255,255,0.94);
 
-backdrop-filter: blur(18px);
+backdrop-filter: blur(20px);
+
+border-radius: 30px;
+
+padding:
+  22px 24px;
+
+box-shadow:
+  0 30px 80px rgba(15,23,42,0.18);
 
 border:
   1px solid rgba(255,255,255,0.45);
-
-border-radius: 28px;
-
-padding: 34px;
-
-box-shadow:
-  0 25px 80px rgba(15,23,42,0.22);
 
 }
 
 .search-box select {
 
-height: 56px;
+width: 100%;
 
-border-radius: 14px;
+height: 62px;
+
+border-radius: 16px;
 
 border:
   1px solid rgba(0,0,0,0.08);
 
-padding: 0 16px;
+padding: 0 18px;
 
 font-size: 15px;
 
 background: white;
+
+color: var(--navy);
+
+outline: none;
+
+transition: all 0.25s ease;
+}
+
+.search-box select:focus {
+
+border:
+  1px solid rgba(212,175,55,0.6);
+
+box-shadow:
+  0 0 0 4px rgba(212,175,55,0.12);
 
 }
 
@@ -275,18 +294,40 @@ background: white;
   border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s;
 }
 .search-tab.active { color: var(--navy); border-bottom-color: var(--gold); }
-.search-fields { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: end; }
 
-.search-field label { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; 
-  font-size: 13px;
+.search-fields {
 
-font-weight: 600;
+display: grid;
+
+grid-template-columns:
+  1fr
+  1fr
+  1fr
+  auto;
+
+gap: 16px;
+
+align-items: end;
+
+}
+
+.search-field label {
+
+display: block;
 
 margin-bottom: 10px;
 
-display:block;
+font-size: 13px;
 
-color: var(--navy);}
+font-weight: 700;
+
+letter-spacing: 0.3px;
+
+color: var(--navy);
+
+text-align: left;
+
+}
 
 .search-field select, .search-field input {
   width: 100%; padding: 11px 14px; border: 1.5px solid #E5E0D5; border-radius: 6px;
@@ -297,11 +338,13 @@ color: var(--navy);}
 
 .search-btn {
 
-height: 56px;
+height: 62px;
+
+min-width: 170px;
 
 border: none;
 
-border-radius: 16px;
+border-radius: 18px;
 
 background:
   linear-gradient(
@@ -313,6 +356,7 @@ background:
 color: var(--navy);
 
 font-size: 16px;
+
 font-weight: 700;
 
 display: flex;
@@ -832,7 +876,6 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
-    <div class="hero-left">
     <div class="hero-badge">📍 Medellín y Área Metropolitana</div>
     <h1>Encuentra tu propiedad <span class="hero-gold">ideal</span> en Medellín</h1>
     <p>Arriendos, ventas y administración inmobiliaria con el respaldo de expertos certificados. Más de 10 años conectando familias con su propiedad ideal.</p>
@@ -840,7 +883,6 @@ footer {
       <div class="hero-stat"><strong id="stat-props">500+</strong><span>Propiedades</span></div>
       <div class="hero-stat"><strong>10+</strong><span>Años de experiencia</span></div>
       <div class="hero-stat"><strong>Corpolonjas</strong><span>Miembro certificado</span></div>
-    </div>
     </div>
 
   <!-- BUSCADOR -->
