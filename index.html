@@ -1628,6 +1628,19 @@ async function loadPropsFromDB() {
   desc: p.descripcion,
   asesor: p.asesor,
   imagen: p.imagen, // 👈 NUEVO
+  imagenes: (() => {
+
+try {
+
+  return JSON.parse(p.imagenes);
+
+} catch {
+
+  return [];
+
+}
+
+})(),
   nuevo: false
 }));
 
