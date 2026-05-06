@@ -112,7 +112,7 @@ justify-content: center;
 overflow: hidden;
 
 padding:
-  250px 5% 140px;
+  180px 5% 120px;
 
 background:
 
@@ -157,16 +157,19 @@ background:
 position: relative;
 z-index: 2;
 
-max-width: 1100px;
-max-width: 760px;
+width: 100%;
+max-width: 1400px;
 
-text-align: center;
-display:flex;
-flex-direction:column;
-align-items:flex-start;
+margin: 0 auto;
+
+display: flex;
+
+align-items: center;
+justify-content: space-between;
+
+gap: 70px;
 
 }
-
 .hero-gold {
 
 color: var(--gold);
@@ -228,19 +231,43 @@ font-weight: 300;
 
 /* SEARCH BOX */
 .search-box {
-  background: var(--white); border-radius: 12px; padding: 28px 32px;
-  width: 100%; max-width: 860px; box-shadow: 0 24px 80px rgba(0,0,0,0.35);
-  position: relative; z-index: 1;
-  margin-top: 70px;
 
-box-shadow:
-  0 20px 60px rgba(15,23,42,0.18);
+width: 560px;
+
+background:
+  rgba(255,255,255,0.92);
 
 backdrop-filter: blur(18px);
 
 border:
-  1px solid rgba(255,255,255,0.5);
+  1px solid rgba(255,255,255,0.45);
+
+border-radius: 28px;
+
+padding: 34px;
+
+box-shadow:
+  0 25px 80px rgba(15,23,42,0.22);
+
 }
+
+.search-box select {
+
+height: 56px;
+
+border-radius: 14px;
+
+border:
+  1px solid rgba(0,0,0,0.08);
+
+padding: 0 16px;
+
+font-size: 15px;
+
+background: white;
+
+}
+
 .search-tabs { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid var(--cream-dark); padding-bottom: 0; }
 .search-tab {
   padding: 10px 20px; border: none; background: none; font-family: 'DM Sans', sans-serif;
@@ -249,18 +276,65 @@ border:
 }
 .search-tab.active { color: var(--navy); border-bottom-color: var(--gold); }
 .search-fields { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: end; }
-.search-field label { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+
+.search-field label { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; 
+  font-size: 13px;
+
+font-weight: 600;
+
+margin-bottom: 10px;
+
+display:block;
+
+color: var(--navy);}
+
 .search-field select, .search-field input {
   width: 100%; padding: 11px 14px; border: 1.5px solid #E5E0D5; border-radius: 6px;
   font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
   background: var(--cream); outline: none; transition: border-color 0.2s;
 }
 .search-field select:focus, .search-field input:focus { border-color: var(--gold); }
+
 .search-btn {
-  background: var(--navy); color: var(--white); border: none; border-radius: 6px;
-  padding: 13px 28px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
-  cursor: pointer; transition: background 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 8px;
+
+height: 56px;
+
+border: none;
+
+border-radius: 16px;
+
+background:
+  linear-gradient(
+    135deg,
+    var(--gold),
+    #D6B25E
+  );
+
+color: var(--navy);
+
+font-size: 16px;
+font-weight: 700;
+
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+
+cursor: pointer;
+
+transition: all 0.25s ease;
+
 }
+
+.search-btn:hover {
+
+transform: translateY(-2px);
+
+box-shadow:
+  0 14px 30px rgba(212,175,55,0.28);
+
+}
+
 .search-btn:hover { background: var(--gold); color: var(--navy); }
 
 /* SECTIONS */
@@ -758,6 +832,7 @@ footer {
 <!-- HERO -->
 <section class="hero">
   <div class="hero-content">
+    <div class="hero-left">
     <div class="hero-badge">📍 Medellín y Área Metropolitana</div>
     <h1>Encuentra tu propiedad <span class="hero-gold">ideal</span> en Medellín</h1>
     <p>Arriendos, ventas y administración inmobiliaria con el respaldo de expertos certificados. Más de 10 años conectando familias con su propiedad ideal.</p>
@@ -766,58 +841,59 @@ footer {
       <div class="hero-stat"><strong>10+</strong><span>Años de experiencia</span></div>
       <div class="hero-stat"><strong>Corpolonjas</strong><span>Miembro certificado</span></div>
     </div>
-  </div>
+    </div>
 
   <!-- BUSCADOR -->
-  <div class="search-box">
-    <div class="search-tabs">
-      <button class="search-tab active" onclick="setTab(this,'arriendo')">Arriendo</button>
-      <button class="search-tab" onclick="setTab(this,'venta')">Venta</button>
-      <button class="search-tab" onclick="setTab(this,'amoblado')">Amoblado</button>
-    </div>
-    <div class="search-fields">
-      <div class="search-field">
-        <label>Tipo de inmueble</label>
-        <select id="s-tipo" onchange="applyFilters()">
-          <option value="">Todos los tipos</option>
-          <option value="Apartamento">Apartamento</option>
-          <option value="Casa">Casa</option>
-          <option value="Local">Local comercial</option>
-          <option value="Bodega">Bodega</option>
-          <option value="Oficina">Oficina</option>
-          <option value="Lote">Lote / Terreno</option>
-        </select>
+    <div class="search-box">
+      <div class="search-tabs">
+        <button class="search-tab active" onclick="setTab(this,'arriendo')">Arriendo</button>
+        <button class="search-tab" onclick="setTab(this,'venta')">Venta</button>
+        <button class="search-tab" onclick="setTab(this,'amoblado')">Amoblado</button>
       </div>
-      <div class="search-field">
-        <label>Sector / Barrio</label>
-        <select id="s-zona" onchange="applyFilters()">
-          <option value="">Toda Medellín</option>
-          <option value="El Poblado">El Poblado</option>
-          <option value="Laureles">Laureles</option>
-          <option value="Envigado">Envigado</option>
-          <option value="Bello">Bello</option>
-          <option value="Sabaneta">Sabaneta</option>
-          <option value="Itagüí">Itagüí</option>
-          <option value="Robledo">Robledo</option>
-          <option value="Castilla">Castilla</option>
-        </select>
+      <div class="search-fields">
+        <div class="search-field">
+          <label>Tipo de inmueble</label>
+          <select id="s-tipo" onchange="applyFilters()">
+            <option value="">Todos los tipos</option>
+            <option value="Apartamento">Apartamento</option>
+            <option value="Casa">Casa</option>
+            <option value="Local">Local comercial</option>
+            <option value="Bodega">Bodega</option>
+            <option value="Oficina">Oficina</option>
+            <option value="Lote">Lote / Terreno</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Sector / Barrio</label>
+          <select id="s-zona" onchange="applyFilters()">
+            <option value="">Toda Medellín</option>
+            <option value="El Poblado">El Poblado</option>
+            <option value="Laureles">Laureles</option>
+            <option value="Envigado">Envigado</option>
+            <option value="Bello">Bello</option>
+            <option value="Sabaneta">Sabaneta</option>
+            <option value="Itagüí">Itagüí</option>
+            <option value="Robledo">Robledo</option>
+            <option value="Castilla">Castilla</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label>Precio máximo</label>
+          <select id="s-precio" onchange="applyFilters()">
+            <option value="">Sin límite</option>
+            <option value="1000000">Hasta $1.000.000</option>
+            <option value="1500000">Hasta $1.500.000</option>
+            <option value="2000000">Hasta $2.000.000</option>
+            <option value="3000000">Hasta $3.000.000</option>
+            <option value="5000000">Hasta $5.000.000</option>
+            <option value="800000000">Hasta $800M (Venta)</option>
+          </select>
+        </div>
+        <button class="search-btn" onclick="scrollToProps()">
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+          Buscar
+        </button>
       </div>
-      <div class="search-field">
-        <label>Precio máximo</label>
-        <select id="s-precio" onchange="applyFilters()">
-          <option value="">Sin límite</option>
-          <option value="1000000">Hasta $1.000.000</option>
-          <option value="1500000">Hasta $1.500.000</option>
-          <option value="2000000">Hasta $2.000.000</option>
-          <option value="3000000">Hasta $3.000.000</option>
-          <option value="5000000">Hasta $5.000.000</option>
-          <option value="800000000">Hasta $800M (Venta)</option>
-        </select>
-      </div>
-      <button class="search-btn" onclick="scrollToProps()">
-        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-        Buscar
-      </button>
     </div>
   </div>
 </section>
