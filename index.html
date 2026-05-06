@@ -1628,19 +1628,23 @@ async function loadPropsFromDB() {
   desc: p.descripcion,
   asesor: p.asesor,
   imagen: p.imagen, // 👈 NUEVO
-  imagenes: (() => {
+  iimagenes: Array.isArray(p.imagenes)
 
-try {
+? p.imagenes
 
-  return JSON.parse(p.imagenes);
+: (() => {
 
-} catch {
+    try {
 
-  return [];
+      return JSON.parse(p.imagenes);
 
-}
+    } catch {
 
-})(),
+      return [];
+
+    }
+
+  })(),
   nuevo: false
 }));
 
@@ -1854,6 +1858,7 @@ async function loadPropsFromDB() {
     console.log(myProps);
     renderProps();
   }
+
 function openModal(id) {
   const p = myProps.find(x => x.id === id);
   if (!p) return;
@@ -2338,7 +2343,7 @@ content.innerHTML = `
           line-height:1.9;
           font-size:15px;
         ">
-          ${p.descripcion || 'Propiedad premium ubicada en excelente zona residencial.'}
+          ${p.desc || 'Propiedad premium ubicada en excelente zona residencial.'}
         </p>
 
       </div>
