@@ -1,0 +1,2282 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Su Banca Inmobiliaria – Medellín</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #C8A75B;
+  --gold-light: #E2C98B;
+  --gold-dark: #9C7A35;
+
+  --navy: #1B2B4B;
+  --navy-light: #26436F;
+
+  --primary-blue: #0D47A1;
+
+  --cream: #F8F9FB;
+  --cream-dark: #EEF1F5;
+
+  --text: #1E293B;
+  --text-muted: #64748B;
+
+  --white: #FFFFFF;
+
+  --success: #2D7A4F;
+
+  --border: rgba(200,167,91,0.25);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { 
+  font-family: 'DM Sans', sans-serif;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #F4F6FA,
+      #EEF2F7
+    );
+
+  color: var(--text);
+}
+
+/* NAVBAR PREMIUM */
+
+nav {
+
+position: fixed;
+top: 18px;
+left: 50%;
+
+transform: translateX(-50%);
+
+width: 92%;
+max-width: 1380px;
+
+z-index: 1000;
+
+display: flex;
+align-items: center;
+justify-content: space-between;
+
+padding: 0 24px;
+
+height: 74px;
+
+background:
+  rgba(255,255,255,0.78);
+
+backdrop-filter: blur(18px);
+
+border:
+  1px solid rgba(255,255,255,0.4);
+
+border-radius: 22px;
+
+box-shadow:
+  0 12px 40px rgba(15,23,42,0.10);
+
+transition: all 0.3s ease;
+}
+.nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.nav-logo-icon {
+  width: 40px; height: 40px; background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-weight: 700; color: var(--navy);
+  font-size: 18px; border-radius: 4px;
+}
+.nav-logo-text { font-family: 'Playfair Display', serif; color: var(--navy); font-size: 17px; font-weight: 600; line-height: 1.2; }
+.nav-logo-text span { display: block; color: var(--gold); font-size: 11px; font-weight: 300; font-family: 'DM Sans', sans-serif; letter-spacing: 2px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 32px; list-style: none; }
+.nav-links a { color: var(--navy); text-decoration: none; font-size: 14px; font-weight: 400; letter-spacing: 0.3px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--gold); }
+.nav-cta { background: var(--gold); color: var(--navy); padding: 9px 22px; border-radius: 4px; font-size: 13px; font-weight: 600; text-decoration: none; transition: background 0.2s; }
+.nav-cta:hover { background: var(--gold-light); }
+.nav-menu-btn { display: none; background: none; border: none; cursor: pointer; color: white; font-size: 22px; }
+
+/* HERO PREMIUM */
+
+.hero {
+
+min-height: 100vh;
+
+position: relative;
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+overflow: hidden;
+
+padding:
+  250px 5% 140px;
+
+background:
+
+linear-gradient(
+      135deg,
+      rgba(5,15,30,0.92),
+      rgba(10,30,60,0.88)
+    ),
+
+  url('https://images.unsplash.com/photo-1460317442991-0ec209397118?q=80&w=2070&auto=format&fit=crop');
+
+background-size: cover;
+background-position: center;
+
+}
+
+.hero::before {
+
+content: '';
+
+position: absolute;
+inset: 0;
+
+background:
+
+  radial-gradient(
+    circle at top left,
+    rgba(212,175,55,0.12),
+    transparent 30%
+  ),
+
+  radial-gradient(
+    circle at bottom right,
+    rgba(255,255,255,0.05),
+    transparent 25%
+  );
+
+}
+
+.hero-content {
+
+position: relative;
+z-index: 2;
+
+max-width: 1100px;
+max-width: 760px;
+
+text-align: center;
+display:flex;
+flex-direction:column;
+align-items:flex-start;
+
+}
+
+.hero-gold {
+
+color: var(--gold);
+
+text-shadow:
+  0 4px 20px rgba(212,175,55,0.28);
+
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(201,168,76,0.15); border: 1px solid rgba(201,168,76,0.4);
+  color: var(--gold-light); padding: 6px 18px; border-radius: 20px;
+  font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 28px;
+}
+.hero h1 {
+
+font-family: 'Playfair Display', serif;
+
+font-size:
+  clamp(52px, 7vw, 88px);
+
+line-height: 1;
+
+font-weight: 700;
+
+color: white;
+
+margin-bottom: 28px;
+
+letter-spacing: -2px;
+
+}
+.hero h1 em { color: var(--gold); font-style: normal; }
+
+.hero p {
+
+color:
+  rgba(255,255,255,0.78);
+
+font-size: 20px;
+letter-spacing: 0.2px;
+
+line-height: 1.8;
+
+max-width: 760px;
+
+margin:
+  0 auto 46px;
+
+font-weight: 300;
+
+}
+
+.hero-stats { display: flex; gap: 48px; justify-content: center; margin-bottom: 56px; }
+.hero-stat { text-align: center; }
+.hero-stat strong { display: block; font-family: 'Playfair Display', serif; font-size: 32px; color: var(--gold); font-weight: 700; }
+.hero-stat span { font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 1px; text-transform: uppercase; }
+
+/* SEARCH BOX */
+.search-box {
+  background: var(--white); border-radius: 12px; padding: 28px 32px;
+  width: 100%; max-width: 860px; box-shadow: 0 24px 80px rgba(0,0,0,0.35);
+  position: relative; z-index: 1;
+  margin-top: 70px;
+
+box-shadow:
+  0 20px 60px rgba(15,23,42,0.18);
+
+backdrop-filter: blur(18px);
+
+border:
+  1px solid rgba(255,255,255,0.5);
+}
+.search-tabs { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid var(--cream-dark); padding-bottom: 0; }
+.search-tab {
+  padding: 10px 20px; border: none; background: none; font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 500; color: var(--text-muted); cursor: pointer;
+  border-bottom: 2px solid transparent; margin-bottom: -1px; transition: all 0.2s;
+}
+.search-tab.active { color: var(--navy); border-bottom-color: var(--gold); }
+.search-fields { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: end; }
+.search-field label { display: block; font-size: 11px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.search-field select, .search-field input {
+  width: 100%; padding: 11px 14px; border: 1.5px solid #E5E0D5; border-radius: 6px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
+  background: var(--cream); outline: none; transition: border-color 0.2s;
+}
+.search-field select:focus, .search-field input:focus { border-color: var(--gold); }
+.search-btn {
+  background: var(--navy); color: var(--white); border: none; border-radius: 6px;
+  padding: 13px 28px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 600;
+  cursor: pointer; transition: background 0.2s; white-space: nowrap; display: flex; align-items: center; gap: 8px;
+}
+.search-btn:hover { background: var(--gold); color: var(--navy); }
+
+/* SECTIONS */
+section { padding: 80px 5%; }
+.section-label { font-size: 11px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 12px; }
+.section-title { font-family: 'Playfair Display', serif; font-size: clamp(28px, 4vw, 42px); font-weight: 700; color: var(--navy); line-height: 1.2; margin-bottom: 16px; }
+.section-subtitle { font-size: 16px; color: var(--text-muted); line-height: 1.7; max-width: 540px; }
+
+/* PROPIEDADES */
+#propiedades { background: var(--cream); }
+.props-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 36px; flex-wrap: wrap; gap: 20px; }
+.props-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.filter-btn {
+  padding: 8px 18px; border: 1.5px solid #DDD8CE; border-radius: 20px; background: var(--white);
+  font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; color: var(--text-muted);
+  cursor: pointer; transition: all 0.2s;
+}
+.filter-btn:hover, .filter-btn.active { border-color: var(--gold); color: var(--navy); background: rgba(201,168,76,0.1); }
+.props-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+.prop-card {
+  background: rgba(255,255,255,0.96);
+  border-radius: 22px;
+  overflow: hidden;
+
+  box-shadow:
+    0 4px 14px rgba(0,0,0,0.04),
+    0 1px 3px rgba(0,0,0,0.05);
+
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease;
+
+  cursor: pointer;
+  border: 1px solid rgba(0,0,0,0.04);
+
+  backdrop-filter: blur(8px);
+}
+.prop-card:hover {
+  transform: translateY(-8px);
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.10),
+    0 4px 12px rgba(0,0,0,0.06);
+}
+.prop-img {
+  height: 290px;
+
+  background-size: cover;
+  background-position: center;
+
+  position: relative;
+
+  overflow: hidden;
+
+  transition: transform 0.5s ease;
+}
+
+.prop-card:hover .prop-img {
+  transform: scale(1.04);
+}
+
+.prop-img::after {
+
+content: '';
+
+position: absolute;
+inset: 0;
+
+background:
+
+  linear-gradient(
+    to top,
+    rgba(0,0,0,0.58) 0%,
+    rgba(0,0,0,0.18) 40%,
+    rgba(0,0,0,0.02) 100%
+  );
+
+}
+
+.prop-img-placeholder {
+  width: 100%; height: 210px;
+  display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 8px;
+  color: rgba(255,255,255,0.7); font-size: 13px;
+}
+
+.prop-badge {
+
+position: absolute;
+
+top: 18px;
+left: 18px;
+
+background:
+  rgba(255,255,255,0.16);
+
+color: white;
+
+padding:
+  9px 16px;
+
+border-radius: 999px;
+
+font-size: 10px;
+font-weight: 700;
+
+letter-spacing: 1.3px;
+text-transform: uppercase;
+
+backdrop-filter: blur(14px);
+
+border:
+  1px solid rgba(255,255,255,0.18);
+
+z-index: 2;
+}
+
+.badge-arriendo { background: var(--navy); color: var(--gold); }
+.badge-venta { background: var(--gold); color: var(--navy); }
+.badge-nuevo { background: var(--success); color: white; }
+
+.prop-fav {
+
+position: absolute;
+
+top: 18px;
+right: 18px;
+
+width: 42px;
+height: 42px;
+
+border-radius: 50%;
+
+background:
+  rgba(255,255,255,0.14);
+
+display: flex;
+align-items: center;
+justify-content: center;
+
+backdrop-filter: blur(14px);
+
+color: white;
+
+font-size: 16px;
+
+z-index: 2;
+
+border:
+  1px solid rgba(255,255,255,0.18);
+
+transition: all 0.25s ease;
+}
+
+.prop-fav:hover {
+  transform: scale(1.08);
+  background: white;
+}
+
+.prop-body {
+
+padding:
+  26px 24px 24px;
+
+}
+
+.prop-price {
+
+font-family:
+  'Playfair Display', serif;
+
+font-size: 34px;
+
+font-weight: 700;
+
+color: var(--navy);
+
+margin-bottom: 12px;
+
+letter-spacing: -1px;
+
+}
+
+.prop-price span { font-size: 13px; font-weight: 400; color: var(--text-muted); font-family: 'DM Sans', sans-serif; }
+.prop-name {
+  font-size: 20px;
+  font-weight: 700;
+
+  color: var(--navy);
+
+  margin-bottom: 8px;
+
+  line-height: 1.3;
+}
+
+.prop-loc {
+
+font-size: 14px;
+
+color: var(--text-muted);
+
+margin-bottom: 18px;
+
+display: flex;
+align-items: center;
+gap: 6px;
+
+}
+
+.prop-details {
+
+display: flex;
+
+gap: 10px;
+
+padding-top: 18px;
+
+border-top:
+  1px solid rgba(0,0,0,0.06);
+
+flex-wrap: wrap;
+
+}
+.prop-detail {
+
+font-size: 13px;
+
+color: var(--navy);
+
+display: flex;
+align-items: center;
+gap: 6px;
+
+background:
+  rgba(15,23,42,0.04);
+
+padding:
+  8px 12px;
+
+border-radius: 999px;
+
+}
+.prop-detail strong { color: var(--text); font-weight: 600; }
+.view-more-btn {
+  display: block; margin: 44px auto 0; padding: 14px 40px; border: 2px solid var(--navy);
+  background: none; border-radius: 6px; font-family: 'DM Sans', sans-serif; font-size: 15px;
+  font-weight: 600; color: var(--navy); cursor: pointer; transition: all 0.2s;
+}
+.view-more-btn:hover { background: var(--navy); color: var(--white); }
+
+/* SERVICIOS */
+#servicios { background: var(--navy); }
+#servicios .section-label { color: var(--gold); }
+#servicios .section-title { color: var(--white); }
+#servicios .section-subtitle { color: rgba(255,255,255,0.6); }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; margin-top: 48px; }
+.service-card {
+  border: 1px solid rgba(201,168,76,0.2); border-radius: 10px; padding: 28px 24px;
+  transition: border-color 0.2s, background 0.2s;
+}
+.service-card:hover { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+.service-icon { font-size: 28px; margin-bottom: 16px; }
+.service-card h3 { font-family: 'Playfair Display', serif; color: var(--white); font-size: 17px; font-weight: 600; margin-bottom: 10px; }
+.service-card p { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.6; }
+
+/* ASESORES */
+#asesores { background: var(--cream-dark); }
+.asesores-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; margin-top: 44px; }
+.asesor-card {
+  background: var(--white); border-radius: 12px; padding: 28px 20px; text-align: center;
+  border: 1px solid rgba(0,0,0,0.06); transition: transform 0.2s, box-shadow 0.2s;
+}
+.asesor-card:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(26,39,68,0.1); }
+.asesor-avatar {
+  width: 72px; height: 72px; border-radius: 50%; margin: 0 auto 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 700;
+  color: var(--navy); background: linear-gradient(135deg, rgba(201,168,76,0.3), rgba(201,168,76,0.1));
+  border: 2px solid var(--gold);
+}
+.asesor-card h3 { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.asesor-card .cargo { font-size: 12px; color: var(--gold-dark); font-weight: 500; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.asesor-card .whatsapp {
+  display: inline-flex; align-items: center; gap: 6px; background: #25D366;
+  color: white; padding: 8px 18px; border-radius: 20px; font-size: 13px; font-weight: 600;
+  text-decoration: none; transition: opacity 0.2s;
+}
+.asesor-card .whatsapp:hover { opacity: 0.85; }
+
+/* CONTACTO */
+#contacto { background: var(--white); }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 52px; }
+.contact-info { }
+.contact-info h3 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--navy); margin-bottom: 20px; }
+.contact-item { display: flex; gap: 14px; margin-bottom: 24px; }
+.contact-item-icon {
+  width: 44px; height: 44px; background: rgba(201,168,76,0.12); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0;
+}
+.contact-item-text strong { display: block; font-size: 13px; font-weight: 600; color: var(--navy); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+.contact-item-text a, .contact-item-text span { font-size: 14px; color: var(--text-muted); text-decoration: none; }
+.contact-item-text a:hover { color: var(--gold-dark); }
+.contact-form { }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.form-group { margin-bottom: 16px; }
+.form-group label { display: block; font-size: 12px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 12px 16px; border: 1.5px solid #E0DAD0; border-radius: 6px;
+  font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--text);
+  background: var(--cream); outline: none; transition: border-color 0.2s;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--gold); }
+.form-group textarea { resize: vertical; min-height: 110px; }
+.submit-btn {
+  background: var(--navy); color: var(--white); border: none; border-radius: 6px;
+  padding: 14px 36px; font-family: 'DM Sans', sans-serif; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: background 0.2s; width: 100%;
+}
+.submit-btn:hover { background: var(--gold-dark); }
+.success-msg { display: none; background: rgba(45,122,79,0.1); border: 1px solid rgba(45,122,79,0.3); color: var(--success); padding: 14px 18px; border-radius: 6px; font-size: 14px; margin-top: 16px; }
+
+/* PANEL ASESOR */
+#panel { background: var(--cream); display: none; }
+#panel.visible { display: block; }
+.panel-box { background: var(--white); border-radius: 14px; overflow:hidden; max-width: 760px; margin: 0 auto; border: 1px solid rgba(0,0,0,0.08); box-shadow: 0 8px 40px rgba(26,39,68,0.08); }
+.panel-header {
+  background: var(--navy); padding: 32px 40px; position: relative; overflow: hidden;
+}
+.panel-header::before {
+  content:''; position:absolute; inset:0;
+  background: repeating-linear-gradient(
+    -35deg,
+    transparent, transparent 18px,
+    rgba(201,168,76,0.08) 18px, rgba(201,168,76,0.08) 20px
+  );
+}
+.panel-header-logo { display:flex; align-items:center; gap:12px; position:relative; z-index:1; margin-bottom:10px; }
+.panel-header h2 { font-family:'Playfair Display',serif; font-size:22px; color:white; margin-bottom:4px; position:relative;z-index:1; }
+.panel-header .subtitle { color:rgba(255,255,255,0.55); font-size:13px; position:relative;z-index:1; }
+.panel-body { padding: 36px 40px; }
+.panel-login { max-width: 400px; margin: 0 auto; }
+.panel-inmueble-form { display: none; }
+.panel-inmueble-form.visible { display: block; }
+.fields-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.fields-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.img-upload {
+  border: 2px dashed #D5CFC3; border-radius: 8px; padding: 32px;
+  text-align: center; cursor: pointer; transition: border-color 0.2s; background: var(--cream);
+}
+.img-upload:hover { border-color: var(--gold); }
+.img-upload p { color: var(--text-muted); font-size: 14px; margin-top: 10px; }
+.img-preview { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.img-thumb { width: 72px; height: 72px; border-radius: 6px; object-fit: cover; border: 1px solid #E0DAD0; }
+.props-list-panel { margin-top: 40px; }
+.props-list-panel h3 { font-size: 16px; font-weight: 600; color: var(--navy); margin-bottom: 16px; }
+.panel-prop-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px; border: 1px solid #E8E3DB; border-radius: 8px; margin-bottom: 10px;
+  background: var(--cream);
+}
+.panel-prop-row .pp-info strong { display: block; font-size: 14px; color: var(--text); font-weight: 600; }
+.panel-prop-row .pp-info span { font-size: 12px; color: var(--text-muted); }
+.pp-actions { display: flex; gap: 8px; }
+.btn-edit, .btn-del {
+  padding: 6px 14px; border-radius: 4px; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: none; transition: opacity 0.2s;
+}
+.btn-edit { background: rgba(26,39,68,0.1); color: var(--navy); }
+.btn-del { background: rgba(220,53,69,0.1); color: #DC3545; }
+.btn-edit:hover, .btn-del:hover { opacity: 0.7; }
+
+/* FOOTER */
+footer {
+  background: #111827; color: rgba(255,255,255,0.6); padding: 56px 5% 28px;
+}
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+.footer-brand .nav-logo-text { color: var(--white); font-size: 18px; }
+.footer-brand .nav-logo-text span { color: var(--gold); }
+.footer-brand p { font-size: 13px; line-height: 1.7; margin-top: 16px; color: rgba(255,255,255,0.45); }
+.footer-col h4 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold); margin-bottom: 16px; }
+.footer-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+.footer-col a:hover { color: var(--white); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.08); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+.footer-bottom p { font-size: 12px; }
+.social-links { display: flex; gap: 12px; }
+.social-link {
+  width: 36px; height: 36px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.15);
+  display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5);
+  text-decoration: none; font-size: 14px; transition: all 0.2s;
+}
+.social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+/* FLOATING WHATSAPP */
+.whatsapp-float {
+  position: fixed; bottom: 28px; right: 28px; z-index: 900;
+  width: 56px; height: 56px; background: #25D366; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.45); text-decoration: none;
+  transition: transform 0.2s; font-size: 26px;
+}
+.whatsapp-float:hover { transform: scale(1.1); }
+
+/* MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 2000;
+  align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white); border-radius: 14px; padding: 36px; max-width: 600px; width: 100%;
+  max-height: 90vh; overflow-y: auto; position: relative;
+}
+.modal-close {
+  position: absolute; top: 16px; right: 20px; background: none; border: none;
+  font-size: 22px; cursor: pointer; color: var(--text-muted);
+}
+.modal h2 { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--navy); margin-bottom: 4px; }
+.modal .badge-modal { display: inline-block; margin-bottom: 16px; }
+.modal .prop-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+.modal .meta-item { background: var(--cream); padding: 12px 14px; border-radius: 8px; }
+.modal .meta-item span { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
+.modal .meta-item strong { font-size: 15px; color: var(--navy); font-weight: 600; }
+.modal-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
+.modal-gallery .gallery-main { height: 200px; background: linear-gradient(135deg,#C9D6E3,#A8B8CC); border-radius: 8px; grid-column: 1/-1; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 13px; }
+.modal-cta { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+.modal-cta a {
+  flex: 1; min-width: 140px; text-align: center; padding: 12px 20px; border-radius: 6px;
+  font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
+}
+.modal-cta .cta-ws { background: #25D366; color: white; }
+.modal-cta .cta-tel { background: var(--navy); color: white; }
+.modal-cta .cta-info { background: var(--cream); color: var(--navy); border: 1px solid #DDD8CE; }
+.modal-cta a:hover { opacity: 0.85; }
+
+/* UTIL */
+.text-center { text-align: center; }
+.mt-12 { margin-top: 12px; }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  nav { padding: 0 5%; }
+  .nav-links, .nav-cta { display: none; }
+  .nav-menu-btn { display: block; }
+  .hero { padding-top: 90px; }
+  .hero-stats { gap: 24px; }
+  .search-fields { grid-template-columns: 1fr 1fr; }
+  .search-btn { grid-column: 1/-1; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .fields-3, .fields-2 { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    
+    <img
+  src="logo.png"
+  alt="Su Banca Inmobiliaria"
+
+  style="
+    height:58px;
+    width:auto;
+
+    object-fit:contain;
+
+    border-radius:12px;
+
+    opacity:0.95;
+  "
+>
+
+    <div class="nav-logo-text">
+      Su Banca Inmobiliaria
+      <span>Su mejor inversión</span>
+    </div>
+
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#propiedades">Propiedades</a></li>
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#asesores">Asesores</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+
+  <a href="#contacto" class="nav-cta">Consignar inmueble</a>
+
+  <button class="nav-menu-btn" onclick="toggleMobileMenu()">☰</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">📍 Medellín y Área Metropolitana</div>
+    <h1>Encuentra tu propiedad <span class="hero-gold">ideal</span> en Medellín</h1>
+    <p>Arriendos, ventas y administración inmobiliaria con el respaldo de expertos certificados. Más de 10 años conectando familias con su propiedad ideal.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong id="stat-props">500+</strong><span>Propiedades</span></div>
+      <div class="hero-stat"><strong>10+</strong><span>Años de experiencia</span></div>
+      <div class="hero-stat"><strong>Corpolonjas</strong><span>Miembro certificado</span></div>
+    </div>
+  </div>
+
+  <!-- BUSCADOR -->
+  <div class="search-box">
+    <div class="search-tabs">
+      <button class="search-tab active" onclick="setTab(this,'arriendo')">Arriendo</button>
+      <button class="search-tab" onclick="setTab(this,'venta')">Venta</button>
+      <button class="search-tab" onclick="setTab(this,'amoblado')">Amoblado</button>
+    </div>
+    <div class="search-fields">
+      <div class="search-field">
+        <label>Tipo de inmueble</label>
+        <select id="s-tipo" onchange="applyFilters()">
+          <option value="">Todos los tipos</option>
+          <option value="Apartamento">Apartamento</option>
+          <option value="Casa">Casa</option>
+          <option value="Local">Local comercial</option>
+          <option value="Bodega">Bodega</option>
+          <option value="Oficina">Oficina</option>
+          <option value="Lote">Lote / Terreno</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label>Sector / Barrio</label>
+        <select id="s-zona" onchange="applyFilters()">
+          <option value="">Toda Medellín</option>
+          <option value="El Poblado">El Poblado</option>
+          <option value="Laureles">Laureles</option>
+          <option value="Envigado">Envigado</option>
+          <option value="Bello">Bello</option>
+          <option value="Sabaneta">Sabaneta</option>
+          <option value="Itagüí">Itagüí</option>
+          <option value="Robledo">Robledo</option>
+          <option value="Castilla">Castilla</option>
+        </select>
+      </div>
+      <div class="search-field">
+        <label>Precio máximo</label>
+        <select id="s-precio" onchange="applyFilters()">
+          <option value="">Sin límite</option>
+          <option value="1000000">Hasta $1.000.000</option>
+          <option value="1500000">Hasta $1.500.000</option>
+          <option value="2000000">Hasta $2.000.000</option>
+          <option value="3000000">Hasta $3.000.000</option>
+          <option value="5000000">Hasta $5.000.000</option>
+          <option value="800000000">Hasta $800M (Venta)</option>
+        </select>
+      </div>
+      <button class="search-btn" onclick="scrollToProps()">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        Buscar
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<section style="
+  background:#EEF2F7;
+  padding:30px 5%;
+  border-top:1px solid rgba(0,0,0,0.04);
+  border-bottom:1px solid rgba(0,0,0,0.06);
+">
+
+  <div style="
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+    max-width:1300px;
+    margin:auto;
+  ">
+
+    <!-- ITEM -->
+    <div style="
+      background:rgba(255,255,255,0.88);
+      border-radius:16px;
+      padding:18px 20px;
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.03);
+    ">
+      <span style="font-size:22px">🏛️</span>
+
+      <div>
+        <div style="
+          font-size:11px;
+          font-weight:700;
+          color:var(--gold-dark);
+          text-transform:uppercase;
+          letter-spacing:1px;
+          margin-bottom:4px;
+        ">
+          Cámara de Comercio
+        </div>
+
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.4;">
+          Mat. 21-591127-12 · Renovada 2024
+        </div>
+      </div>
+    </div>
+
+    <!-- ITEM -->
+    <div style="
+      background:rgba(255,255,255,0.88);
+      border-radius:16px;
+      padding:18px 20px;
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.03);
+    ">
+      <span style="font-size:22px">📜</span>
+
+      <div>
+        <div style="
+          font-size:11px;
+          font-weight:700;
+          color:var(--gold-dark);
+          text-transform:uppercase;
+          letter-spacing:1px;
+          margin-bottom:4px;
+        ">
+          Matrícula Arrendador
+        </div>
+
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.4;">
+          M.A.V.U. N°0041/17 · Alcaldía de Medellín
+        </div>
+      </div>
+    </div>
+
+    <!-- ITEM -->
+    <div style="
+      background:rgba(255,255,255,0.88);
+      border-radius:16px;
+      padding:18px 20px;
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.03);
+    ">
+      <span style="font-size:22px">🏅</span>
+
+      <div>
+        <div style="
+          font-size:11px;
+          font-weight:700;
+          color:var(--gold-dark);
+          text-transform:uppercase;
+          letter-spacing:1px;
+          margin-bottom:4px;
+        ">
+          Corpolonjas de Colombia
+        </div>
+
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.4;">
+          Miembro activo desde 2017 · R.N.C.I/C.C-03-086
+        </div>
+      </div>
+    </div>
+
+    <!-- ITEM -->
+    <div style="
+      background:rgba(255,255,255,0.88);
+      border-radius:16px;
+      padding:18px 20px;
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.03);
+    ">
+      <span style="font-size:22px">🤝</span>
+
+      <div>
+        <div style="
+          font-size:11px;
+          font-weight:700;
+          color:var(--gold-dark);
+          text-transform:uppercase;
+          letter-spacing:1px;
+          margin-bottom:4px;
+        ">
+          Fenalco Antioquia
+        </div>
+
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.4;">
+          Empresa afiliada activa desde 2025
+        </div>
+      </div>
+    </div>
+
+    <!-- ITEM -->
+    <div style="
+      background:rgba(255,255,255,0.88);
+      border-radius:16px;
+      padding:18px 20px;
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      box-shadow:0 2px 10px rgba(0,0,0,0.03);
+    ">
+      <span style="font-size:22px">⚖️</span>
+
+      <div>
+        <div style="
+          font-size:11px;
+          font-weight:700;
+          color:var(--gold-dark);
+          text-transform:uppercase;
+          letter-spacing:1px;
+          margin-bottom:4px;
+        ">
+          Ley 820 de 2003
+        </div>
+
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.4;">
+          Contratos revisados y avalados
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROPIEDADES -->
+<section id="propiedades">
+  <div class="props-header">
+    <div>
+      <div class="section-label">Portafolio</div>
+      <h2 class="section-title">Propiedades disponibles</h2>
+    </div>
+    <div>
+      <span id="props-count" style="font-size:14px;color:var(--text-muted)"></span>
+    </div>
+  </div>
+  <div class="props-filters" id="props-filters">
+    <button class="filter-btn active" onclick="setFilter(this,'todos')">Todos</button>
+    <button class="filter-btn" onclick="setFilter(this,'Arriendo')">Arriendo</button>
+    <button class="filter-btn" onclick="setFilter(this,'Venta')">Venta</button>
+    <button class="filter-btn" onclick="setFilter(this,'Amoblado')">Amoblado</button>
+    <button class="filter-btn" onclick="setFilter(this,'Apartamento')">Apartamentos</button>
+    <button class="filter-btn" onclick="setFilter(this,'Casa')">Casas</button>
+    <button class="filter-btn" onclick="setFilter(this,'Local')">Locales</button>
+    <button class="filter-btn" onclick="setFilter(this,'Bodega')">Bodegas</button>
+  </div>
+  <div class="props-grid" id="props-grid"></div>
+  <button class="view-more-btn" id="load-more-btn" onclick="loadMore()">Ver más propiedades</button>
+</section>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="section-label">Lo que hacemos</div>
+  <h2 class="section-title" style="color:var(--white)">Servicios inmobiliarios integrales</h2>
+  <p class="section-subtitle">Acompañamos cada etapa de su proceso inmobiliario con profesionalismo y transparencia.</p>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-icon">🏠</div>
+      <h3>Administración de arriendos</h3>
+      <p>Gestionamos su propiedad de A a Z: contratos, cobros, inquilinos y mantenimientos. Pago los primeros 5 días hábiles del mes.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🤝</div>
+      <h3>Compra y venta</h3>
+      <p>Asesoría profesional para comprar o vender al mejor precio del mercado, con acompañamiento en todo el proceso notarial.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📊</div>
+      <h3>Avalúos y valoración</h3>
+      <p>Determinamos el valor real de su inmueble con metodología certificada por Corpolonjas de Colombia.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📋</div>
+      <h3>Estudio de inquilinos</h3>
+      <p>Análisis de referencias crediticias, laborales y personales para minimizar riesgos y proteger su patrimonio.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">🏢</div>
+      <h3>Propiedad horizontal</h3>
+      <p>Administración de conjuntos residenciales y comerciales. Gestión de asambleas, cuotas y mantenimiento.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">📝</div>
+      <h3>Contratos y asesoría legal</h3>
+      <p>Elaboración y revisión de contratos bajo la Ley 820 de 2003. Matrícula arrendador M.A.V.U. N°0041/17.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ASESORES -->
+<section id="asesores">
+  <div class="section-label">Nuestro equipo</div>
+  <h2 class="section-title">Asesores especializados</h2>
+  <p class="section-subtitle">Conozca a nuestros profesionales, siempre listos para acompañarle.</p>
+  <div class="asesores-grid" id="asesores-grid"></div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+  <div class="section-label">Contáctenos</div>
+  <h2 class="section-title">Estamos para ayudarle</h2>
+  <p class="section-subtitle">Déjenos sus datos y un asesor le contactará en menos de 2 horas hábiles.</p>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <h3>Información de contacto</h3>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div class="contact-item-text">
+          <strong>Dirección</strong>
+          <span>Cra 81 N° 32-204 Of. 509, CC Nueva Villa de Aburrá, Medellín</span>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📞</div>
+        <div class="contact-item-text">
+          <strong>Teléfonos</strong>
+          <a href="tel:+576043222388">(604) 322 23 88</a><br>
+          <a href="tel:+573103612810">310 361 2810 · 312 644 0460</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">💬</div>
+        <div class="contact-item-text">
+          <strong>WhatsApp</strong>
+          <a href="https://wa.me/573132211683" target="_blank">313 221 1683</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">✉️</div>
+        <div class="contact-item-text">
+          <strong>Email</strong>
+          <a href="mailto:subancainmobiliaria@gmail.com">subancainmobiliaria@gmail.com</a>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">🕐</div>
+        <div class="contact-item-text">
+          <strong>Horario de atención</strong>
+          <span>Lun – Vie: 8:00am – 6:00pm · Sáb: 9:00am – 1:00pm</span>
+        </div>
+      </div>
+      <!-- Credenciales legales -->
+      <div style="margin-top:28px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:8px;padding:16px 18px;">
+        <p style="font-size:11px;font-weight:600;color:var(--gold-dark);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Respaldo legal</p>
+        <p style="font-size:12px;color:var(--text-muted);line-height:1.7;margin:0">
+          NIT: 901.086.954-9 · Matrícula arrendador M.A.V.U. N°0041/17<br>
+          Miembro Corpolonjas de Colombia desde 2017 · Matrícula R.N.C.I/C.C-03-086
+        </p>
+      </div>
+    </div>
+    <div class="contact-form">
+      <form onsubmit="submitContact(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input type="text" placeholder="Su nombre completo" required>
+          </div>
+          <div class="form-group">
+            <label>Teléfono</label>
+            <input type="tel" placeholder="300 000 0000" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" placeholder="correo@ejemplo.com">
+        </div>
+        <div class="form-group">
+          <label>¿En qué le podemos ayudar?</label>
+          <select>
+            <option>Quiero arrendar una propiedad</option>
+            <option>Quiero comprar una propiedad</option>
+            <option>Quiero consignar mi inmueble</option>
+            <option>Necesito un avalúo</option>
+            <option>Otro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Mensaje (opcional)</label>
+          <textarea placeholder="Cuéntenos más sobre lo que busca..."></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Enviar mensaje</button>
+        <div class="success-msg" id="contact-success">✅ ¡Mensaje enviado! Un asesor le contactará pronto.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- PANEL ASESORES -->
+<section id="panel">
+  <div class="panel-box">
+    <!-- Header estilo contrato -->
+    <div class="panel-header">
+      <div class="panel-header-logo">
+        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+          <rect width="44" height="44" rx="5" fill="rgba(255,255,255,0.1)"/>
+          <text x="22" y="29" text-anchor="middle" font-family="serif" font-weight="700" font-size="18" fill="#C9A84C">SB</text>
+        </svg>
+        <div>
+          <div style="color:white;font-family:'Playfair Display',serif;font-size:15px;font-weight:600">Su Banca Inmobiliaria S.A.S.</div>
+          <div style="color:var(--gold);font-size:11px;letter-spacing:1.5px;text-transform:uppercase">Portal de Asesores</div>
+        </div>
+      </div>
+      <h2>Gestión de Inmuebles</h2>
+      <p class="subtitle">NIT: 901.086.954-9 · Cra 81 N°32-204 Of.509 · subancainmobiliaria@gmail.com</p>
+    </div>
+    <div class="panel-body">
+
+    <!-- LOGIN -->
+    <div id="panel-login" class="panel-login">
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:24px;text-align:center">Ingrese con sus credenciales de asesor</p>
+      <div class="form-group">
+        <label>Usuario</label>
+        <input type="text" id="login-user" placeholder="usuario@subanca.com">
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input type="password" id="login-pass" placeholder="••••••••">
+      </div>
+      <button class="submit-btn" onclick="doLogin()">Ingresar al panel</button>
+      <p style="font-size:12px;color:var(--text-muted);margin-top:12px;text-align:center">Demo: usuario <strong>asesor</strong> · contraseña <strong>1234</strong></p>
+    </div>
+
+    <!-- FORM NUEVO INMUEBLE -->
+    <div id="panel-content" class="panel-inmueble-form">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:28px;flex-wrap:wrap;gap:12px;">
+        <h3 style="font-size:18px;font-weight:600;color:var(--navy)">📋 Publicar nuevo inmueble</h3>
+        <button onclick="doLogout()" style="background:none;border:1px solid #DDD8CE;padding:7px 16px;border-radius:6px;font-size:13px;cursor:pointer;color:var(--text-muted)">Cerrar sesión</button>
+      </div>
+
+      <div class="fields-3" style="margin-bottom:16px">
+        <div class="form-group">
+          <label>Tipo de gestión</label>
+          <select id="p-gestion">
+            <option>Arriendo</option><option>Venta</option><option>Amoblado</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Tipo de inmueble</label>
+          <select id="p-tipo">
+            <option>Apartamento</option><option>Casa</option><option>Local</option><option>Bodega</option><option>Oficina</option><option>Lote</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estado</label>
+          <select id="p-estado">
+            <option>Disponible</option><option>Reservado</option><option>Arrendado</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fields-2" style="margin-bottom:16px">
+        <div class="form-group">
+          <label>Nombre / Referencia</label>
+          <input type="text" id="p-nombre" placeholder="Ej: Apto moderno El Poblado">
+        </div>
+        <div class="form-group">
+          <label>Sector / Barrio</label>
+          <select id="p-zona">
+            <option>El Poblado</option><option>Laureles</option><option>Envigado</option>
+            <option>Bello</option><option>Sabaneta</option><option>Itagüí</option>
+            <option>Robledo</option><option>Castilla</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Dirección (uso interno)</label>
+        <input type="text" id="p-dir" placeholder="Cl. 10 #43-50, Apto 301">
+      </div>
+
+      <div class="fields-3" style="margin-bottom:16px">
+        <div class="form-group">
+          <label>Precio ($)</label>
+          <input type="number" id="p-precio" placeholder="1500000">
+        </div>
+        <div class="form-group">
+          <label>Habitaciones</label>
+          <select id="p-hab">
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Baños</label>
+          <select id="p-ban">
+            <option>1</option><option>2</option><option>3</option><option>4</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fields-3" style="margin-bottom:16px">
+        <div class="form-group">
+          <label>Área (m²)</label>
+          <input type="number" id="p-area" placeholder="75">
+        </div>
+        <div class="form-group">
+          <label>Parqueaderos</label>
+          <select id="p-park">
+            <option>0</option><option>1</option><option>2</option><option>3</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Estrato</label>
+          <select id="p-estrato">
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Descripción del inmueble</label>
+        <textarea id="p-desc" style="min-height:90px" placeholder="Describe las características, acabados, comodidades..."></textarea>
+      </div>
+
+      <div class="form-group" style="margin-bottom:16px">
+        <label>Asesor responsable</label>
+        <select id="p-asesor">
+          <option>Sebastian Pernett</option>
+          <option>Maribel Jaramillo</option>
+          <option>Esneyder Calle</option>
+          <option>Santiago Pernett</option>
+        </select>
+      </div>
+
+      <div class="img-upload" onclick="document.getElementById('img-input').click()">
+        <div style="font-size:32px">📷</div>
+        <p>Haga clic para subir fotos del inmueble</p>
+        <p style="font-size:12px;margin-top:4px">JPG, PNG · Máx. 10 fotos</p>
+        <input type="file" id="img-input" accept="image/*" multiple style="display:none" onchange="previewImgs(event)">
+      </div>
+      <div class="img-preview" id="img-preview"></div>
+
+      <button class="submit-btn" style="margin-top:24px" onclick="publishProp()">✅ Publicar inmueble</button>
+      <div class="success-msg" id="publish-success" style="margin-top:12px"></div>
+
+      <!-- LISTA MIS INMUEBLES -->
+      <div class="props-list-panel">
+        <h3>Mis inmuebles publicados</h3>
+        <div id="my-props-list"></div>
+      </div>
+    </div>
+    </div><!-- /panel-body -->
+  </div><!-- /panel-box -->
+</section>
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <svg width="40" height="40" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="44" height="44" rx="5" fill="#C9A84C"/>
+          <clipPath id="clip1"><rect width="44" height="44" rx="5"/></clipPath>
+          <g clip-path="url(#clip1)">
+            <line x1="-4" y1="14" x2="58" y2="14" stroke="rgba(26,39,68,0.15)" stroke-width="6"/>
+            <line x1="-4" y1="22" x2="58" y2="22" stroke="rgba(26,39,68,0.15)" stroke-width="6"/>
+            <line x1="-4" y1="30" x2="58" y2="30" stroke="rgba(26,39,68,0.15)" stroke-width="6"/>
+            <text x="22" y="29" text-anchor="middle" font-family="serif" font-weight="700" font-size="19" fill="#1A2744">SB</text>
+          </g>
+        </svg>
+        <div>
+          <div style="font-family:'Playfair Display',serif;color:white;font-size:17px;font-weight:600">Su Banca Inmobiliaria</div>
+          <div style="font-size:11px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase">Su mejor inversión</div>
+        </div>
+      </div>
+      <p style="font-size:13px;line-height:1.7;color:rgba(255,255,255,0.45)">Más de 7 años conectando personas con su propiedad ideal en Medellín y el Área Metropolitana. Miembros activos de Corpolonjas de Colombia.</p>
+      <p style="font-size:11px;color:rgba(255,255,255,0.3);margin-top:12px">NIT: 901.086.954-9 · M.A.V.U. N°0041/17</p>
+    </div>
+    <div class="footer-col">
+      <h4>Propiedades</h4>
+      <a href="#propiedades">Arriendos</a>
+      <a href="#propiedades">Ventas</a>
+      <a href="#propiedades">Amoblados</a>
+      <a href="#propiedades">Bodegas</a>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <a href="#servicios">Administración</a>
+      <a href="#servicios">Avalúos</a>
+      <a href="#servicios">Estudio inquilinos</a>
+      <a href="#servicios">Propiedad horizontal</a>
+    </div>
+    <div class="footer-col">
+      <h4>Empresa</h4>
+      <a href="#asesores">Equipo</a>
+      <a href="#contacto">Contáctenos</a>
+      <a href="#panel" onclick="document.getElementById('panel').classList.add('visible')">Portal asesores</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Su Banca Inmobiliaria S.A.S. · NIT 901.086.954-9 · Todos los derechos reservados</p>
+    <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+      <a href="tel:+576043222388" style="font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none">(604) 322 23 88</a>
+      <a href="mailto:subancainmobiliaria@gmail.com" style="font-size:12px;color:rgba(255,255,255,0.4);text-decoration:none">subancainmobiliaria@gmail.com</a>
+    <div class="social-links">
+      <a href="#" class="social-link">f</a>
+      <a href="#" class="social-link">in</a>
+      <a href="#" class="social-link">ig</a>
+    </div>
+    </div>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOTANTE -->
+<a href="https://wa.me/573132211683?text=Hola,%20me%20interesa%20una%20propiedad%20de%20Su%20Banca%20Inmobiliaria" class="whatsapp-float" target="_blank">💬</a>
+
+<!-- MODAL DETALLE PROPIEDAD -->
+<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal-content"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const supabaseClient = supabase.createClient(
+  'https://piuztzpjgwouaplbxbqc.supabase.co', // SIN /rest/v1/
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpdXp0enBqZ3dvdWFwbGJ4YnFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5ODY1ODAsImV4cCI6MjA5MzU2MjU4MH0.3QVRdgikykyrql8nv0yx7ZdrskmZWdVi6XRWQJDgstk' // la que empieza por sb_publishable_ o tu anon
+);
+
+// ===== DATA =====
+let allProps = [
+  {id:1, tipo:'Apartamento', gestion:'Arriendo', zona:'El Poblado', nombre:'Apartamento moderno en El Poblado', precio:2800000, hab:3, ban:2, area:85, park:1, estrato:5, nuevo:true, desc:'Hermoso apartamento con acabados de lujo, cocina integral y zona de lavandería.', asesor:'Sebastián Pernett'},
+  {id:2, tipo:'Casa', gestion:'Venta', zona:'Laureles', nombre:'Casa esquinera en Laureles', precio:580000000, hab:4, ban:3, area:220, park:2, estrato:5, nuevo:false, desc:'Amplia casa en esquina con jardín privado y zona social.', asesor:'Beatriz Elena Ruiz'},
+  {id:3, tipo:'Apartamento', gestion:'Arriendo', zona:'Envigado', nombre:'Apto familiar en Envigado', precio:1600000, hab:3, ban:2, area:78, park:1, estrato:4, nuevo:false, desc:'Excelente ubicación cerca a colegios y centros comerciales.', asesor:'Asesor Comercial'},
+  {id:4, tipo:'Local', gestion:'Arriendo', zona:'Itagüí', nombre:'Local comercial alta visibilidad', precio:3200000, hab:0, ban:1, area:120, park:2, estrato:3, nuevo:true, desc:'Local a pie de vía con vitrina y depósito incluido.', asesor:'Asesor Comercial 2'},
+  {id:5, tipo:'Apartamento', gestion:'Amoblado', zona:'El Poblado', nombre:'Estudio amoblado El Poblado', precio:2100000, hab:1, ban:1, area:42, park:0, estrato:5, nuevo:false, desc:'Perfecto para ejecutivos o arrendamiento corto plazo.', asesor:'Sebastián Pernett'},
+  {id:6, tipo:'Casa', gestion:'Arriendo', zona:'Bello', nombre:'Casa bifamiliar en Bello', precio:1200000, hab:3, ban:2, area:140, park:1, estrato:3, nuevo:false, desc:'Piso independiente, patio privado y excelente iluminación natural.', asesor:'Beatriz Elena Ruiz'},
+  {id:7, tipo:'Bodega', gestion:'Arriendo', zona:'Itagüí', nombre:'Bodega industrial en Itagüí', precio:4500000, hab:0, ban:1, area:400, park:4, estrato:2, nuevo:false, desc:'Bodega con puerta seccional, portería y oficinas en segundo piso.', asesor:'Asesor Comercial 2'},
+  {id:8, tipo:'Apartamento', gestion:'Venta', zona:'Sabaneta', nombre:'Apartamento nuevo en Sabaneta', precio:320000000, hab:2, ban:2, area:65, park:1, estrato:4, nuevo:true, desc:'Proyecto sobre planos con entrega inmediata.', asesor:'Asesor Comercial'},
+  {id:9, tipo:'Casa', gestion:'Venta', zona:'Robledo', nombre:'Casa en conjunto cerrado Robledo', precio:420000000, hab:3, ban:2, area:155, park:2, estrato:4, nuevo:false, desc:'Conjunto con piscina, gimnasio y portería 24 horas.', asesor:'Sebastián Pernett'},
+  {id:10, tipo:'Apartamento', gestion:'Arriendo', zona:'Castilla', nombre:'Apto amplio en Castilla', precio:900000, hab:2, ban:1, area:60, park:0, estrato:2, nuevo:false, desc:'Muy bien ubicado cerca al metro y servicios.', asesor:'Beatriz Elena Ruiz'},
+  {id:11, tipo:'Oficina', gestion:'Arriendo', zona:'El Poblado', nombre:'Oficina ejecutiva El Poblado', precio:3800000, hab:0, ban:2, area:90, park:1, estrato:5, nuevo:false, desc:'Oficina con sala de juntas, recepción y vigilancia privada.', asesor:'Asesor Comercial 2'},
+  {id:12, tipo:'Apartamento', gestion:'Amoblado', zona:'Laureles', nombre:'Apto amoblado Laureles', precio:2600000, hab:2, ban:2, area:72, park:1, estrato:5, nuevo:true, desc:'Completamente equipado, smart TV, internet y parqueo.', asesor:'Asesor Comercial'},
+];
+
+let myProps = [...allProps]; // panel props
+let currentFilter = 'todos';
+let currentTab = 'arriendo';
+let visibleCount = 6;
+let filteredProps = [];
+
+async function loadPropsFromDB() {
+  console.log("🔥 cargando desde Supabase...");
+
+  const { data, error } = await supabaseClient
+    .from('propiedades')
+    .select('*');
+
+  if (error) {
+    console.error('❌ ERROR DB:', error);
+    return;
+  }
+
+  console.log("✅ DATA:", data);
+
+  myProps = data.map(p => ({
+  id: p.id,
+  tipo: p.tipo,
+  gestion: p.gestion,
+  zona: p.zona,
+  nombre: p.nombre,
+  precio: p.precio,
+  hab: p.habitaciones,
+  ban: p.banos,
+  area: p.area,
+  park: p.parqueaderos,
+  estrato: p.estrato,
+  desc: p.descripcion,
+  asesor: p.asesor,
+  imagen: p.imagen, // 👈 NUEVO
+  nuevo: false
+}));
+
+  renderProps();
+}
+
+const asesores = [
+  {nombre:'Sebastián Pernett Ruiz', cargo:'Gerente · Rep. Legal', cel:'3132211683'},
+  {nombre:'Maribel Jaramillo', cargo:'Administradora', cel:'3132211683'},
+  {nombre:'Esneyder Calle', cargo:'Asesor Comercial', cel:'3009508722'},
+  {nombre:'Santiago Pernett', cargo:'Asesor Comercial', cel:'3112566539'},
+];
+
+// ===== FILTERS =====
+function setTab(el, tab) {
+  document.querySelectorAll('.search-tab').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentTab = tab;
+}
+function setFilter(el, filter) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = filter;
+  visibleCount = 6;
+  renderProps();
+}
+function applyFilters() {
+  visibleCount = 6;
+  renderProps();
+  document.getElementById('propiedades').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function scrollToProps() {
+  applyFilters();
+}
+
+function getFilteredProps() {
+  const tipo = document.getElementById('s-tipo').value;
+  const zona = document.getElementById('s-zona').value;
+  const precio = parseInt(document.getElementById('s-precio').value) || 0;
+
+  return myProps.filter(p => {
+    if (currentFilter !== 'todos') {
+      if (p.gestion === currentFilter || p.tipo === currentFilter) {}
+      else return false;
+    }
+    if (tipo && p.tipo !== tipo) return false;
+    if (zona && p.zona !== zona) return false;
+    if (precio && p.precio > precio) return false;
+    return true;
+  });
+}
+
+function renderProps() {
+  filteredProps = getFilteredProps();
+  const grid = document.getElementById('props-grid');
+  const btn = document.getElementById('load-more-btn');
+  const counter = document.getElementById('props-count');
+  const shown = filteredProps.slice(0, visibleCount);
+  counter.textContent = `${filteredProps.length} propiedad${filteredProps.length !== 1 ? 'es' : ''} encontrada${filteredProps.length !== 1 ? 's' : ''}`;
+  grid.innerHTML = shown.map(p => propCard(p)).join('');
+  btn.style.display = filteredProps.length > visibleCount ? 'block' : 'none';
+}
+function loadMore() { visibleCount += 6; renderProps();}
+
+function fmtPrice(p, g) {
+  if (g === 'Venta') return '$' + (p >= 1000000 ? (p/1000000).toFixed(0) + 'M' : p.toLocaleString('es-CO'));
+  return '$' + p.toLocaleString('es-CO') + '/mes';
+}
+
+const colors = ['#C9D6E3','#B8CCDC','#9FBBCB','#C3D4BE','#D4C3BE','#C3C3D4','#D4C3C3'];
+
+function propCard(p) {
+
+return `
+
+<div class="prop-card" onclick="openModal('${p.id}')">
+
+  <div 
+    class="prop-img"
+    style="
+      background-image:url('${p.imagenes?.[0] || p.imagen || "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688"}');
+      background-size:cover;
+      background-position:center;
+      position:relative;
+    "
+  >
+
+    ${!p.imagen ? `
+    <div class="prop-img-placeholder">
+
+      <svg 
+        width="40" 
+        height="40" 
+        fill="none" 
+        stroke="rgba(255,255,255,0.5)" 
+        stroke-width="1.5" 
+        viewBox="0 0 24 24"
+      >
+        <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/>
+        <polyline points="9,22 9,12 15,12 15,22"/>
+      </svg>
+
+      <span style="font-size:11px">
+        ${p.tipo} · ${p.zona}
+      </span>
+
+    </div>
+    ` : ''}
+
+    <span class="prop-badge ${
+      p.gestion === 'Arriendo'
+        ? 'badge-arriendo'
+        : p.gestion === 'Amoblado'
+        ? 'badge-arriendo'
+        : 'badge-venta'
+    }">
+      ${p.gestion}
+    </span>
+
+    ${
+      p.nuevo
+        ? '<span class="prop-badge badge-nuevo" style="left:auto;right:12px">Nuevo</span>'
+        : ''
+    }
+
+    <div class="prop-fav" onclick="event.stopPropagation()">
+      ♡
+    </div>
+
+  </div>
+
+  <div class="prop-body">
+
+    <div class="prop-price">
+      ${fmtPrice(p.precio, p.gestion)}
+      <span>
+        ${p.estrato ? 'Estrato ' + p.estrato : ''}
+      </span>
+    </div>
+
+    <div class="prop-name">
+      ${p.nombre}
+    </div>
+
+    <div class="prop-loc">
+      📍 ${p.zona}
+    </div>
+
+    <div class="prop-details">
+
+      ${
+        p.hab > 0
+          ? `<div class="prop-detail">🛏 <strong>${p.hab}</strong></div>`
+          : ''
+      }
+
+      ${
+        p.ban > 0
+          ? `<div class="prop-detail">🚿 <strong>${p.ban}</strong></div>`
+          : ''
+      }
+
+      <div class="prop-detail">
+        📐 <strong>${p.area}m²</strong>
+      </div>
+
+      ${
+        p.park > 0
+          ? `<div class="prop-detail">🚗 <strong>${p.park}</strong></div>`
+          : ''
+      }
+
+    </div>
+
+  </div>
+
+</div>
+
+`;
+}
+
+// ===== MODAL =====
+async function loadPropsFromDB() {
+    const { data, error } = await supabaseClient
+    .from('propiedades')
+    .select('id, tipo, gestion, zona, nombre, precio, habitaciones, banos, area, parqueaderos, estrato, descripcion, asesor, imagen')
+  
+    if (error) {
+      console.error('ERROR DB:', error);
+      return;
+    }
+  
+    myProps = data.map(p => ({
+      id: p.id,
+      tipo: p.tipo,
+      imagenes: p.imagenes || [],
+      gestion: p.gestion,
+      zona: p.zona,
+      nombre: p.nombre,
+      precio: p.precio,
+      hab: p.habitaciones,
+      ban: p.banos,
+      area: p.area,
+      park: p.parqueaderos,
+      estrato: p.estrato,
+      desc: p.descripcion,
+      asesor: p.asesor,
+      nuevo: false
+    }));
+    renderProps();
+  }
+function openModal(id) {
+  const p = myProps.find(x => x.id === id);
+  if (!p) return;
+  const asesor = asesores.find(a => a.nombre === p.asesor) || asesores[0];
+  const bg = colors[p.id % colors.length];
+  document.getElementById('modal-content').innerHTML = `
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-gallery">
+      <div class="gallery-main">
+
+        <img
+          id="main-property-image"
+
+          src="${
+            p.imagenes?.[0] ||
+            p.imagen ||
+            'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'
+          }"
+
+        style="
+          width:100%;
+          height:100%;
+
+          object-fit:cover;
+
+          display:block;
+        "
+        >
+
+      </div>
+
+
+<div style="
+  display:flex;
+  gap:10px;
+
+  padding:14px;
+
+  overflow-x:auto;
+
+  background:#F8FAFC;
+">
+
+  ${(p.imagenes || []).map(img => `
+
+    <img
+      src="${img}"
+
+      style="
+        width:110px;
+        height:80px;
+
+        object-fit:cover;
+
+        border-radius:10px;
+
+        cursor:pointer;
+
+        flex-shrink:0;
+
+        border:2px solid transparent;
+
+        transition:all 0.25s ease;
+      "
+
+      onclick="
+        document.getElementById('main-property-image').src='${img}'
+      "
+    >
+
+  `).join('')}
+</div>
+
+
+  </div>
+</div>
+    </div>
+    <span class="prop-badge ${p.gestion !== 'Venta' ? 'badge-arriendo' : 'badge-venta'} badge-modal">${p.gestion}</span>
+    <h2>${p.nombre}</h2>
+    <div style="display:flex;align-items:center;gap:6px;margin:6px 0 0;color:var(--text-muted);font-size:14px">📍 ${p.zona} · Estrato ${p.estrato}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:26px;color:var(--navy);font-weight:700;margin-top:10px">${fmtPrice(p.precio, p.gestion)}</div>
+    <div class="prop-meta">
+      ${p.hab > 0 ? `<div class="meta-item"><span>Habitaciones</span><strong>${p.hab}</strong></div>` : ''}
+      ${p.ban > 0 ? `<div class="meta-item"><span>Baños</span><strong>${p.ban}</strong></div>` : ''}
+      <div class="meta-item"><span>Área</span><strong>${p.area} m²</strong></div>
+      ${p.park > 0 ? `<div class="meta-item"><span>Parqueaderos</span><strong>${p.park}</strong></div>` : ''}
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:16px">${p.desc}</p>
+    <div style="background:var(--cream);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--text-muted)">
+      <strong style="color:var(--navy)">Asesor responsable:</strong> ${asesor.nombre} · ${asesor.cargo}
+    </div>
+    <div class="modal-cta">
+      <a href="https://wa.me/57${asesor.cel}?text=Hola%20${encodeURIComponent(asesor.nombre)},%20me%20interesa%20la%20propiedad:%20${encodeURIComponent(p.nombre)}" target="_blank" class="cta-ws">💬 WhatsApp</a>
+      <a href="tel:+57${asesor.cel}" class="cta-tel">📞 Llamar</a>
+      <a href="#contacto" onclick="closeModal()" class="cta-info">✉️ Más info</a>
+    </div>`;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(e) {
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ===== ASESORES =====
+function renderAsesores() {
+  document.getElementById('asesores-grid').innerHTML = asesores.map(a => {
+    const initials = a.nombre.split(' ').map(x=>x[0]).slice(0,2).join('');
+    return `<div class="asesor-card">
+      <div class="asesor-avatar">${initials}</div>
+      <h3>${a.nombre}</h3>
+      <div class="cargo">${a.cargo}</div>
+      <a href="https://wa.me/57${a.cel}" target="_blank" class="whatsapp">💬 WhatsApp</a>
+    </div>`;
+  }).join('');
+}
+
+// ===== CONTACT =====
+function submitContact(e) {
+  e.preventDefault();
+  document.getElementById('contact-success').style.display = 'block';
+  setTimeout(() => { document.getElementById('contact-success').style.display = 'none'; }, 5000);
+}
+
+// ===== PANEL =====
+function doLogin() {
+  const u = document.getElementById('login-user').value;
+  const p = document.getElementById('login-pass').value;
+  if ((u === 'asesor' || u.includes('@')) && p === '1234') {
+    document.getElementById('panel-login').style.display = 'none';
+    document.getElementById('panel-content').classList.add('visible');
+    renderMyProps();
+  } else {
+    alert('Credenciales incorrectas. Use: asesor / 1234');
+  }
+}
+function doLogout() {
+  document.getElementById('panel-login').style.display = 'block';
+  document.getElementById('panel-content').classList.remove('visible');
+}
+function previewImgs(e) {
+  const preview = document.getElementById('img-preview');
+  preview.innerHTML = '';
+  Array.from(e.target.files).slice(0,10).forEach(f => {
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const img = document.createElement('img');
+      img.src = ev.target.result;
+      img.className = 'img-thumb';
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(f);
+  });
+}
+function publishProp() {
+  const nombre = document.getElementById('p-nombre').value.trim();
+  if (!nombre) { alert('Ingrese el nombre o referencia del inmueble.'); return; }
+  const newProp = {
+    id: Date.now(),
+    tipo: document.getElementById('p-tipo').value,
+    gestion: document.getElementById('p-gestion').value,
+    zona: document.getElementById('p-zona').value,
+    nombre: nombre,
+    precio: parseInt(document.getElementById('p-precio').value) || 0,
+    hab: parseInt(document.getElementById('p-hab').value) || 0,
+    ban: parseInt(document.getElementById('p-ban').value) || 0,
+    area: parseInt(document.getElementById('p-area').value) || 0,
+    park: parseInt(document.getElementById('p-park').value) || 0,
+    estrato: parseInt(document.getElementById('p-estrato').value) || 0,
+    nuevo: true,
+    desc: document.getElementById('p-desc').value,
+    asesor: document.getElementById('p-asesor').value,
+  };
+  myProps.unshift(newProp);
+  const msg = document.getElementById('publish-success');
+  msg.style.display = 'block';
+  msg.textContent = `✅ Inmueble "${newProp.nombre}" publicado exitosamente.`;
+  setTimeout(() => { msg.style.display = 'none'; }, 4000);
+  renderMyProps();
+  document.getElementById('p-nombre').value = '';
+  document.getElementById('p-precio').value = '';
+  document.getElementById('p-desc').value = '';
+  document.getElementById('img-preview').innerHTML = '';
+}
+function renderMyProps() {
+  const list = document.getElementById('my-props-list');
+  if (myProps.length === 0) { list.innerHTML = '<p style="color:var(--text-muted);font-size:14px">No hay inmuebles publicados aún.</p>'; return; }
+  list.innerHTML = myProps.slice(0,8).map(p => `
+    <div class="panel-prop-row">
+      <div class="pp-info">
+        <strong>${p.nombre}</strong>
+        <span>${p.gestion} · ${p.tipo} · ${p.zona} · ${fmtPrice(p.precio, p.gestion)}</span>
+      </div>
+      <div class="pp-actions">
+        <button class="btn-edit" onclick="alert('Editar: función disponible en versión completa')">Editar</button>
+        <button class="btn-del" onclick="deleteProp(${p.id})">Eliminar</button>
+      </div>
+    </div>`).join('');
+}
+function deleteProp(id) {
+  if (!confirm('¿Eliminar este inmueble?')) return;
+  myProps = myProps.filter(p => p.id !== id);
+  renderProps();
+  renderMyProps();
+}
+
+// ===== MOBILE MENU =====
+function toggleMobileMenu() {
+  // Simple implementation
+  const links = document.querySelector('.nav-links');
+  if (links) {
+    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '68px';
+    links.style.left = '0';
+    links.style.width = '100%';
+    links.style.background = 'rgba(26,39,68,0.98)';
+    links.style.padding = '16px 5%';
+    links.style.gap = '16px';
+  }
+}
+
+// ===== INIT =====
+function openModal(id) {
+
+const p = myProps.find(prop => prop.id == id);
+
+if (!p) return;
+
+const modal = document.getElementById('property-modal');
+const content = document.getElementById('property-modal-content');
+
+const whatsappMessage = encodeURIComponent(
+  `Hola, me interesa este inmueble: ${p.nombre}`
+);
+
+content.innerHTML = `
+
+  <div style="position:relative;">
+
+    <img
+      src="${p.imagen || 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'}"
+
+      style="
+        width:100%;
+        height:420px;
+        object-fit:cover;
+      "
+    >
+
+    <button
+      onclick="closeModal()"
+
+      style="
+        position:absolute;
+        top:20px;
+        right:20px;
+
+        width:46px;
+        height:46px;
+
+        border:none;
+        border-radius:50%;
+
+        background:white;
+
+        font-size:20px;
+        cursor:pointer;
+
+        box-shadow:0 4px 14px rgba(0,0,0,0.18);
+      "
+    >
+      ✕
+    </button>
+
+  </div>
+
+  <div style="padding:36px;">
+
+    <div style="
+      display:flex;
+      justify-content:space-between;
+      gap:34px;
+      flex-wrap:wrap;
+    ">
+
+      <!-- INFO -->
+
+      <div style="flex:1;min-width:320px;">
+
+        <div style="
+          display:inline-block;
+
+          background:#EEF2F7;
+          color:var(--navy);
+
+          padding:8px 16px;
+
+          border-radius:999px;
+
+          font-size:12px;
+          font-weight:700;
+
+          margin-bottom:18px;
+        ">
+          ${p.gestion}
+        </div>
+
+        <h2 style="
+          font-size:42px;
+          color:var(--navy);
+
+          margin-bottom:12px;
+
+          line-height:1.1;
+        ">
+          ${p.nombre}
+        </h2>
+
+        <div style="
+          color:var(--text-muted);
+          font-size:16px;
+
+          margin-bottom:24px;
+        ">
+          📍 ${p.zona}
+        </div>
+
+        <div style="
+          font-size:46px;
+          font-weight:800;
+
+          color:var(--navy);
+
+          margin-bottom:28px;
+        ">
+          ${fmtPrice(p.precio, p.gestion)}
+        </div>
+
+        <!-- FEATURES -->
+
+        <div style="
+          display:grid;
+
+          grid-template-columns:
+            repeat(auto-fit,minmax(140px,1fr));
+
+          gap:16px;
+
+          margin-bottom:34px;
+        ">
+
+          <div style="
+            background:#F8FAFC;
+            padding:18px;
+            border-radius:16px;
+          ">
+            <div style="
+              font-size:12px;
+              color:var(--text-muted);
+              margin-bottom:8px;
+            ">
+              Habitaciones
+            </div>
+
+            <div style="
+              font-size:28px;
+              font-weight:700;
+              color:var(--navy);
+            ">
+              ${p.hab}
+            </div>
+          </div>
+
+          <div style="
+            background:#F8FAFC;
+            padding:18px;
+            border-radius:16px;
+          ">
+            <div style="
+              font-size:12px;
+              color:var(--text-muted);
+              margin-bottom:8px;
+            ">
+              Baños
+            </div>
+
+            <div style="
+              font-size:28px;
+              font-weight:700;
+              color:var(--navy);
+            ">
+              ${p.ban}
+            </div>
+          </div>
+
+          <div style="
+            background:#F8FAFC;
+            padding:18px;
+            border-radius:16px;
+          ">
+            <div style="
+              font-size:12px;
+              color:var(--text-muted);
+              margin-bottom:8px;
+            ">
+              Área
+            </div>
+
+            <div style="
+              font-size:28px;
+              font-weight:700;
+              color:var(--navy);
+            ">
+              ${p.area}m²
+            </div>
+          </div>
+
+          <div style="
+            background:#F8FAFC;
+            padding:18px;
+            border-radius:16px;
+          ">
+            <div style="
+              font-size:12px;
+              color:var(--text-muted);
+              margin-bottom:8px;
+            ">
+              Parqueaderos
+            </div>
+
+            <div style="
+              font-size:28px;
+              font-weight:700;
+              color:var(--navy);
+            ">
+              ${p.park}
+            </div>
+          </div>
+
+        </div>
+
+        <!-- DESCRIPCIÓN -->
+
+        <h3 style="
+          font-size:26px;
+          color:var(--navy);
+
+          margin-bottom:16px;
+        ">
+          Descripción
+        </h3>
+
+        <p style="
+          color:var(--text-muted);
+
+          line-height:1.9;
+          font-size:15px;
+        ">
+          ${p.descripcion || 'Propiedad premium ubicada en excelente zona residencial.'}
+        </p>
+
+      </div>
+
+      <!-- SIDEBAR -->
+
+      <div style="width:320px;">
+
+        <div style="
+          background:#F8FAFC;
+
+          border-radius:22px;
+
+          padding:28px;
+
+          border:1px solid rgba(0,0,0,0.05);
+        ">
+
+          <div style="
+            font-size:14px;
+            color:var(--text-muted);
+
+            margin-bottom:8px;
+          ">
+            Asesor inmobiliario
+          </div>
+
+          <div style="
+            font-size:24px;
+            font-weight:700;
+
+            color:var(--navy);
+
+            margin-bottom:24px;
+          ">
+            ${p.asesor || 'Su Banca Inmobiliaria'}
+          </div>
+
+          <a
+            href="https://wa.me/573112566539?text=${whatsappMessage}"
+
+            target="_blank"
+
+            style="
+              display:block;
+              width:100%;
+
+              background:
+                linear-gradient(
+                  135deg,
+                  var(--gold),
+                  #D6B36A
+                );
+
+              color:var(--navy);
+
+              text-align:center;
+
+              padding:16px;
+
+              border-radius:16px;
+
+              text-decoration:none;
+
+              font-weight:700;
+
+              margin-bottom:14px;
+            "
+          >
+            WhatsApp
+          </a>
+
+          <button style="
+            width:100%;
+
+            padding:16px;
+
+            border-radius:16px;
+
+            border:1px solid rgba(0,0,0,0.08);
+
+            background:white;
+
+            font-weight:700;
+
+            cursor:pointer;
+          ">
+            Solicitar información
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+`;
+
+modal.style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('property-modal').style.display = 'none';
+}
+
+window.addEventListener('click', (e) => {
+
+const modal = document.getElementById('property-modal');
+
+if (e.target === modal) {
+  closeModal();
+}
+
+});
+
+renderProps();
+renderAsesores();
+document.getElementById('stat-props').textContent = myProps.length + '+';
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.boxShadow = window.scrollY > 40 ? '0 4px 24px rgba(0,0,0,0.25)' : 'none';
+});
+
+loadPropsFromDB();
+
+</script>
+
+<!-- MODAL PROPIEDAD -->
+
+<div id="property-modal" style="
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.72);
+
+  display:none;
+
+  align-items:center;
+  justify-content:center;
+
+  z-index:9999;
+
+  padding:30px;
+
+  backdrop-filter:blur(10px);
+">
+
+  <div id="property-modal-content" style="
+    background:white;
+
+    width:100%;
+    max-width:1100px;
+
+    border-radius:24px;
+
+    overflow:hidden;
+
+    position:relative;
+
+    max-height:92vh;
+    overflow-y:auto;
+
+    box-shadow:
+      0 30px 60px rgba(0,0,0,0.25);
+  ">
+  </div>
+
+</div>
+
+</body>
+</html>
