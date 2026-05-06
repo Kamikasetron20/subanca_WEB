@@ -1827,6 +1827,7 @@ async function loadPropsFromDB() {
     const { data, error } = await supabaseClient
     .from('propiedades')
     .select('id, tipo, gestion, zona, nombre, precio, habitaciones, banos, area, parqueaderos, estrato, descripcion, asesor, imagen')
+    console.log(data);
   
     if (error) {
       console.error('ERROR DB:', error);
