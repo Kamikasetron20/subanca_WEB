@@ -827,24 +827,6 @@ box-shadow:
 .modal-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
 .modal-gallery .gallery-main { height: 200px; background: linear-gradient(135deg,#C9D6E3,#A8B8CC); border-radius: 8px; grid-column: 1/-1; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 13px; }
 
-.gallery-side {
-
-display:flex;
-flex-direction:column;
-gap:10px;
-
-}
-
-.gallery-thumb {
-
-width:100%;
-
-border-radius:14px;
-
-overflow:hidden;
-
-}
-
 .modal-cta { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
 .modal-cta a {
   flex: 1; min-width: 140px; text-align: center; padding: 12px 20px; border-radius: 6px;
@@ -1853,19 +1835,18 @@ async function loadPropsFromDB() {
     renderProps();
   }
 
-  function openModal(id) {
+function openModal(id) {
 
 const p = myProps.find(x => x.id === id);
 
 if (!p) return;
 
-const asesor =
-  asesores.find(a => a.nombre === p.asesor) || asesores[0];
+const asesor = asesores.find(a => a.nombre === p.asesor) || asesores[0];
 
-const image =
+const imagenPrincipal =
   p.imagen ||
-  (p.imagenes && p.imagenes[0]) ||
-  'https://via.placeholder.com/800x500?text=Sin+Imagen';
+  p.imagenes?.[0] ||
+  'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688';
 
 document.getElementById('modal-content').innerHTML = `
 
@@ -1873,72 +1854,124 @@ document.getElementById('modal-content').innerHTML = `
 
   <div class="modal-gallery">
 
-    <div
-      class="gallery-main"
-      style="
-        background-image:url('${image}');
-        background-size:cover;
-        background-position:center;
-        border-radius:8px;
-      "
-    ></div>
+    <div class="gallery-main">
+
+      <img
+        id="main-property-image"
+
+        src="${imagenPrincipal}"
+
+        style="
+          width:100%;
+          height:100%;
+          object-fit:cover;
+          border-radius:18px;
+          display:block;
+        "
+      >
+
+    </div>
 
   </div>
 
-  <span class="prop-badge ${
-    p.gestion !== 'Venta'
-      ? 'badge-arriendo'
-      : 'badge-venta'
-  } badge-modal">
-
+  <span class="prop-badge ${p.gestion !== 'Venta' ? 'badge-arriendo' : 'badge-venta'} badge-modal">
     ${p.gestion}
-
   </span>
 
   <h2>${p.nombre}</h2>
 
-  <div style="display:flex;align-items:center;gap:6px;margin:6px 0 0;color:var(--text-muted);font-size:14px">
+  <div style="
+    display:flex;
+    align-items:center;
+    gap:6px;
+    margin:6px 0 0;
+    color:var(--text-muted);
+    font-size:14px
+  ">
     📍 ${p.zona} · Estrato ${p.estrato}
   </div>
 
-  <div style="font-family:'Playfair Display',serif;font-size:26px;color:var(--navy);font-weight:700;margin-top:10px">
+  <div style="
+    font-family:'Playfair Display',serif;
+    font-size:26px;
+    color:var(--navy);
+    font-weight:700;
+    margin-top:10px
+  ">
     ${fmtPrice(p.precio, p.gestion)}
   </div>
 
   <div class="prop-meta">
 
-    ${
-      p.hab > 0
-        ? `<div class="meta-item"><span>Habitaciones</span><strong>${p.hab}</strong></div>`
-        : ''
-    }
+    ${p.hab > 0 ? `
+      <div class="meta-item">
+        <span>Habitaciones</span>
+        <strong>${p.hab}</strong>
+      </div>
+    ` : ''}
 
-    ${
-      p.ban > 0
-        ? `<div class="meta-item"><span>Baños</span><strong>${p.ban}</strong></div>`
-        : ''
-    }
+    ${p.ban > 0 ? `
+      <div class="meta-item">
+        <span>Baños</span>
+        <strong>${p.ban}</strong>
+      </div>
+    ` : ''}
 
     <div class="meta-item">
       <span>Área</span>
       <strong>${p.area} m²</strong>
     </div>
 
-    ${
-      p.park > 0
-        ? `<div class="meta-item"><span>Parqueaderos</span><strong>${p.park}</strong></div>`
-        : ''
-    }
+    ${p.park > 0 ? `
+      <div class="meta-item">
+        <span>Parqueaderos</span>
+        <strong>${p.park}</strong>
+      </div>
+    ` : ''}
 
   </div>
 
-  <p style="font-size:14px;color:var(--text-muted);line-height:1.7;margin-bottom:16px">
-    ${p.desc || ''}
+  <p style="
+    font-size:14px;
+    color:var(--text-muted);
+    line-height:1.7;
+    margin-bottom:16px;
+    white-space:pre-line;
+  ">
+    ${p.desc || 'Propiedad premium ubicada en excelente zona residencial.'}
   </p>
 
-  <div style="background:var(--cream);border-radius:8px;padding:14px 16px;font-size:13px;color:var(--text-muted)">
-    <strong style="color:var(--navy)">Asesor responsable:</strong>
+  <div style="
+    background:var(--cream);
+    border-radius:8px;
+    padding:14px 16px;
+    font-size:13px;
+    color:var(--text-muted)
+  ">
+    <strong style="color:var(--navy)">
+      Asesor responsable:
+    </strong>
+
     ${asesor.nombre}
+  </div>
+
+  <div class="modal-cta">
+
+    <a
+      href="https://wa.me/57${asesor.cel}"
+      target="_blank"
+      class="cta-ws"
+    >
+      💬 WhatsApp
+    </a>
+
+    <a
+      href="tel:+57${asesor.cel}"
+      class="cta-tel"
+    >
+      📞 Llamar
+    </a>
+
   </div>
 
 `;
@@ -2074,345 +2107,6 @@ function toggleMobileMenu() {
 }
 
 // ===== INIT =====
-function openModal(id) {
-
-const p = myProps.find(prop => prop.id == id);
-
-if (!p) return;
-
-const modal = document.getElementById('property-modal');
-const content = document.getElementById('property-modal-content');
-
-const whatsappMessage = encodeURIComponent(
-  `Hola, me interesa este inmueble: ${p.nombre}`
-);
-
-content.innerHTML = `
-
-  <div style="position:relative;">
-
-    <img
-      src="${p.imagen || 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688'}"
-
-      style="
-        width:100%;
-        height:420px;
-        object-fit:cover;
-      "
-    >
-
-    <button
-      onclick="closeModal()"
-
-      style="
-        position:absolute;
-        top:20px;
-        right:20px;
-
-        width:46px;
-        height:46px;
-
-        border:none;
-        border-radius:50%;
-
-        background:white;
-
-        font-size:20px;
-        cursor:pointer;
-
-        box-shadow:0 4px 14px rgba(0,0,0,0.18);
-      "
-    >
-      ✕
-    </button>
-
-  </div>
-
-  <div style="padding:36px;">
-
-    <div style="
-      display:flex;
-      justify-content:space-between;
-      gap:34px;
-      flex-wrap:wrap;
-    ">
-
-      <!-- INFO -->
-
-      <div style="flex:1;min-width:320px;">
-
-        <div style="
-          display:inline-block;
-
-          background:#EEF2F7;
-          color:var(--navy);
-
-          padding:8px 16px;
-
-          border-radius:999px;
-
-          font-size:12px;
-          font-weight:700;
-
-          margin-bottom:18px;
-        ">
-          ${p.gestion}
-        </div>
-
-        <h2 style="
-          font-size:42px;
-          color:var(--navy);
-
-          margin-bottom:12px;
-
-          line-height:1.1;
-        ">
-          ${p.nombre}
-        </h2>
-
-        <div style="
-          color:var(--text-muted);
-          font-size:16px;
-
-          margin-bottom:24px;
-        ">
-          📍 ${p.zona}
-        </div>
-
-        <div style="
-          font-size:46px;
-          font-weight:800;
-
-          color:var(--navy);
-
-          margin-bottom:28px;
-        ">
-          ${fmtPrice(p.precio, p.gestion)}
-        </div>
-
-        <!-- FEATURES -->
-
-        <div style="
-          display:grid;
-
-          grid-template-columns:
-            repeat(auto-fit,minmax(140px,1fr));
-
-          gap:16px;
-
-          margin-bottom:34px;
-        ">
-
-          <div style="
-            background:#F8FAFC;
-            padding:18px;
-            border-radius:16px;
-          ">
-            <div style="
-              font-size:12px;
-              color:var(--text-muted);
-              margin-bottom:8px;
-            ">
-              Habitaciones
-            </div>
-
-            <div style="
-              font-size:28px;
-              font-weight:700;
-              color:var(--navy);
-            ">
-              ${p.hab}
-            </div>
-          </div>
-
-          <div style="
-            background:#F8FAFC;
-            padding:18px;
-            border-radius:16px;
-          ">
-            <div style="
-              font-size:12px;
-              color:var(--text-muted);
-              margin-bottom:8px;
-            ">
-              Baños
-            </div>
-
-            <div style="
-              font-size:28px;
-              font-weight:700;
-              color:var(--navy);
-            ">
-              ${p.ban}
-            </div>
-          </div>
-
-          <div style="
-            background:#F8FAFC;
-            padding:18px;
-            border-radius:16px;
-          ">
-            <div style="
-              font-size:12px;
-              color:var(--text-muted);
-              margin-bottom:8px;
-            ">
-              Área
-            </div>
-
-            <div style="
-              font-size:28px;
-              font-weight:700;
-              color:var(--navy);
-            ">
-              ${p.area}m²
-            </div>
-          </div>
-
-          <div style="
-            background:#F8FAFC;
-            padding:18px;
-            border-radius:16px;
-          ">
-            <div style="
-              font-size:12px;
-              color:var(--text-muted);
-              margin-bottom:8px;
-            ">
-              Parqueaderos
-            </div>
-
-            <div style="
-              font-size:28px;
-              font-weight:700;
-              color:var(--navy);
-            ">
-              ${p.park}
-            </div>
-          </div>
-
-        </div>
-
-        <!-- DESCRIPCIÓN -->
-
-        <h3 style="
-          font-size:26px;
-          color:var(--navy);
-
-          margin-bottom:16px;
-        ">
-          Descripción
-        </h3>
-
-        <p style="
-          color:var(--text-muted);
-
-          line-height:1.9;
-          font-size:15px;
-        ">
-          ${p.desc || 'Propiedad premium ubicada en excelente zona residencial.'}
-        </p>
-
-      </div>
-
-      <!-- SIDEBAR -->
-
-      <div style="width:320px;">
-
-        <div style="
-          background:#F8FAFC;
-
-          border-radius:22px;
-
-          padding:28px;
-
-          border:1px solid rgba(0,0,0,0.05);
-        ">
-
-          <div style="
-            font-size:14px;
-            color:var(--text-muted);
-
-            margin-bottom:8px;
-          ">
-            Asesor inmobiliario
-          </div>
-
-          <div style="
-            font-size:24px;
-            font-weight:700;
-
-            color:var(--navy);
-
-            margin-bottom:24px;
-          ">
-            ${p.asesor || 'Su Banca Inmobiliaria'}
-          </div>
-
-          <a
-            href="https://wa.me/573112566539?text=${whatsappMessage}"
-
-            target="_blank"
-
-            style="
-              display:block;
-              width:100%;
-
-              background:
-                linear-gradient(
-                  135deg,
-                  var(--gold),
-                  #D6B36A
-                );
-
-              color:var(--navy);
-
-              text-align:center;
-
-              padding:16px;
-
-              border-radius:16px;
-
-              text-decoration:none;
-
-              font-weight:700;
-
-              margin-bottom:14px;
-            "
-          >
-            WhatsApp
-          </a>
-
-          <button style="
-            width:100%;
-
-            padding:16px;
-
-            border-radius:16px;
-
-            border:1px solid rgba(0,0,0,0.08);
-
-            background:white;
-
-            font-weight:700;
-
-            cursor:pointer;
-          ">
-            Solicitar información
-          </button>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </div>
-
-`;
-
-modal.style.display = 'flex';
-}
 
 function closeModal() {
   document.getElementById('property-modal').style.display = 'none';
