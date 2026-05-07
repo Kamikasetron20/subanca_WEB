@@ -1600,58 +1600,6 @@ let currentTab = 'arriendo';
 let visibleCount = 6;
 let filteredProps = [];
 
-async function loadPropsFromDB() {
-  console.log("🔥 cargando desde Supabase...");
-
-  const { data, error } = await supabaseClient
-    .from('propiedades')
-    .select('*');
-
-  if (error) {
-    console.error('❌ ERROR DB:', error);
-    return;
-  }
-
-  console.log("✅ DATA:", data);
-
-  myProps = data.map(p => ({
-  id: p.id,
-  tipo: p.tipo,
-  gestion: p.gestion,
-  zona: p.zona,
-  nombre: p.nombre,
-  precio: p.precio,
-  hab: p.habitaciones,
-  ban: p.banos,
-  area: p.area,
-  park: p.parqueaderos,
-  estrato: p.estrato,
-  desc: p.descripcion,
-  asesor: p.asesor,
-  imagen: p.imagen, // 👈 NUEVO
-  iimagenes: Array.isArray(p.imagenes)
-
-? p.imagenes
-
-: (() => {
-
-    try {
-
-      return JSON.parse(p.imagenes);
-
-    } catch {
-
-      return [];
-
-    }
-
-  })(),
-  nuevo: false
-}));
-
-  renderProps();
-}
-
 const asesores = [
   {nombre:'Sebastián Pernett Ruiz', cargo:'Gerente · Rep. Legal', cel:'3132211683'},
   {nombre:'Maribel Jaramillo', cargo:'Administradora', cel:'3132211683'},
@@ -1802,17 +1750,22 @@ return `
 
 // ===== MODAL =====
 async function loadPropsFromDB() {
-    const { data, error } = await supabaseClient
-    .from('propiedades')
-    .select('id, tipo, gestion, zona, nombre, precio, habitaciones, banos, area, parqueaderos, estrato, descripcion, asesor, imagen')
-    console.log(data);
-  
-    if (error) {
-      console.error('ERROR DB:', error);
-      return;
-    }
-  
-    myProps = data.map(p => ({
+
+console.log("🔥 cargando desde Supabase...");
+
+const { data, error } = await supabaseClient
+  .from('propiedades')
+  .select('*');
+
+if (error) {
+  console.error('❌ ERROR DB:', error);
+  return;
+}
+
+console.log("✅ DATA:", data);
+
+myProps = data.map(p => ({
+
   id: p.id,
   tipo: p.tipo,
 
@@ -1829,21 +1782,29 @@ async function loadPropsFromDB() {
   nombre: p.nombre,
   precio: p.precio,
 
-  hab: p.habitaciones,
-  ban: p.banos,
-  area: p.area,
-  park: p.parqueaderos,
+  hab: p.habitaciones || 0,
+  ban: p.banos || 0,
+  area: p.area || 0,
+  park: p.parqueaderos || 0,
 
-  estrato: p.estrato,
-  desc: p.descripcion,
+  estrato: p.estrato || 0,
+  desc: p.descripcion || '',
 
-  asesor: p.asesor,
+  asesor: p.asesor || 'Asesor Comercial',
 
   nuevo: false
+
 }));
-    console.log(myProps);
-    renderProps();
-  }
+
+allProps = [...myProps];
+
+console.log("✅ propiedades cargadas:", myProps);
+
+renderProps();
+
+document.getElementById('stat-props').textContent =
+  myProps.length + '+';
+}
 
 function openModal(id) {
 
