@@ -1794,13 +1794,33 @@ myProps = data.map(p => ({
   id: p.id,
   tipo: p.tipo,
 
-  imagenes:
+  imagenes: (() => {
 
-typeof p.imagenes === 'string'
-  ? JSON.parse(p.imagenes)
-  : (Array.isArray(p.imagenes)
-      ? p.imagenes
-      : []),
+try {
+
+  if (Array.isArray(p.imagenes)) {
+    return p.imagenes;
+  }
+
+  if (typeof p.imagenes === 'string') {
+
+    const parsed = JSON.parse(p.imagenes);
+
+    return Array.isArray(parsed)
+      ? parsed
+      : [];
+  }
+
+  return [];
+
+} catch(e) {
+
+  console.error('ERROR imagenes:', p.imagenes);
+
+  return [];
+}
+
+})(),
 
   imagen:
   p.imagen ||
