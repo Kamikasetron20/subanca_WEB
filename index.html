@@ -811,8 +811,25 @@ box-shadow:
 
 .modal-overlay.open { display: flex; }
 .modal {
-  background: var(--white); border-radius: 14px; padding: 36px; max-width: 600px; width: 100%;
-  max-height: 90vh; overflow-y: auto; position: relative;
+
+background: white;
+
+width: 96%;
+max-width: 1380px;
+
+border-radius: 28px;
+
+overflow-y: auto;
+
+position: relative;
+
+max-height: 94vh;
+
+padding: 38px;
+
+box-shadow:
+  0 30px 80px rgba(0,0,0,0.28);
+
 }
 .modal-close {
   position: absolute; top: 16px; right: 20px; background: none; border: none;
@@ -827,7 +844,15 @@ box-shadow:
 .modal-gallery { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 20px; }
 .modal-gallery .gallery-main { height: 200px; background: linear-gradient(135deg,#C9D6E3,#A8B8CC); border-radius: 8px; grid-column: 1/-1; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.6); font-size: 13px; }
 
-.modal-cta { display: flex; gap: 12px; margin-top: 20px; flex-wrap: wrap; }
+.modal-cta {
+
+display:flex;
+
+justify-content:center;
+
+margin-top:22px;
+
+}
 .modal-cta a {
   flex: 1; min-width: 140px; text-align: center; padding: 12px 20px; border-radius: 6px;
   font-size: 14px; font-weight: 600; text-decoration: none; transition: opacity 0.2s;
@@ -1772,10 +1797,12 @@ myProps = data.map(p => ({
   imagenes: p.imagenes || [],
 
   imagen:
-    p.imagen ||
-    p.imagen_url ||
-    (p.imagenes && p.imagenes[0]) ||
-    'https://via.placeholder.com/600x400?text=Sin+Imagen',
+  p.imagen ||
+  p.imagen_url ||
+  (Array.isArray(p.imagenes) && p.imagenes.length > 0
+    ? p.imagenes[0]
+    : null) ||
+  'https://via.placeholder.com/600x400?text=Sin+Imagen',
 
   gestion: p.gestion,
   zona: p.zona,
@@ -1824,26 +1851,66 @@ console.log("MODAL PROPERTY:", p);
 document.getElementById('modal-content').innerHTML = `
 
   <button class="modal-close" onclick="closeModal()">✕</button>
-
   <div class="modal-gallery">
 
-    <div class="gallery-main">
+  <div class="gallery-main">
 
-      <img
-        id="main-property-image"
+    <img
+      id="main-property-image"
 
-        src="${imagenPrincipal}"
+      src="${imagenPrincipal}"
 
-        style="
-          width:100%;
-          height:100%;
-          object-fit:cover;
-          border-radius:18px;
-          display:block;
-        "
-      >
+      style="
+        width:100%;
+        height:520px;
+        object-fit:cover;
+        border-radius:18px;
+        display:block;
+      "
+    >
 
-    </div>
+  </div>
+
+  ${
+    Array.isArray(p.imagenes) && p.imagenes.length > 0
+      ? `
+        <div
+          style="
+            display:flex;
+            gap:12px;
+            overflow-x:auto;
+            margin-top:16px;
+            padding-bottom:6px;
+          "
+        >
+
+          ${p.imagenes.map(img => `
+
+            <img
+              src="${img}"
+
+              onclick="
+                document.getElementById('main-property-image').src='${img}'
+              "
+
+              style="
+                width:110px;
+                height:82px;
+                object-fit:cover;
+                border-radius:12px;
+                cursor:pointer;
+                flex-shrink:0;
+                border:2px solid rgba(255,255,255,0.6);
+                transition:.2s;
+              "
+            >
+
+          `).join('')}
+
+        </div>
+      `
+      : ''
+  }
 
   </div>
 
@@ -1905,13 +1972,14 @@ document.getElementById('modal-content').innerHTML = `
   </div>
 
   <p style="
-    font-size:14px;
-    color:var(--text-muted);
-    line-height:1.7;
-    margin-bottom:16px;
-    white-space:pre-line;
-  ">
-    ${p.desc || 'Propiedad premium ubicada en excelente zona residencial.'}
+      font-size:16px;
+      color:#1f2937;
+      line-height:1.9;
+      margin-bottom:18px;
+      white-space:pre-line;
+      font-weight:500;
+    ">
+      ${p.desc || 'Propiedad premium ubicada en excelente zona residencial.'}
   </p>
 
   <div style="
@@ -1922,7 +1990,7 @@ document.getElementById('modal-content').innerHTML = `
     color:var(--text-muted)
   ">
     <strong style="color:var(--navy)">
-      Asesor responsable:
+      Asesor:
     </strong>
 
     ${asesor.nombre}
@@ -1936,13 +2004,6 @@ document.getElementById('modal-content').innerHTML = `
       class="cta-ws"
     >
       💬 WhatsApp
-    </a>
-
-    <a
-      href="tel:+57${asesor.cel}"
-      class="cta-tel"
-    >
-      📞 Llamar
     </a>
 
   </div>
