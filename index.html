@@ -1808,6 +1808,8 @@ document.getElementById('stat-props').textContent =
 
 function openModal(id) {
 
+try {
+
 const p = myProps.find(x => x.id === id);
 
 if (!p) return;
@@ -1816,8 +1818,10 @@ const asesor = asesores.find(a => a.nombre === p.asesor) || asesores[0];
 
 const imagenPrincipal =
   p.imagen ||
-  p.imagenes?.[0] ||
+  (Array.isArray(p.imagenes) ? p.imagenes[0] : null) ||
   'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688';
+
+console.log("MODAL PROPERTY:", p);
 
 document.getElementById('modal-content').innerHTML = `
 
@@ -1950,6 +1954,10 @@ document.getElementById('modal-content').innerHTML = `
 document.getElementById('modal-overlay').classList.add('open');
 
 document.body.style.overflow = 'hidden';
+
+} catch(err) {console.error("ERROR OPENMODAL:", err);
+
+}
 }
 
 function closeModal(e) {
