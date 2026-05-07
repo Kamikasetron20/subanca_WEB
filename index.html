@@ -1794,7 +1794,13 @@ myProps = data.map(p => ({
   id: p.id,
   tipo: p.tipo,
 
-  imagenes: p.imagenes || [],
+  imagenes:
+
+typeof p.imagenes === 'string'
+  ? JSON.parse(p.imagenes)
+  : (Array.isArray(p.imagenes)
+      ? p.imagenes
+      : []),
 
   imagen:
   p.imagen ||
@@ -1853,96 +1859,112 @@ document.getElementById('modal-content').innerHTML = `
   <button class="modal-close" onclick="closeModal()">✕</button>
   <div class="modal-gallery">
 
-  <div class="gallery-main">
+   <div
+  class="gallery-main"
 
-    <img
-      id="main-property-image"
+  style="
+    width:100%;
+    height:420px;
+    overflow:hidden;
+    border-radius:20px;
+    margin-bottom:10px;
+  "
+>
 
-      src="${imagenPrincipal}"
+  <img
+    id="main-property-image"
 
-      style="
-        width:100%;
-        height:520px;
-        object-fit:cover;
-        border-radius:18px;
-        display:block;
-      "
-    >
+    src="${imagenPrincipal}"
 
-  </div>
+    style="
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+    "
+  >
 
-  ${
-    Array.isArray(p.imagenes) && p.imagenes.length > 0
-      ? `
-        <div
-          style="
-            display:flex;
-            gap:12px;
-            overflow-x:auto;
-            margin-top:16px;
-            padding-bottom:6px;
-          "
-        >
+</div>
 
-          ${p.imagenes.map(img => `
+${
+  Array.isArray(p.imagenes) && p.imagenes.length > 0
+    ? `
+      <div
+        style="
+          display:flex;
+          gap:12px;
+          overflow-x:auto;
+          margin-top:16px;
+          padding-bottom:6px;
+        "
+      >
 
-            <img
-              src="${img}"
+        ${p.imagenes.map(img => `
 
-              onclick="
-                document.getElementById('main-property-image').src='${img}'
-              "
+          <img
+            src="${img}"
 
-              style="
-                width:110px;
-                height:82px;
-                object-fit:cover;
-                border-radius:12px;
-                cursor:pointer;
-                flex-shrink:0;
-                border:2px solid rgba(255,255,255,0.6);
-                transition:.2s;
-              "
-            >
+            onclick="
+              document.getElementById('main-property-image').src='${img}'
+            "
 
-          `).join('')}
+            style="
+              width:110px;
+              height:82px;
+              object-fit:cover;
+              border-radius:12px;
+              cursor:pointer;
+              flex-shrink:0;
+              border:2px solid rgba(255,255,255,0.6);
+              transition:.2s;
+            "
+          >
 
-        </div>
-      `
-      : ''
-  }
+        `).join('')}
 
-  </div>
+      </div>
+    `
+    : ''
+}
+
+<div style="height:20px"></div> 
 
   <span class="prop-badge ${p.gestion !== 'Venta' ? 'badge-arriendo' : 'badge-venta'} badge-modal">
     ${p.gestion}
   </span>
 
-  <h2>${p.nombre}</h2>
+  <h2 style="
+  margin-top:8px;
+  margin-bottom:12px;
+  line-height:1.2;
+  font-size:34px;
+  ">
+    ${p.nombre}
+  </h2>
 
   <div style="
     display:flex;
     align-items:center;
-    gap:6px;
-    margin:6px 0 0;
-    color:var(--text-muted);
-    font-size:14px
+    gap:8px;
+    margin:4px 0 0;
+    color:#4b5563;
+    font-size:15px;
+    font-weight:500;
   ">
-    📍 ${p.zona} · Estrato ${p.estrato}
+        📍 ${p.zona} · Estrato ${p.estrato}
   </div>
 
   <div style="
     font-family:'Playfair Display',serif;
-    font-size:26px;
+    font-size:38px;
     color:var(--navy);
     font-weight:700;
-    margin-top:10px
+    margin-top:14px
   ">
     ${fmtPrice(p.precio, p.gestion)}
   </div>
 
-  <div class="prop-meta">
-
+  <div class="prop-meta" style="margin-top:24px">
     ${p.hab > 0 ? `
       <div class="meta-item">
         <span>Habitaciones</span>
