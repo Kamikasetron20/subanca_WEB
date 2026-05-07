@@ -1728,16 +1728,14 @@ return `
 
 <div class="prop-card" onclick="openModal(${p.id})">
 
-  <div 
+  <div
     class="prop-img"
     style="
-      background-image:url('${image}');
+      background-image:url('${p.image}');
       background-size:cover;
       background-position:center;
-      position:relative;
     "
   >
-
     <span class="prop-badge ${
       p.gestion === 'Arriendo' || p.gestion === 'Amoblado'
         ? 'badge-arriendo'
@@ -1815,22 +1813,34 @@ async function loadPropsFromDB() {
     }
   
     myProps = data.map(p => ({
-      id: p.id,
-      tipo: p.tipo,
-      imagenes: p.imagenes || [],
-      gestion: p.gestion,
-      zona: p.zona,
-      nombre: p.nombre,
-      precio: p.precio,
-      hab: p.habitaciones,
-      ban: p.banos,
-      area: p.area,
-      park: p.parqueaderos,
-      estrato: p.estrato,
-      desc: p.descripcion,
-      asesor: p.asesor,
-      nuevo: false
-    }));
+  id: p.id,
+  tipo: p.tipo,
+
+  imagenes: p.imagenes || [],
+
+  imagen:
+    p.imagen ||
+    p.imagen_url ||
+    (p.imagenes && p.imagenes[0]) ||
+    'https://via.placeholder.com/600x400?text=Sin+Imagen',
+
+  gestion: p.gestion,
+  zona: p.zona,
+  nombre: p.nombre,
+  precio: p.precio,
+
+  hab: p.habitaciones,
+  ban: p.banos,
+  area: p.area,
+  park: p.parqueaderos,
+
+  estrato: p.estrato,
+  desc: p.descripcion,
+
+  asesor: p.asesor,
+
+  nuevo: false
+}));
     console.log(myProps);
     renderProps();
   }
@@ -2108,19 +2118,6 @@ function toggleMobileMenu() {
 
 // ===== INIT =====
 
-function closeModal() {
-  document.getElementById('property-modal').style.display = 'none';
-}
-
-window.addEventListener('click', (e) => {
-
-const modal = document.getElementById('property-modal');
-
-if (e.target === modal) {
-  closeModal();
-}
-
-});
 
 renderProps();
 renderAsesores();
@@ -2135,47 +2132,5 @@ window.addEventListener('scroll', () => {
 loadPropsFromDB();
 
 </script>
-
-<!-- MODAL PROPIEDAD -->
-
-<div id="property-modal" style="
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.72);
-
-  display:none;
-
-  align-items:center;
-  justify-content:center;
-
-  z-index:9999;
-
-  padding:30px;
-
-  backdrop-filter:blur(10px);
-">
-
-  <div id="property-modal-content" style="
-    background:white;
-
-    width:100%;
-    max-width:1100px;
-
-    border-radius:24px;
-
-    overflow:hidden;
-
-    position:relative;
-
-    max-height:92vh;
-    overflow-y:auto;
-
-    box-shadow:
-      0 30px 60px rgba(0,0,0,0.25);
-  ">
-  </div>
-
-</div>
-
 </body>
 </html>
