@@ -1234,9 +1234,24 @@ gap:14px;
 
 overflow-x:auto;
 
-padding-bottom:8px;
+padding:
+  6px
+  4px
+  14px;
+
+margin-top:4px;
 
 scrollbar-width:none;
+
+scroll-behavior:smooth;
+
+-webkit-overflow-scrolling:touch;
+
+}
+
+.gallery-thumbs::-webkit-scrollbar {
+
+display:none;
 
 }
 
@@ -1250,11 +1265,13 @@ display:none;
 
 width:120px;
 
+min-width:120px;
+
 height:82px;
 
 object-fit:cover;
 
-border-radius:14px;
+border-radius:16px;
 
 cursor:pointer;
 
@@ -1265,10 +1282,13 @@ border:3px solid transparent;
 transition:
   transform .22s ease,
   border-color .22s ease,
+  opacity .22s ease,
   box-shadow .22s ease;
 
 box-shadow:
-  0 6px 16px rgba(15,23,42,0.10);
+  0 6px 18px rgba(15,23,42,0.10);
+
+opacity:.82;
 
 }
 
@@ -1277,6 +1297,11 @@ box-shadow:
 transform:translateY(-3px);
 
 border-color:var(--gold);
+
+opacity:1;
+
+box-shadow:
+  0 14px 30px rgba(15,23,42,0.16);
 
 }
 
@@ -2336,10 +2361,17 @@ ${
         ${p.imagenes.map(img => `
 
           <img
+            class="${img === imagenPrincipal ? 'active-thumb' : ''}"
+
             src="${img}"
 
             onclick="
-              document.getElementById('main-property-image').src='${img}'
+              document.getElementById('main-property-image').src='${img}';
+
+              document.querySelectorAll('.gallery-thumbs img')
+                .forEach(el => el.classList.remove('active-thumb'));
+
+              this.classList.add('active-thumb');
             "
 
             onmouseover="
