@@ -3,7 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Su Banca Inmobiliaria – Medellín</title>
+<title>Su Banca Inmobiliaria | Arriendos y ventas en Medellín</title>
+<meta name="description" content="Encuentra apartamentos, casas, locales y propiedades en arriendo, venta y amoblados en Medellín y el Valle de Aburrá con Su Banca Inmobiliaria.">
+<meta
+  property="og:image"
+  content="https://kamikasetron20.github.io/subanca_WEB/img/og-banner.jpg"
+>
+
+<meta
+  property="og:description"
+
+  content="
+    Propiedades en arriendo, venta y amoblados en Medellín y el Valle de Aburrá.
+  "
+>
+
+<meta
+  property="og:type"
+  content="website"
+>
+
+<meta
+  property="og:image"
+
+  content="
+    https://images.unsplash.com/photo-1560518883-ce09059eeffa
+  "
+>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -1131,37 +1157,201 @@ box-shadow:
 
 @media (max-width: 980px) {
 
-.modal-sidebar {
+/* =========================
+   HERO / BUSCADOR
+========================= */
 
-position: relative;
+.search-box {
 
-top: unset;
+  padding: 22px;
+
+  border-radius: 26px;
+
+}
+
+.search-fields {
+
+  grid-template-columns: 1fr;
+
+  gap: 14px;
 
 }
 
-.modal-features {
+.search-btn {
 
-grid-template-columns: 1fr;
+  width: 100%;
+
+  justify-content: center;
+
+  height: 56px;
+
+  font-size: 15px;
 
 }
+
+.search-tabs {
+
+  gap: 10px;
+
+}
+
+.search-tab {
+
+  flex: 1;
+
+  justify-content: center;
+
+  font-size: 14px;
+
+  padding: 12px 10px;
+
+}
+
+/* =========================
+   PROPIEDADES
+========================= */
+
+.props-grid {
+
+  grid-template-columns: 1fr;
+
+  gap: 22px;
+
+}
+
+.prop-card {
+
+  border-radius: 24px;
+
+}
+
+.prop-img {
+
+  height: 240px;
+
+}
+
+.prop-content {
+
+  padding: 20px;
+
+}
+
+.prop-title {
+
+  font-size: 26px;
+
+}
+
+.prop-price {
+
+  font-size: 32px;
+
+}
+
+/* =========================
+   MODAL
+========================= */
 
 .modal {
 
-padding: 24px;
+  width: 94%;
 
-border-radius: 24px;
+  max-height: 92vh;
+
+  padding: 18px;
+
+  border-radius: 26px;
+
+  overflow-y: auto;
+
+}
+
+.modal-layout {
+
+  gap: 22px;
+
+}
+
+.modal-sidebar {
+
+  position: relative;
+
+  top: unset;
+
+}
+
+.gallery-main {
+
+  height: 280px;
+
+  border-radius: 20px;
+
+}
+
+.gallery-thumbs img {
+
+  width: 96px;
+
+  min-width: 96px;
+
+  height: 72px;
+
+  border-radius: 14px;
 
 }
 
 .modal-title {
 
-font-size: 34px;
+  font-size: 30px;
+
+  line-height: 1.1;
 
 }
 
 .modal-price {
 
-font-size: 44px;
+  font-size: 38px;
+
+  line-height: 1;
+
+}
+
+.modal-features {
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 12px;
+
+}
+
+.meta-item {
+
+  padding: 14px;
+
+}
+
+.modal-cta {
+
+  position: sticky;
+
+  bottom: 0;
+
+  background: white;
+
+  padding-top: 12px;
+
+}
+
+.cta-ws {
+
+  width: 100%;
+
+  justify-content: center;
+
+  height: 56px;
+
+  font-size: 15px;
 
 }
 
