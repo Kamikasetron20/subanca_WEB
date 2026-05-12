@@ -586,7 +586,7 @@ padding:
 .prop-price {
 
 font-family:
-  'Playfair Display', serif;
+  'Cormorant Garamond', serif;
 
 font-size: 34px;
 
@@ -1130,12 +1130,6 @@ box-shadow:
 /* RESPONSIVE */
 
 @media (max-width: 980px) {
-
-.modal-layout {
-
-grid-template-columns: 1fr;
-
-}
 
 .modal-sidebar {
 
@@ -2169,7 +2163,7 @@ return `
   <div
     class="prop-img"
     style="
-      background-image:url('${p.image}');
+      background-image:url('${p.image || (Array.isArray(p.imagenes) ? p.imagenes[0] : '')}');
       background-size:cover;
       background-position:center;
     "
