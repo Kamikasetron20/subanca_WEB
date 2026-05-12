@@ -1457,7 +1457,7 @@ transform:
       <div class="search-fields">
         <div class="search-field">
           <label>Tipo de inmueble</label>
-          <select id="s-tipo" onchange="applyFilters()">
+          <select id="s-tipo">
             <option value="">Todos los tipos</option>
             <option value="Apartamento">Apartamento</option>
             <option value="Casa">Casa</option>
@@ -1469,7 +1469,7 @@ transform:
         </div>
         <div class="search-field">
           <label>Sector / Barrio</label>
-          <select id="s-zona" onchange="applyFilters()">
+          <select id="s-zona">
             <option value="">Toda Medellín</option>
             <option value="El Poblado">El Poblado</option>
             <option value="Laureles">Laureles</option>
@@ -1483,7 +1483,7 @@ transform:
         </div>
         <div class="search-field">
           <label>Precio máximo</label>
-          <select id="s-precio" onchange="applyFilters()">
+          <select id="s-precio">
             <option value="">Cualquier precio</option>
           </select>
         </div>
@@ -2236,8 +2236,6 @@ else if (tab === 'venta') {
 }
 
 precio.innerHTML = options;
-
-applyFilters();
 
 }
 function setFilter(el, filter) {
