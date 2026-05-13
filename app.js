@@ -19,6 +19,60 @@ let allProps = [
     { id: 12, tipo: 'Apartamento', gestion: 'Amoblado', zona: 'Laureles', nombre: 'Apto amoblado Laureles', precio: 2600000, hab: 2, ban: 2, area: 72, park: 1, estrato: 5, nuevo: true, desc: 'Completamente equipado, smart TV, internet y parqueo.', asesor: 'Asesor Comercial' },
 ];
 
+async function loadProperties(){
+
+  const { data, error } = await supabaseClient
+      .from('propiedades')
+      .select('*')
+      .order('created_at', { ascending:false });
+
+  console.log(data);
+  console.log(error);
+
+  if(error){
+
+      console.error('Error cargando propiedades:', error);
+
+      return;
+
+  }
+
+  allProps = data.map(p => ({
+
+      id: p.id,
+
+      nombre: p.nombre,
+
+      tipo: p.tipo,
+
+      gestion: p.gestion,
+
+      zona: p.zona,
+
+      precio: p.precio,
+
+      hab: p.habitaciones,
+
+      ban: p.banos,
+
+      area: p.area,
+
+      park: p.parqueaderos,
+
+      estrato: p.estrato,
+
+      desc: p.descripcion,
+
+      asesor: p.asesor,
+
+      nuevo: true
+
+  }));
+
+  renderProps();
+
+}
+
 let myProps = [...allProps]; // panel props
 let currentFilter = 'todos';
 let currentTab = 'arriendo';
@@ -887,7 +941,7 @@ async function publishProp() {
       created_at: new Date().toISOString()
   
     };
-    
+
     const { data, error } = await supabaseClient
     .from('propiedades')
     .insert([newProp]);
@@ -966,3 +1020,5 @@ loadDraft();
 setInterval(saveDraft,3000);
 
 loadPropsFromDB();
+
+loadProperties();
