@@ -24,6 +24,7 @@ let currentFilter = 'todos';
 let currentTab = 'arriendo';
 let visibleCount = 6;
 let filteredProps = [];
+let uploadedImgs = [];
 window.addEventListener('DOMContentLoaded', () => {
 
     const activeTab = document.querySelector('.search-tab.active');
@@ -666,21 +667,195 @@ function doLogout() {
     document.getElementById('panel-login').style.display = 'block';
     document.getElementById('panel-content').classList.remove('visible');
 }
-function previewImgs(e) {
-    const preview = document.getElementById('img-preview');
-    preview.innerHTML = '';
-    Array.from(e.target.files).slice(0, 10).forEach(f => {
-        const reader = new FileReader();
-        reader.onload = ev => {
-            const img = document.createElement('img');
-            img.src = ev.target.result;
-            img.className = 'img-thumb';
-            preview.appendChild(img);
-        };
-        reader.readAsDataURL(f);
-    });
+
+async function optimizeImage(file){
+
+  return new Promise((resolve)=>{
+
+      const img = new Image();
+
+      img.onload = ()=>{
+
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+
+          const MAX_WIDTH = 1600;
+          const MAX_HEIGHT = 1600;
+
+          let width = img.width;
+          let height = img.height;
+
+          // Resize proporcional
+          if(width > height){
+
+              if(width > MAX_WIDTH){
+                  height *= MAX_WIDTH / width;
+                  width = MAX_WIDTH;
+              }
+
+          } else {
+
+              if(height > MAX_HEIGHT){
+                  width *= MAX_HEIGHT / height;
+                  height = MAX_HEIGHT;
+              }
+
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          ctx.drawImage(img,0,0,width,height);
+
+          // Convertir a WebP comprimido
+          canvas.toBlob(
+
+              (blob)=>{
+
+                  const optimizedFile = new File(
+
+                      [blob],
+
+                      file.name.replace(/\.[^/.]+$/, "") + '.webp',
+
+                      {
+                          type:'image/webp'
+                      }
+
+                  );
+
+                  resolve(optimizedFile);
+
+              },
+
+              'image/webp',
+
+              0.78
+
+          );
+
+      };
+
+      img.src = URL.createObjectURL(file);
+
+  });
+
 }
-function publishProp() {
+
+async function previewImgs(e){
+
+  const preview = document.getElementById('img-preview');
+
+  preview.innerHTML = '';
+
+  uploadedImgs = [];
+
+  const files = Array.from(e.target.files).slice(0,10);
+
+  for(const file of files){
+
+      // Optimizar automáticamente
+      const optimized = await optimizeImage(file);
+
+      uploadedImgs.push(optimized);
+
+      const img = document.createElement('img');
+
+      img.src = URL.createObjectURL(optimized);
+
+      img.className = 'img-thumb';
+
+      preview.appendChild(img);
+
+  }
+
+}
+
+function saveDraft(){
+
+  const draft = {
+
+      gestion: document.getElementById('p-gestion')?.value || '',
+      tipo: document.getElementById('p-tipo')?.value || '',
+      estado: document.getElementById('p-estado')?.value || '',
+
+      nombre: document.getElementById('p-nombre')?.value || '',
+      zona: document.getElementById('p-zona')?.value || '',
+      direccion: document.getElementById('p-dir')?.value || '',
+
+      precio: document.getElementById('p-precio')?.value || '',
+      hab: document.getElementById('p-hab')?.value || '',
+      ban: document.getElementById('p-ban')?.value || '',
+
+      area: document.getElementById('p-area')?.value || '',
+      park: document.getElementById('p-park')?.value || '',
+      estrato: document.getElementById('p-estrato')?.value || '',
+
+      descripcion: document.getElementById('p-desc')?.value || '',
+      asesor: document.getElementById('p-asesor')?.value || ''
+
+  };
+
+  localStorage.setItem(
+      'subanca_property_draft',
+      JSON.stringify(draft)
+  );
+
+}
+
+function loadDraft(){
+
+  const saved = localStorage.getItem('subanca_property_draft');
+
+  if(!saved) return;
+
+  const draft = JSON.parse(saved);
+
+  if(document.getElementById('p-gestion'))
+      document.getElementById('p-gestion').value = draft.gestion || '';
+
+  if(document.getElementById('p-tipo'))
+      document.getElementById('p-tipo').value = draft.tipo || '';
+
+  if(document.getElementById('p-estado'))
+      document.getElementById('p-estado').value = draft.estado || '';
+
+  if(document.getElementById('p-nombre'))
+      document.getElementById('p-nombre').value = draft.nombre || '';
+
+  if(document.getElementById('p-zona'))
+      document.getElementById('p-zona').value = draft.zona || '';
+
+  if(document.getElementById('p-dir'))
+      document.getElementById('p-dir').value = draft.direccion || '';
+
+  if(document.getElementById('p-precio'))
+      document.getElementById('p-precio').value = draft.precio || '';
+
+  if(document.getElementById('p-hab'))
+      document.getElementById('p-hab').value = draft.hab || '';
+
+  if(document.getElementById('p-ban'))
+      document.getElementById('p-ban').value = draft.ban || '';
+
+  if(document.getElementById('p-area'))
+      document.getElementById('p-area').value = draft.area || '';
+
+  if(document.getElementById('p-park'))
+      document.getElementById('p-park').value = draft.park || '';
+
+  if(document.getElementById('p-estrato'))
+      document.getElementById('p-estrato').value = draft.estrato || '';
+
+  if(document.getElementById('p-desc'))
+      document.getElementById('p-desc').value = draft.descripcion || '';
+
+  if(document.getElementById('p-asesor'))
+      document.getElementById('p-asesor').value = draft.asesor || '';
+
+}
+
+async function publishProp() {
     const nombre = document.getElementById('p-nombre').value.trim();
     if (!nombre) { alert('Ingrese el nombre o referencia del inmueble.'); return; }
     const newProp = {
@@ -699,12 +874,23 @@ function publishProp() {
         desc: document.getElementById('p-desc').value,
         asesor: document.getElementById('p-asesor').value,
     };
-    myProps.unshift(newProp);
-    const msg = document.getElementById('publish-success');
-    msg.style.display = 'block';
-    msg.textContent = `✅ Inmueble "${newProp.nombre}" publicado exitosamente.`;
-    setTimeout(() => { msg.style.display = 'none'; }, 4000);
-    renderMyProps();
+    const { data, error } = await supabaseClient
+    .from('properties')
+    .insert([newProp]);
+
+console.log(error);
+
+if(error){
+
+    alert('Error guardando inmueble');
+
+    return;
+
+}
+
+myProps.unshift(newProp);
+
+renderMyProps();
     document.getElementById('p-nombre').value = '';
     document.getElementById('p-precio').value = '';
     document.getElementById('p-desc').value = '';
@@ -731,6 +917,7 @@ function deleteProp(id) {
     renderProps();
     renderMyProps();
 }
+
 
 // ===== MOBILE MENU =====
 function toggleMobileMenu() {
@@ -759,5 +946,9 @@ window.addEventListener('scroll', () => {
     const nav = document.querySelector('nav');
     nav.style.boxShadow = window.scrollY > 40 ? '0 4px 24px rgba(0,0,0,0.25)' : 'none';
 });
+
+loadDraft();
+
+setInterval(saveDraft,3000);
 
 loadPropsFromDB();
