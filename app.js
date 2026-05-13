@@ -875,7 +875,7 @@ async function publishProp() {
         asesor: document.getElementById('p-asesor').value,
     };
     const { data, error } = await supabaseClient
-    .from('properties')
+    .from('propiedades')
     .insert([newProp]);
 
 console.log(error);
