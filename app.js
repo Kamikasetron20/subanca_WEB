@@ -796,6 +796,42 @@ async function optimizeImage(file){
 
 }
 
+async function uploadImages(propertyId){
+
+  const uploadedUrls = [];
+
+  for(const file of uploadedImgs){
+
+      const fileName = `${Date.now()}-${file.name}`;
+
+      const filePath = `propiedades/${propertyId}/${fileName}`;
+
+      const { error } = await supabaseClient
+          .storage
+          .from('subanca-assets')
+          .upload(filePath, file);
+
+      if(error){
+
+          console.error(error);
+
+          continue;
+
+      }
+
+      const { data } = supabaseClient
+          .storage
+          .from('subanca-assets')
+          .getPublicUrl(filePath);
+
+      uploadedUrls.push(data.publicUrl);
+
+  }
+
+  return uploadedUrls;
+
+}
+
 async function previewImgs(e){
 
   const preview = document.getElementById('img-preview');
@@ -912,7 +948,14 @@ function loadDraft(){
 async function publishProp() {
     const nombre = document.getElementById('p-nombre').value.trim();
     if (!nombre) { alert('Ingrese el nombre o referencia del inmueble.'); return; }
+
+    const propertyId = crypto.randomUUID();
+    const imageUrls = await uploadImages(propertyId);
     const newProp = {
+
+      id: propertyId,
+
+      imagenes: imageUrls,
 
       nombre: nombre,
   
