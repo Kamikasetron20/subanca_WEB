@@ -2,6 +2,7 @@ const supabaseClient = supabase.createClient(
     'https://piuztzpjgwouaplbxbqc.supabase.co', // SIN /rest/v1/
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpdXp0enBqZ3dvdWFwbGJ4YnFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5ODY1ODAsImV4cCI6MjA5MzU2MjU4MH0.3QVRdgikykyrql8nv0yx7ZdrskmZWdVi6XRWQJDgstk' // la que empieza por sb_publishable_ o tu anon
 );
+let uploadedImgs = [];
 
 // ===== DATA =====
 let allProps = [
@@ -78,7 +79,6 @@ let currentFilter = 'todos';
 let currentTab = 'arriendo';
 let visibleCount = 6;
 let filteredProps = [];
-let uploadedImgs = [];
 window.addEventListener('DOMContentLoaded', () => {
 
     const activeTab = document.querySelector('.search-tab.active');
@@ -800,7 +800,11 @@ async function uploadImages(propertyId){
 
   const uploadedUrls = [];
 
+  console.log(uploadedImgs);
+
   for(const file of uploadedImgs){
+
+      console.log(file);
 
       const fileName = `${Date.now()}-${file.name}`;
 
@@ -825,6 +829,9 @@ async function uploadImages(propertyId){
           .getPublicUrl(filePath);
 
       uploadedUrls.push(data.publicUrl);
+
+      console.log(data);
+      console.log(error);
 
   }
 
