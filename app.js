@@ -859,21 +859,35 @@ async function publishProp() {
     const nombre = document.getElementById('p-nombre').value.trim();
     if (!nombre) { alert('Ingrese el nombre o referencia del inmueble.'); return; }
     const newProp = {
-        id: Date.now(),
-        tipo: document.getElementById('p-tipo').value,
-        gestion: document.getElementById('p-gestion').value,
-        zona: document.getElementById('p-zona').value,
-        nombre: nombre,
-        precio: parseInt(document.getElementById('p-precio').value) || 0,
-        hab: parseInt(document.getElementById('p-hab').value) || 0,
-        ban: parseInt(document.getElementById('p-ban').value) || 0,
-        area: parseInt(document.getElementById('p-area').value) || 0,
-        park: parseInt(document.getElementById('p-park').value) || 0,
-        estrato: parseInt(document.getElementById('p-estrato').value) || 0,
-        nuevo: true,
-        desc: document.getElementById('p-desc').value,
-        asesor: document.getElementById('p-asesor').value,
+
+      nombre: nombre,
+  
+      tipo: document.getElementById('p-tipo').value,
+  
+      gestion: document.getElementById('p-gestion').value,
+  
+      zona: document.getElementById('p-zona').value,
+  
+      precio: parseInt(document.getElementById('p-precio').value) || 0,
+  
+      habitaciones: parseInt(document.getElementById('p-hab').value) || 0,
+  
+      banos: parseInt(document.getElementById('p-ban').value) || 0,
+  
+      area: parseInt(document.getElementById('p-area').value) || 0,
+  
+      parqueaderos: parseInt(document.getElementById('p-park').value) || 0,
+  
+      estrato: parseInt(document.getElementById('p-estrato').value) || 0,
+  
+      descripcion: document.getElementById('p-desc').value,
+  
+      asesor: document.getElementById('p-asesor').value,
+  
+      created_at: new Date().toISOString()
+  
     };
+    
     const { data, error } = await supabaseClient
     .from('propiedades')
     .insert([newProp]);
