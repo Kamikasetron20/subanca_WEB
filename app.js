@@ -81,7 +81,7 @@ if(container){
 
 }
 
-  renderProps();
+  renderProps(allProps);
 
 }
 
@@ -299,10 +299,9 @@ function getFilteredProps() {
         ) return false;
         return true;
     });
-}
 
-function renderProps() {
-    filteredProps = getFilteredProps();
+function renderProps(props = allProps){    
+    const filteredProps = getFilteredProps(props = allProps);
     const grid = document.getElementById('props-grid');
     const btn = document.getElementById('load-more-btn');
     const counter = document.getElementById('props-count');
@@ -311,6 +310,7 @@ function renderProps() {
     grid.innerHTML = shown.map(p => propCard(p)).join('');
     btn.style.display = filteredProps.length > visibleCount ? 'block' : 'none';
 }
+
 function loadMore() { visibleCount += 6; renderProps(); }
 
 function fmtPrice(p, g) {
@@ -1142,7 +1142,7 @@ async function deleteProp(id){
   }
 
   // Actualizar frontend
-  allProps = allProps.filter(p => p.id !== id);
+  allProps = props.filter(p => p.id !== id);
 
   myProps = myProps.filter(p => p.id !== id);
 
@@ -1239,4 +1239,4 @@ setInterval(saveDraft,3000);
 
 loadPropsFromDB();
 
-loadProperties();
+loadProperties();}
