@@ -1050,13 +1050,29 @@ async function deleteProp(id){
   // Eliminar imágenes Storage
   if(prop.imagenes && prop.imagenes.length){
 
-      const paths = prop.imagenes.map(url => {
+    const paths = prop.imagenes.map(url => {
 
-          const split = url.split('/storage/v1/object/public/subanca-assets/');
-
-          return split[1];
-
-      });
+      console.log(url);
+  
+      const marker = '/storage/v1/object/public/subanca-assets/';
+  
+      const index = url.indexOf(marker);
+  
+      if(index === -1){
+  
+          console.error('Path inválido:', url);
+  
+          return null;
+  
+      }
+  
+      const path = url.substring(index + marker.length);
+  
+      console.log(path);
+  
+      return path;
+  
+  }).filter(Boolean);
 
       const { error:storageError } = await supabaseClient
           .storage
