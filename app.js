@@ -339,9 +339,11 @@ const colors = ['#C9D6E3', '#B8CCDC', '#9FBBCB', '#C3D4BE', '#D4C3BE', '#C3C3D4'
 function propCard(p) {
 
   const image =
-    p.imagen ||
-    (p.imagenes && p.imagenes[0]) ||
-    'https://via.placeholder.com/600x400?text=Sin+Imagen';
+    p.imagen && p.imagen.trim() !== ''
+      ? p.imagen
+      : Array.isArray(p.imagenes) && p.imagenes.length > 0
+        ? p.imagenes[0]
+        : 'https://via.placeholder.com/600x400?text=Sin+Imagen';
 
   return `
 
