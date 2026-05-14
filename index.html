@@ -1,41 +1,35 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Su Banca Inmobiliaria | Arriendos y ventas en Medellín</title>
-<meta name="description" content="Encuentra apartamentos, casas, locales y propiedades en arriendo, venta y amoblados en Medellín y el Valle de Aburrá con Su Banca Inmobiliaria.">
-<meta
-  property="og:image"
-  content="https://piuztzpjgwouaplbxbqc.supabase.co/storage/v1/object/public/subanca-assets/branding/og-banner.webp"
->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Su Banca Inmobiliaria | Arriendos y ventas en Medellín</title>
+  <meta name="description"
+    content="Encuentra apartamentos, casas, locales y propiedades en arriendo, venta y amoblados en Medellín y el Valle de Aburrá con Su Banca Inmobiliaria.">
+  <meta property="og:image"
+    content="https://piuztzpjgwouaplbxbqc.supabase.co/storage/v1/object/public/subanca-assets/branding/og-banner.webp">
 
-<meta
-  property="og:description"
-  content="
+  <meta property="og:description" content="
     Propiedades en arriendo, venta y amoblados en Medellín y el Valle de Aburrá.
-  "
->
+  ">
 
-<meta
-  property="og:type"
-  content="website"
->
+  <meta property="og:type" content="website">
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    
-    <img
-  src="https://piuztzpjgwouaplbxbqc.supabase.co/storage/v1/object/public/subanca-assets/branding/logo.webp"
-  alt="Su Banca Inmobiliaria"
-  
-  style="
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+
+      <img src="https://piuztzpjgwouaplbxbqc.supabase.co/storage/v1/object/public/subanca-assets/branding/logo.webp"
+        alt="Su Banca Inmobiliaria" style="
     height:58px;
     width:auto;
 
@@ -44,557 +38,609 @@
     border-radius:12px;
 
     opacity:0.95;
-  "
->
+  ">
 
-    <div class="nav-logo-text">
-      Su Banca Inmobiliaria
-      <span>Su mejor inversión</span>
-    </div>
-
-  </a>
-
-  <ul class="nav-links">
-    <li><a href="#propiedades">Propiedades</a></li>
-    <li><a href="#servicios">Servicios</a></li>
-    <li><a href="#asesores">Asesores</a></li>
-    <li><a href="#contacto">Contacto</a></li>
-  </ul>
-
-  <a href="#contacto" class="nav-cta">Consignar inmueble</a>
-
-  <button class="nav-menu-btn" onclick="toggleMobileMenu()">☰</button>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-badge">📍 Medellín y Área Metropolitana</div>
-    <h1>Encuentra tu propiedad <span class="hero-gold">ideal</span> en Medellín</h1>
-    <p>Arriendos, ventas y administración inmobiliaria con el respaldo de expertos certificados. Más de 10 años conectando familias con su propiedad ideal.</p>
-    <div class="hero-stats">
-      <div class="hero-stat"><strong id="stat-props">500+</strong><span>Propiedades</span></div>
-      <div class="hero-stat"><strong>10+</strong><span>Años de experiencia</span></div>
-      <div class="hero-stat"><strong>Corpolonjas</strong><span>Miembro certificado</span></div>
-    </div>
-
-  <!-- BUSCADOR -->
-    <div class="search-box">
-      <div class="search-tabs">
-        <button class="search-tab active" onclick="setTab(this,'arriendo')">Arriendo</button>
-        <button class="search-tab" onclick="setTab(this,'venta')">Venta</button>
-        <button class="search-tab" onclick="setTab(this,'amoblado')">Amoblado</button>
+      <div class="nav-logo-text">
+        Su Banca Inmobiliaria
+        <span>Su mejor inversión</span>
       </div>
-      <div class="search-fields">
-        <div class="search-field">
-          <label>Tipo de inmueble</label>
-          <select id="s-tipo">
-            <option value="">Todos los tipos</option>
-            <option value="Apartamento">Apartamento</option>
-            <option value="Casa">Casa</option>
-            <option value="Local">Local comercial</option>
-            <option value="Bodega">Bodega</option>
-            <option value="Oficina">Oficina</option>
-            <option value="Lote">Lote / Terreno</option>
-          </select>
+
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#propiedades">Propiedades</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#asesores">Asesores</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+
+    <a href="#contacto" class="nav-cta">Consignar inmueble</a>
+
+    <button class="nav-menu-btn" onclick="toggleMobileMenu()">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">📍 Medellín y Área Metropolitana</div>
+      <h1>Encuentra tu propiedad <span class="hero-gold">ideal</span> en Medellín</h1>
+      <p>Arriendos, ventas y administración inmobiliaria con el respaldo de expertos certificados. Más de 10 años
+        conectando familias con su propiedad ideal.</p>
+      <div class="hero-stats">
+        <div class="hero-stat"><strong id="stat-props">500+</strong><span>Propiedades</span></div>
+        <div class="hero-stat"><strong>10+</strong><span>Años de experiencia</span></div>
+        <div class="hero-stat"><strong>Corpolonjas</strong><span>Miembro certificado</span></div>
+      </div>
+
+      <!-- BUSCADOR -->
+      <div class="search-box">
+        <div class="search-tabs">
+          <button class="search-tab active" onclick="setTab(this,'arriendo')">Arriendo</button>
+          <button class="search-tab" onclick="setTab(this,'venta')">Venta</button>
+          <button class="search-tab" onclick="setTab(this,'amoblado')">Amoblado</button>
         </div>
-        <div class="search-field">
-          <label>Sector / Barrio</label>
-          <select id="s-zona">
-            <option value="">Toda Medellín</option>
-            <option value="El Poblado">El Poblado</option>
-            <option value="Laureles">Laureles</option>
-            <option value="Envigado">Envigado</option>
-            <option value="Bello">Bello</option>
-            <option value="Sabaneta">Sabaneta</option>
-            <option value="Itagüí">Itagüí</option>
-            <option value="Robledo">Robledo</option>
-            <option value="Castilla">Castilla</option>
-          </select>
+        <div class="search-fields">
+          <div class="search-field">
+            <label>Tipo de inmueble</label>
+            <select id="s-tipo">
+              <option value="">Todos los tipos</option>
+              <option value="Apartamento">Apartamento</option>
+              <option value="Casa">Casa</option>
+              <option value="Local">Local comercial</option>
+              <option value="Bodega">Bodega</option>
+              <option value="Oficina">Oficina</option>
+              <option value="Lote">Lote / Terreno</option>
+            </select>
+          </div>
+          <div class="search-field">
+            <label>Sector / Barrio</label>
+            <select id="s-zona">
+              <option value="">Toda Medellín</option>
+              <option value="El Poblado">El Poblado</option>
+              <option value="Laureles">Laureles</option>
+              <option value="Envigado">Envigado</option>
+              <option value="Bello">Bello</option>
+              <option value="Sabaneta">Sabaneta</option>
+              <option value="Itagüí">Itagüí</option>
+              <option value="Robledo">Robledo</option>
+              <option value="Castilla">Castilla</option>
+            </select>
+          </div>
+          <div class="search-field">
+            <label>Precio máximo</label>
+            <select id="s-precio">
+              <option value="">Cualquier precio</option>
+            </select>
+          </div>
+          <button class="search-btn" onclick="scrollToProps()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35" />
+            </svg>
+            Buscar
+          </button>
         </div>
-        <div class="search-field">
-          <label>Precio máximo</label>
-          <select id="s-precio">
-            <option value="">Cualquier precio</option>
-          </select>
-        </div>
-        <button class="search-btn" onclick="scrollToProps()">
-          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
-          Buscar
-        </button>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- TRUST BAR -->
-<section class="trust-section">
+  <!-- TRUST BAR -->
+  <section class="trust-section">
 
-  <div class="trust-grid">
+    <div class="trust-grid">
 
-    <!-- ITEM -->
-    <div class="trust-card">
+      <!-- ITEM -->
+      <div class="trust-card">
 
-      <span class="trust-icon">🏛️</span>
+        <span class="trust-icon">🏛️</span>
 
+        <div>
+          <div class="trust-title">
+            Cámara de Comercio
+          </div>
+
+          <div class="trust-text">
+            Mat. 21-591127-12 · Renovada 2024
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM -->
+      <div class="trust-card">
+        <span class="trust-icon">📜</span>
+
+        <div>
+          <div class="trust-title">
+            Matrícula Arrendador
+          </div>
+
+          <div class="trust-text">
+            M.A.V.U. N°0041/17 · Alcaldía de Medellín
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM -->
+      <div class="trust-card">
+        <span class="trust-icon">🏅</span>
+
+        <div>
+          <div class="trust-title">
+            Corpolonjas de Colombia
+          </div>
+
+          <div class="trust-text">
+            Miembro activo desde 2017 · R.N.C.I/C.C-03-086
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM -->
+      <div class="trust-card">
+        <span class="trust-icon">🤝</span>
+
+        <div>
+          <div class="trust-title">
+            Fenalco Antioquia
+          </div>
+
+          <div class="trust-text">
+            Empresa afiliada activa desde 2025
+          </div>
+        </div>
+      </div>
+
+      <!-- ITEM -->
+      <div class="trust-card">
+        <span class="trust-icon">⚖️</span>
+
+        <div>
+          <div class="trust-title">
+            Ley 820 de 2003
+          </div>
+
+          <div class="trust-text">
+            Contratos revisados y avalados
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROPIEDADES -->
+  <section id="propiedades">
+    <div class="props-header">
       <div>
-        <div class="trust-title">
-          Cámara de Comercio
-        </div>
-
-        <div class="trust-text">
-          Mat. 21-591127-12 · Renovada 2024
-        </div>
+        <div class="section-label">Portafolio</div>
+        <h2 class="section-title">Propiedades disponibles</h2>
       </div>
-    </div>
-
-    <!-- ITEM -->
-    <div class="trust-card">
-      <span class="trust-icon">📜</span>
-
       <div>
-        <div class="trust-title">
-          Matrícula Arrendador
-        </div>
-
-        <div class="trust-text">
-        M.A.V.U. N°0041/17 · Alcaldía de Medellín
-        </div>
+        <span id="props-count" style="font-size:14px;color:var(--text-muted)"></span>
       </div>
     </div>
+    <div class="props-filters" id="props-filters">
+      <button class="filter-btn active" onclick="setFilter(this,'todos')">Todos</button>
+      <button class="filter-btn" onclick="setFilter(this,'Arriendo')">Arriendo</button>
+      <button class="filter-btn" onclick="setFilter(this,'Venta')">Venta</button>
+      <button class="filter-btn" onclick="setFilter(this,'Amoblado')">Amoblado</button>
+      <button class="filter-btn" onclick="setFilter(this,'Apartamento')">Apartamentos</button>
+      <button class="filter-btn" onclick="setFilter(this,'Casa')">Casas</button>
+      <button class="filter-btn" onclick="setFilter(this,'Local')">Locales</button>
+      <button class="filter-btn" onclick="setFilter(this,'Bodega')">Bodegas</button>
+    </div>
+    <div class="props-grid" id="props-grid"></div>
+    <button class="view-more-btn" id="load-more-btn" onclick="loadMore()">Ver más propiedades</button>
+  </section>
 
-    <!-- ITEM -->
-    <div class="trust-card">
-      <span class="trust-icon">🏅</span>
-
-      <div>
-        <div class="trust-title">
-          Corpolonjas de Colombia
-        </div>
-
-        <div class="trust-text">
-          Miembro activo desde 2017 · R.N.C.I/C.C-03-086
-        </div>
+  <!-- SERVICIOS -->
+  <section id="servicios">
+    <div class="section-label">Lo que hacemos</div>
+    <h2 class="section-title" style="color:var(--white)">Servicios inmobiliarios integrales</h2>
+    <p class="section-subtitle">Acompañamos cada etapa de su proceso inmobiliario con profesionalismo y transparencia.
+    </p>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🏠</div>
+        <h3>Administración de arriendos</h3>
+        <p>Gestionamos su propiedad de A a Z: contratos, cobros, inquilinos y mantenimientos. Pago los primeros 5 días
+          hábiles del mes.</p>
       </div>
-    </div>
-
-    <!-- ITEM -->
-    <div class="trust-card">
-      <span class="trust-icon">🤝</span>
-
-      <div>
-        <div class="trust-title">
-          Fenalco Antioquia
-        </div>
-
-        <div class="trust-text">
-          Empresa afiliada activa desde 2025
-        </div>
+      <div class="service-card">
+        <div class="service-icon">🤝</div>
+        <h3>Compra y venta</h3>
+        <p>Asesoría profesional para comprar o vender al mejor precio del mercado, con acompañamiento en todo el proceso
+          notarial.</p>
       </div>
-    </div>
-
-    <!-- ITEM -->
-    <div class="trust-card">
-      <span class="trust-icon">⚖️</span>
-
-      <div>
-        <div class="trust-title">
-          Ley 820 de 2003
-        </div>
-
-        <div class="trust-text">
-          Contratos revisados y avalados
-        </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Avalúos y valoración</h3>
+        <p>Determinamos el valor real de su inmueble con metodología certificada por Corpolonjas de Colombia.</p>
       </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- PROPIEDADES -->
-<section id="propiedades">
-  <div class="props-header">
-    <div>
-      <div class="section-label">Portafolio</div>
-      <h2 class="section-title">Propiedades disponibles</h2>
-    </div>
-    <div>
-      <span id="props-count" style="font-size:14px;color:var(--text-muted)"></span>
-    </div>
-  </div>
-  <div class="props-filters" id="props-filters">
-    <button class="filter-btn active" onclick="setFilter(this,'todos')">Todos</button>
-    <button class="filter-btn" onclick="setFilter(this,'Arriendo')">Arriendo</button>
-    <button class="filter-btn" onclick="setFilter(this,'Venta')">Venta</button>
-    <button class="filter-btn" onclick="setFilter(this,'Amoblado')">Amoblado</button>
-    <button class="filter-btn" onclick="setFilter(this,'Apartamento')">Apartamentos</button>
-    <button class="filter-btn" onclick="setFilter(this,'Casa')">Casas</button>
-    <button class="filter-btn" onclick="setFilter(this,'Local')">Locales</button>
-    <button class="filter-btn" onclick="setFilter(this,'Bodega')">Bodegas</button>
-  </div>
-  <div class="props-grid" id="props-grid"></div>
-  <button class="view-more-btn" id="load-more-btn" onclick="loadMore()">Ver más propiedades</button>
-</section>
-
-<!-- SERVICIOS -->
-<section id="servicios">
-  <div class="section-label">Lo que hacemos</div>
-  <h2 class="section-title" style="color:var(--white)">Servicios inmobiliarios integrales</h2>
-  <p class="section-subtitle">Acompañamos cada etapa de su proceso inmobiliario con profesionalismo y transparencia.</p>
-  <div class="services-grid">
-    <div class="service-card">
-      <div class="service-icon">🏠</div>
-      <h3>Administración de arriendos</h3>
-      <p>Gestionamos su propiedad de A a Z: contratos, cobros, inquilinos y mantenimientos. Pago los primeros 5 días hábiles del mes.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🤝</div>
-      <h3>Compra y venta</h3>
-      <p>Asesoría profesional para comprar o vender al mejor precio del mercado, con acompañamiento en todo el proceso notarial.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📊</div>
-      <h3>Avalúos y valoración</h3>
-      <p>Determinamos el valor real de su inmueble con metodología certificada por Corpolonjas de Colombia.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📋</div>
-      <h3>Estudio de inquilinos</h3>
-      <p>Análisis de referencias crediticias, laborales y personales para minimizar riesgos y proteger su patrimonio.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🏢</div>
-      <h3>Propiedad horizontal</h3>
-      <p>Administración de conjuntos residenciales y comerciales. Gestión de asambleas, cuotas y mantenimiento.</p>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📝</div>
-      <h3>Contratos y asesoría legal</h3>
-      <p>Elaboración y revisión de contratos bajo la Ley 820 de 2003. Matrícula arrendador M.A.V.U. N°0041/17.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ASESORES -->
-<section id="asesores">
-  <div class="section-label">Nuestro equipo</div>
-  <h2 class="section-title">Asesores especializados</h2>
-  <p class="section-subtitle">Conozca a nuestros profesionales, siempre listos para acompañarle.</p>
-  <div class="asesores-grid" id="asesores-grid"></div>
-</section>
-
-<!-- CONTACTO -->
-<section id="contacto">
-  <div class="section-label">Contáctenos</div>
-  <h2 class="section-title">Estamos para ayudarle</h2>
-  <p class="section-subtitle">Déjenos sus datos y un asesor le contactará en menos de 2 horas hábiles.</p>
-  <div class="contact-grid">
-    <div class="contact-info">
-      <h3>Información de contacto</h3>
-      <div class="contact-item">
-        <div class="contact-item-icon">📍</div>
-        <div class="contact-item-text">
-          <strong>Dirección</strong>
-          <span>Cra 81 N° 32-204 Of. 509, CC Nueva Villa de Aburrá, Medellín</span>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-item-icon">📞</div>
-        <div class="contact-item-text">
-          <strong>Teléfonos</strong>
-          <a href="tel:+576043222388">(604) 322 23 88</a><br>
-          <a href="tel:+573103612810">310 361 2810 · 312 644 0460</a>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-item-icon">💬</div>
-        <div class="contact-item-text">
-          <strong>WhatsApp</strong>
-          <a href="https://wa.me/573132211683" target="_blank">313 221 1683</a>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-item-icon">✉️</div>
-        <div class="contact-item-text">
-          <strong>Email</strong>
-          <a href="mailto:subancainmobiliaria@gmail.com">subancainmobiliaria@gmail.com</a>
-        </div>
-      </div>
-      <div class="contact-item">
-        <div class="contact-item-icon">🕐</div>
-        <div class="contact-item-text">
-          <strong>Horario de atención</strong>
-          <span>Lun – Vie: 8:00am – 6:00pm · Sáb: 9:00am – 1:00pm</span>
-        </div>
-      </div>
-      <!-- Credenciales legales -->
-      <div style="margin-top:28px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:8px;padding:16px 18px;">
-        <p style="font-size:11px;font-weight:600;color:var(--gold-dark);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">Respaldo legal</p>
-        <p style="font-size:12px;color:var(--text-muted);line-height:1.7;margin:0">
-          NIT: 901.086.954-9 · Matrícula arrendador M.A.V.U. N°0041/17<br>
-          Miembro Corpolonjas de Colombia desde 2017 · Matrícula R.N.C.I/C.C-03-086
+      <div class="service-card">
+        <div class="service-icon">📋</div>
+        <h3>Estudio de inquilinos</h3>
+        <p>Análisis de referencias crediticias, laborales y personales para minimizar riesgos y proteger su patrimonio.
         </p>
       </div>
+      <div class="service-card">
+        <div class="service-icon">🏢</div>
+        <h3>Propiedad horizontal</h3>
+        <p>Administración de conjuntos residenciales y comerciales. Gestión de asambleas, cuotas y mantenimiento.</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📝</div>
+        <h3>Contratos y asesoría legal</h3>
+        <p>Elaboración y revisión de contratos bajo la Ley 820 de 2003. Matrícula arrendador M.A.V.U. N°0041/17.</p>
+      </div>
     </div>
-    <div class="contact-form">
-      <form onsubmit="submitContact(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" placeholder="Su nombre completo" required>
+  </section>
+
+  <!-- ASESORES -->
+  <section id="asesores">
+    <div class="section-label">Nuestro equipo</div>
+    <h2 class="section-title">Asesores especializados</h2>
+    <p class="section-subtitle">Conozca a nuestros profesionales, siempre listos para acompañarle.</p>
+    <div class="asesores-grid" id="asesores-grid"></div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto">
+    <div class="section-label">Contáctenos</div>
+    <h2 class="section-title">Estamos para ayudarle</h2>
+    <p class="section-subtitle">Déjenos sus datos y un asesor le contactará en menos de 2 horas hábiles.</p>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Información de contacto</h3>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div class="contact-item-text">
+            <strong>Dirección</strong>
+            <span>Cra 81 N° 32-204 Of. 509, CC Nueva Villa de Aburrá, Medellín</span>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📞</div>
+          <div class="contact-item-text">
+            <strong>Teléfonos</strong>
+            <a href="tel:+576043222388">(604) 322 23 88</a><br>
+            <a href="tel:+573103612810">310 361 2810 · 312 644 0460</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">💬</div>
+          <div class="contact-item-text">
+            <strong>WhatsApp</strong>
+            <a href="https://wa.me/573132211683" target="_blank">313 221 1683</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">✉️</div>
+          <div class="contact-item-text">
+            <strong>Email</strong>
+            <a href="mailto:subancainmobiliaria@gmail.com">subancainmobiliaria@gmail.com</a>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">🕐</div>
+          <div class="contact-item-text">
+            <strong>Horario de atención</strong>
+            <span>Lun – Vie: 8:00am – 6:00pm · Sáb: 9:00am – 1:00pm</span>
+          </div>
+        </div>
+        <!-- Credenciales legales -->
+        <div
+          style="margin-top:28px;background:rgba(201,168,76,0.08);border:1px solid rgba(201,168,76,0.25);border-radius:8px;padding:16px 18px;">
+          <p
+            style="font-size:11px;font-weight:600;color:var(--gold-dark);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:10px">
+            Respaldo legal</p>
+          <p style="font-size:12px;color:var(--text-muted);line-height:1.7;margin:0">
+            NIT: 901.086.954-9 · Matrícula arrendador M.A.V.U. N°0041/17<br>
+            Miembro Corpolonjas de Colombia desde 2017 · Matrícula R.N.C.I/C.C-03-086
+          </p>
+        </div>
+      </div>
+      <div class="contact-form">
+        <form onsubmit="submitContact(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input type="text" placeholder="Su nombre completo" required>
+            </div>
+            <div class="form-group">
+              <label>Teléfono</label>
+              <input type="tel" placeholder="300 000 0000" required>
+            </div>
           </div>
           <div class="form-group">
-            <label>Teléfono</label>
-            <input type="tel" placeholder="300 000 0000" required>
+            <label>Email</label>
+            <input type="email" placeholder="correo@ejemplo.com">
+          </div>
+          <div class="form-group">
+            <label>¿En qué le podemos ayudar?</label>
+            <select>
+              <option>Quiero arrendar una propiedad</option>
+              <option>Quiero comprar una propiedad</option>
+              <option>Quiero consignar mi inmueble</option>
+              <option>Necesito un avalúo</option>
+              <option>Otro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Mensaje (opcional)</label>
+            <textarea placeholder="Cuéntenos más sobre lo que busca..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Enviar mensaje</button>
+          <div class="success-msg" id="contact-success">✅ ¡Mensaje enviado! Un asesor le contactará pronto.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- PANEL ASESORES -->
+  <section id="panel">
+    <div class="panel-box">
+      <!-- Header estilo contrato -->
+      <div class="panel-header">
+        <div class="panel-header-logo">
+          <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
+            <rect width="44" height="44" rx="5" fill="rgba(255,255,255,0.1)" />
+            <text x="22" y="29" text-anchor="middle" font-family="serif" font-weight="700" font-size="18"
+              fill="#C9A84C">SB</text>
+          </svg>
+          <div>
+            <div style="color:white;font-family:'Playfair Display',serif;font-size:15px;font-weight:600">Su Banca
+              Inmobiliaria S.A.S.</div>
+            <div style="color:var(--gold);font-size:11px;letter-spacing:1.5px;text-transform:uppercase">Portal de
+              Asesores</div>
           </div>
         </div>
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" placeholder="correo@ejemplo.com">
+        <h2>Gestión de Inmuebles</h2>
+        <p class="subtitle">NIT: 901.086.954-9 · Cra 81 N°32-204 Of.509 · subancainmobiliaria@gmail.com</p>
+      </div>
+      <div class="panel-body">
+
+        <!-- LOGIN -->
+        <div id="panel-login" class="panel-login">
+          <p class="panel-helper-text" style="margin-bottom:24px">Ingrese con sus credenciales de asesor</p>
+          <div class="form-group">
+            <label>Usuario</label>
+            <input type="text" id="login-user" placeholder="usuario@subanca.com">
+          </div>
+          <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" id="login-pass" placeholder="••••••••">
+          </div>
+          <button class="submit-btn" onclick="doLogin()">Ingresar al panel</button>
+          <p style="font-size:12px;color:var(--text-muted);margin-top:12px;text-align:center">Demo: usuario
+            <strong>asesor</strong> · contraseña <strong>1234</strong></p>
         </div>
-        <div class="form-group">
-          <label>¿En qué le podemos ayudar?</label>
-          <select>
-            <option>Quiero arrendar una propiedad</option>
-            <option>Quiero comprar una propiedad</option>
-            <option>Quiero consignar mi inmueble</option>
-            <option>Necesito un avalúo</option>
-            <option>Otro</option>
-          </select>
+
+        <!-- FORM NUEVO INMUEBLE -->
+        <div id="panel-content" class="panel-inmueble-form">
+          <div class="panel-flex-between" style="margin-bottom:28px">
+            <h3 class="panel-title">📋 Publicar nuevo inmueble</h3>
+            <button onclick="doLogout()" class="panel-logout-btn">Cerrar sesión</button>
+          </div>
+
+          <div class="fields-3 panel-section-space">
+            <div class="form-group">
+              <label>Tipo de gestión</label>
+              <select id="p-gestion">
+                <option>Arriendo</option>
+                <option>Venta</option>
+                <option>Amoblado</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Tipo de inmueble</label>
+              <select id="p-tipo">
+                <option>Apartamento</option>
+                <option>Casa</option>
+                <option>Local</option>
+                <option>Bodega</option>
+                <option>Oficina</option>
+                <option>Lote</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Estado</label>
+              <select id="p-estado">
+                <option>Disponible</option>
+                <option>Reservado</option>
+                <option>Arrendado</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fields-2 panel-section-space">
+            <div class="form-group">
+              <label>Nombre / Referencia</label>
+              <input type="text" id="p-nombre" placeholder="Ej: Apto moderno El Poblado">
+            </div>
+            <div class="form-group">
+              <label>Sector / Barrio</label>
+              <select id="p-zona">
+                <option>El Poblado</option>
+                <option>Laureles</option>
+                <option>Envigado</option>
+                <option>Bello</option>
+                <option>Sabaneta</option>
+                <option>Itagüí</option>
+                <option>Robledo</option>
+                <option>Castilla</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:16px">
+            <label>Dirección (uso interno)</label>
+            <input type="text" id="p-dir" placeholder="Cl. 10 #43-50, Apto 301">
+          </div>
+
+          <div class="fields-3 panel-section-space">
+            <div class="form-group">
+              <label>Precio ($)</label>
+              <input type="number" id="p-precio" placeholder="1500000">
+            </div>
+            <div class="form-group">
+              <label>Habitaciones</label>
+              <select id="p-hab">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Baños</label>
+              <select id="p-ban">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="fields-3 panel-section-space">
+            <div class="form-group">
+              <label>Área (m²)</label>
+              <input type="number" id="p-area" placeholder="75">
+            </div>
+            <div class="form-group">
+              <label>Parqueaderos</label>
+              <select id="p-park">
+                <option>0</option>
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Estrato</label>
+              <select id="p-estrato">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+                <option>6</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom:16px">
+            <label>Descripción del inmueble</label>
+            <textarea id="p-desc" style="min-height:90px"
+              placeholder="Describe las características, acabados, comodidades..."></textarea>
+          </div>
+
+          <div class="form-group" style="margin-bottom:16px">
+            <label>Asesor responsable</label>
+            <select id="p-asesor">
+              <option>Sebastian Pernett</option>
+              <option>Maribel Jaramillo</option>
+              <option>Esneyder Calle</option>
+              <option>Santiago Pernett</option>
+            </select>
+          </div>
+
+          <div class="img-upload" onclick="document.getElementById('img-input').click()">
+            <div class="panel-upload-icon">📷</div>
+            <p>Haga clic para subir fotos del inmueble</p>
+            <p class="panel-upload-small">JPG, PNG · Máx. 10 fotos</p>
+            <input type="file" id="img-input" accept="image/*" multiple style="display:none"
+              onchange="previewImgs(event)">
+          </div>
+          <div class="img-preview" id="img-preview"></div>
+
+          <button id="publish-btn" class="submit-btn" style="margin-top:24px" onclick="publishProp()">✅ Publicar
+            inmueble</button>
+          <div class="success-msg" id="publish-success" style="margin-top:12px"></div>
+
+          <!-- LISTA MIS INMUEBLES -->
+          <div class="props-list-panel">
+            <h3>Mis inmuebles publicados</h3>
+            <div id="my-props-list"></div>
+          </div>
         </div>
-        <div class="form-group">
-          <label>Mensaje (opcional)</label>
-          <textarea placeholder="Cuéntenos más sobre lo que busca..."></textarea>
+      </div><!-- /panel-body -->
+    </div><!-- /panel-box -->
+  </section>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-box">
+          <svg width="40" height="40" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="44" height="44" rx="5" fill="#C9A84C" />
+            <clipPath id="clip1">
+              <rect width="44" height="44" rx="5" />
+            </clipPath>
+            <g clip-path="url(#clip1)">
+              <line x1="-4" y1="14" x2="58" y2="14" stroke="rgba(26,39,68,0.15)" stroke-width="6" />
+              <line x1="-4" y1="22" x2="58" y2="22" stroke="rgba(26,39,68,0.15)" stroke-width="6" />
+              <line x1="-4" y1="30" x2="58" y2="30" stroke="rgba(26,39,68,0.15)" stroke-width="6" />
+              <text x="22" y="29" text-anchor="middle" font-family="serif" font-weight="700" font-size="19"
+                fill="#1A2744">SB</text>
+            </g>
+          </svg>
+          <div>
+            <div class="footer-brand-title">Su Banca Inmobiliaria</div>
+            <div class="footer-brand-subtitle">Su mejor inversión</div>
+          </div>
         </div>
-        <button type="submit" class="submit-btn">Enviar mensaje</button>
-        <div class="success-msg" id="contact-success">✅ ¡Mensaje enviado! Un asesor le contactará pronto.</div>
-      </form>
+        <p class="footer-description">Más de 7 años conectando personas con su propiedad ideal en Medellín y el Área
+          Metropolitana. Miembros activos de Corpolonjas de Colombia.</p>
+        <p class="footer-legal">NIT: 901.086.954-9 · M.A.V.U. N°0041/17</p>
+      </div>
+      <div class="footer-col">
+        <h4>Propiedades</h4>
+        <a href="#propiedades">Arriendos</a>
+        <a href="#propiedades">Ventas</a>
+        <a href="#propiedades">Amoblados</a>
+        <a href="#propiedades">Bodegas</a>
+      </div>
+      <div class="footer-col">
+        <h4>Servicios</h4>
+        <a href="#servicios">Administración</a>
+        <a href="#servicios">Avalúos</a>
+        <a href="#servicios">Estudio inquilinos</a>
+        <a href="#servicios">Propiedad horizontal</a>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <a href="#asesores">Equipo</a>
+        <a href="#contacto">Contáctenos</a>
+        <a href="#panel" onclick="document.getElementById('panel').classList.add('visible')">Portal asesores</a>
+      </div>
     </div>
+    <div class="footer-bottom">
+      <p>© 2025 Su Banca Inmobiliaria S.A.S. · NIT 901.086.954-9 · Todos los derechos reservados</p>
+      <div class="footer-contact-row">
+        <a href="tel:+576043222388" class="footer-contact-link">(604) 322 23 88</a>
+        <a href="mailto:subancainmobiliaria@gmail.com" class="footer-contact-link">subancainmobiliaria@gmail.com</a>
+        <div class="social-links">
+          <a href="#" class="social-link">f</a>
+          <a href="#" class="social-link">in</a>
+          <a href="#" class="social-link">ig</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WHATSAPP FLOTANTE -->
+  <a href="https://wa.me/573132211683?text=Hola,%20me%20interesa%20una%20propiedad%20de%20Su%20Banca%20Inmobiliaria"
+    class="whatsapp-float" target="_blank">💬</a>
+
+  <!-- MODAL DETALLE PROPIEDAD -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
+    <div class="modal" id="modal-content"></div>
   </div>
-</section>
 
-<!-- PANEL ASESORES -->
-<section id="panel">
-  <div class="panel-box">
-    <!-- Header estilo contrato -->
-    <div class="panel-header">
-      <div class="panel-header-logo">
-        <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
-          <rect width="44" height="44" rx="5" fill="rgba(255,255,255,0.1)"/>
-          <text x="22" y="29" text-anchor="middle" font-family="serif" font-weight="700" font-size="18" fill="#C9A84C">SB</text>
-        </svg>
-        <div>
-          <div style="color:white;font-family:'Playfair Display',serif;font-size:15px;font-weight:600">Su Banca Inmobiliaria S.A.S.</div>
-          <div style="color:var(--gold);font-size:11px;letter-spacing:1.5px;text-transform:uppercase">Portal de Asesores</div>
-        </div>
-      </div>
-      <h2>Gestión de Inmuebles</h2>
-      <p class="subtitle">NIT: 901.086.954-9 · Cra 81 N°32-204 Of.509 · subancainmobiliaria@gmail.com</p>
-    </div>
-    <div class="panel-body">
-
-    <!-- LOGIN -->
-    <div id="panel-login" class="panel-login">
-      <p class="panel-helper-text" style="margin-bottom:24px">Ingrese con sus credenciales de asesor</p>
-      <div class="form-group">
-        <label>Usuario</label>
-        <input type="text" id="login-user" placeholder="usuario@subanca.com">
-      </div>
-      <div class="form-group">
-        <label>Contraseña</label>
-        <input type="password" id="login-pass" placeholder="••••••••">
-      </div>
-      <button class="submit-btn" onclick="doLogin()">Ingresar al panel</button>
-      <p style="font-size:12px;color:var(--text-muted);margin-top:12px;text-align:center">Demo: usuario <strong>asesor</strong> · contraseña <strong>1234</strong></p>
-    </div>
-
-    <!-- FORM NUEVO INMUEBLE -->
-    <div id="panel-content" class="panel-inmueble-form">
-      <div class="panel-flex-between" style="margin-bottom:28px">
-        <h3 class="panel-title">📋 Publicar nuevo inmueble</h3>
-        <button onclick="doLogout()" class="panel-logout-btn">Cerrar sesión</button>
-      </div>
-
-      <div class="fields-3 panel-section-space">
-        <div class="form-group">
-          <label>Tipo de gestión</label>
-          <select id="p-gestion">
-            <option>Arriendo</option><option>Venta</option><option>Amoblado</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Tipo de inmueble</label>
-          <select id="p-tipo">
-            <option>Apartamento</option><option>Casa</option><option>Local</option><option>Bodega</option><option>Oficina</option><option>Lote</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Estado</label>
-          <select id="p-estado">
-            <option>Disponible</option><option>Reservado</option><option>Arrendado</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="fields-2 panel-section-space">
-        <div class="form-group">
-          <label>Nombre / Referencia</label>
-          <input type="text" id="p-nombre" placeholder="Ej: Apto moderno El Poblado">
-        </div>
-        <div class="form-group">
-          <label>Sector / Barrio</label>
-          <select id="p-zona">
-            <option>El Poblado</option><option>Laureles</option><option>Envigado</option>
-            <option>Bello</option><option>Sabaneta</option><option>Itagüí</option>
-            <option>Robledo</option><option>Castilla</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group" style="margin-bottom:16px">
-        <label>Dirección (uso interno)</label>
-        <input type="text" id="p-dir" placeholder="Cl. 10 #43-50, Apto 301">
-      </div>
-
-      <div class="fields-3 panel-section-space">
-        <div class="form-group">
-          <label>Precio ($)</label>
-          <input type="number" id="p-precio" placeholder="1500000">
-        </div>
-        <div class="form-group">
-          <label>Habitaciones</label>
-          <select id="p-hab">
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Baños</label>
-          <select id="p-ban">
-            <option>1</option><option>2</option><option>3</option><option>4</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="fields-3 panel-section-space">
-        <div class="form-group">
-          <label>Área (m²)</label>
-          <input type="number" id="p-area" placeholder="75">
-        </div>
-        <div class="form-group">
-          <label>Parqueaderos</label>
-          <select id="p-park">
-            <option>0</option><option>1</option><option>2</option><option>3</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Estrato</label>
-          <select id="p-estrato">
-            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="form-group" style="margin-bottom:16px">
-        <label>Descripción del inmueble</label>
-        <textarea id="p-desc" style="min-height:90px" placeholder="Describe las características, acabados, comodidades..."></textarea>
-      </div>
-
-      <div class="form-group" style="margin-bottom:16px">
-        <label>Asesor responsable</label>
-        <select id="p-asesor">
-          <option>Sebastian Pernett</option>
-          <option>Maribel Jaramillo</option>
-          <option>Esneyder Calle</option>
-          <option>Santiago Pernett</option>
-        </select>
-      </div>
-
-      <div class="img-upload" onclick="document.getElementById('img-input').click()">
-        <div class="panel-upload-icon">📷</div>
-        <p>Haga clic para subir fotos del inmueble</p>
-        <p class="panel-upload-small">JPG, PNG · Máx. 10 fotos</p>
-        <input type="file" id="img-input" accept="image/*" multiple style="display:none" onchange="previewImgs(event)">
-      </div>
-      <div class="img-preview" id="img-preview"></div>
-
-      <button id="publish-btn" class="submit-btn" style="margin-top:24px" onclick="publishProp()">✅ Publicar inmueble</button>
-      <div class="success-msg" id="publish-success" style="margin-top:12px"></div>
-
-      <!-- LISTA MIS INMUEBLES -->
-      <div class="props-list-panel">
-        <h3>Mis inmuebles publicados</h3>
-        <div id="my-props-list"></div>
-      </div>
-    </div>
-    </div><!-- /panel-body -->
-  </div><!-- /panel-box -->
-</section>
-<footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <div class="footer-brand-box">
-        <svg width="40" height="40" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect width="44" height="44" rx="5" fill="#C9A84C"/>
-          <clipPath id="clip1"><rect width="44" height="44" rx="5"/></clipPath>
-          <g clip-path="url(#clip1)">
-            <line x1="-4" y1="14" x2="58" y2="14" stroke="rgba(26,39,68,0.15)" stroke-width="6"/>
-            <line x1="-4" y1="22" x2="58" y2="22" stroke="rgba(26,39,68,0.15)" stroke-width="6"/>
-            <line x1="-4" y1="30" x2="58" y2="30" stroke="rgba(26,39,68,0.15)" stroke-width="6"/>
-            <text x="22" y="29" text-anchor="middle" font-family="serif" font-weight="700" font-size="19" fill="#1A2744">SB</text>
-          </g>
-        </svg>
-        <div>
-          <div class="footer-brand-title">Su Banca Inmobiliaria</div>
-          <div class="footer-brand-subtitle">Su mejor inversión</div>
-        </div>
-      </div>
-      <p class="footer-description">Más de 7 años conectando personas con su propiedad ideal en Medellín y el Área Metropolitana. Miembros activos de Corpolonjas de Colombia.</p>
-      <p class="footer-legal">NIT: 901.086.954-9 · M.A.V.U. N°0041/17</p>
-    </div>
-    <div class="footer-col">
-      <h4>Propiedades</h4>
-      <a href="#propiedades">Arriendos</a>
-      <a href="#propiedades">Ventas</a>
-      <a href="#propiedades">Amoblados</a>
-      <a href="#propiedades">Bodegas</a>
-    </div>
-    <div class="footer-col">
-      <h4>Servicios</h4>
-      <a href="#servicios">Administración</a>
-      <a href="#servicios">Avalúos</a>
-      <a href="#servicios">Estudio inquilinos</a>
-      <a href="#servicios">Propiedad horizontal</a>
-    </div>
-    <div class="footer-col">
-      <h4>Empresa</h4>
-      <a href="#asesores">Equipo</a>
-      <a href="#contacto">Contáctenos</a>
-      <a href="#panel" onclick="document.getElementById('panel').classList.add('visible')">Portal asesores</a>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>© 2025 Su Banca Inmobiliaria S.A.S. · NIT 901.086.954-9 · Todos los derechos reservados</p>
-    <div class="footer-contact-row">
-      <a href="tel:+576043222388" class="footer-contact-link">(604) 322 23 88</a>
-      <a href="mailto:subancainmobiliaria@gmail.com" class="footer-contact-link">subancainmobiliaria@gmail.com</a>
-    <div class="social-links">
-      <a href="#" class="social-link">f</a>
-      <a href="#" class="social-link">in</a>
-      <a href="#" class="social-link">ig</a>
-    </div>
-    </div>
-  </div>
-</footer>
-
-<!-- WHATSAPP FLOTANTE -->
-<a href="https://wa.me/573132211683?text=Hola,%20me%20interesa%20una%20propiedad%20de%20Su%20Banca%20Inmobiliaria" class="whatsapp-float" target="_blank">💬</a>
-
-<!-- MODAL DETALLE PROPIEDAD -->
-<div class="modal-overlay" id="modal-overlay" onclick="closeModal(event)">
-  <div class="modal" id="modal-content"></div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="app.js?v=8"></script>
 </body>
+
 </html>

@@ -1,85 +1,85 @@
 const supabaseClient = supabase.createClient(
-    'https://piuztzpjgwouaplbxbqc.supabase.co', // SIN /rest/v1/
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpdXp0enBqZ3dvdWFwbGJ4YnFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5ODY1ODAsImV4cCI6MjA5MzU2MjU4MH0.3QVRdgikykyrql8nv0yx7ZdrskmZWdVi6XRWQJDgstk' // la que empieza por sb_publishable_ o tu anon
+  'https://piuztzpjgwouaplbxbqc.supabase.co', // SIN /rest/v1/
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpdXp0enBqZ3dvdWFwbGJ4YnFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5ODY1ODAsImV4cCI6MjA5MzU2MjU4MH0.3QVRdgikykyrql8nv0yx7ZdrskmZWdVi6XRWQJDgstk' // la que empieza por sb_publishable_ o tu anon
 );
 let uploadedImgs = [];
 let editingPropertyId = null;
 
 // ===== DATA =====
 let allProps = [
-    { id: 1, tipo: 'Apartamento', gestion: 'Arriendo', zona: 'El Poblado', nombre: 'Apartamento moderno en El Poblado', precio: 2800000, hab: 3, ban: 2, area: 85, park: 1, estrato: 5, nuevo: true, desc: 'Hermoso apartamento con acabados de lujo, cocina integral y zona de lavandería.', asesor: 'Sebastián Pernett' },
-    { id: 2, tipo: 'Casa', gestion: 'Venta', zona: 'Laureles', nombre: 'Casa esquinera en Laureles', precio: 580000000, hab: 4, ban: 3, area: 220, park: 2, estrato: 5, nuevo: false, desc: 'Amplia casa en esquina con jardín privado y zona social.', asesor: 'Beatriz Elena Ruiz' },
-    { id: 3, tipo: 'Apartamento', gestion: 'Arriendo', zona: 'Envigado', nombre: 'Apto familiar en Envigado', precio: 1600000, hab: 3, ban: 2, area: 78, park: 1, estrato: 4, nuevo: false, desc: 'Excelente ubicación cerca a colegios y centros comerciales.', asesor: 'Asesor Comercial' },
-    { id: 4, tipo: 'Local', gestion: 'Arriendo', zona: 'Itagüí', nombre: 'Local comercial alta visibilidad', precio: 3200000, hab: 0, ban: 1, area: 120, park: 2, estrato: 3, nuevo: true, desc: 'Local a pie de vía con vitrina y depósito incluido.', asesor: 'Asesor Comercial 2' },
-    { id: 5, tipo: 'Apartamento', gestion: 'Amoblado', zona: 'El Poblado', nombre: 'Estudio amoblado El Poblado', precio: 2100000, hab: 1, ban: 1, area: 42, park: 0, estrato: 5, nuevo: false, desc: 'Perfecto para ejecutivos o arrendamiento corto plazo.', asesor: 'Sebastián Pernett' },
-    { id: 6, tipo: 'Casa', gestion: 'Arriendo', zona: 'Bello', nombre: 'Casa bifamiliar en Bello', precio: 1200000, hab: 3, ban: 2, area: 140, park: 1, estrato: 3, nuevo: false, desc: 'Piso independiente, patio privado y excelente iluminación natural.', asesor: 'Beatriz Elena Ruiz' },
-    { id: 7, tipo: 'Bodega', gestion: 'Arriendo', zona: 'Itagüí', nombre: 'Bodega industrial en Itagüí', precio: 4500000, hab: 0, ban: 1, area: 400, park: 4, estrato: 2, nuevo: false, desc: 'Bodega con puerta seccional, portería y oficinas en segundo piso.', asesor: 'Asesor Comercial 2' },
-    { id: 8, tipo: 'Apartamento', gestion: 'Venta', zona: 'Sabaneta', nombre: 'Apartamento nuevo en Sabaneta', precio: 320000000, hab: 2, ban: 2, area: 65, park: 1, estrato: 4, nuevo: true, desc: 'Proyecto sobre planos con entrega inmediata.', asesor: 'Asesor Comercial' },
-    { id: 9, tipo: 'Casa', gestion: 'Venta', zona: 'Robledo', nombre: 'Casa en conjunto cerrado Robledo', precio: 420000000, hab: 3, ban: 2, area: 155, park: 2, estrato: 4, nuevo: false, desc: 'Conjunto con piscina, gimnasio y portería 24 horas.', asesor: 'Sebastián Pernett' },
-    { id: 10, tipo: 'Apartamento', gestion: 'Arriendo', zona: 'Castilla', nombre: 'Apto amplio en Castilla', precio: 900000, hab: 2, ban: 1, area: 60, park: 0, estrato: 2, nuevo: false, desc: 'Muy bien ubicado cerca al metro y servicios.', asesor: 'Beatriz Elena Ruiz' },
-    { id: 11, tipo: 'Oficina', gestion: 'Arriendo', zona: 'El Poblado', nombre: 'Oficina ejecutiva El Poblado', precio: 3800000, hab: 0, ban: 2, area: 90, park: 1, estrato: 5, nuevo: false, desc: 'Oficina con sala de juntas, recepción y vigilancia privada.', asesor: 'Asesor Comercial 2' },
-    { id: 12, tipo: 'Apartamento', gestion: 'Amoblado', zona: 'Laureles', nombre: 'Apto amoblado Laureles', precio: 2600000, hab: 2, ban: 2, area: 72, park: 1, estrato: 5, nuevo: true, desc: 'Completamente equipado, smart TV, internet y parqueo.', asesor: 'Asesor Comercial' },
+  { id: 1, tipo: 'Apartamento', gestion: 'Arriendo', zona: 'El Poblado', nombre: 'Apartamento moderno en El Poblado', precio: 2800000, hab: 3, ban: 2, area: 85, park: 1, estrato: 5, nuevo: true, desc: 'Hermoso apartamento con acabados de lujo, cocina integral y zona de lavandería.', asesor: 'Sebastián Pernett' },
+  { id: 2, tipo: 'Casa', gestion: 'Venta', zona: 'Laureles', nombre: 'Casa esquinera en Laureles', precio: 580000000, hab: 4, ban: 3, area: 220, park: 2, estrato: 5, nuevo: false, desc: 'Amplia casa en esquina con jardín privado y zona social.', asesor: 'Beatriz Elena Ruiz' },
+  { id: 3, tipo: 'Apartamento', gestion: 'Arriendo', zona: 'Envigado', nombre: 'Apto familiar en Envigado', precio: 1600000, hab: 3, ban: 2, area: 78, park: 1, estrato: 4, nuevo: false, desc: 'Excelente ubicación cerca a colegios y centros comerciales.', asesor: 'Asesor Comercial' },
+  { id: 4, tipo: 'Local', gestion: 'Arriendo', zona: 'Itagüí', nombre: 'Local comercial alta visibilidad', precio: 3200000, hab: 0, ban: 1, area: 120, park: 2, estrato: 3, nuevo: true, desc: 'Local a pie de vía con vitrina y depósito incluido.', asesor: 'Asesor Comercial 2' },
+  { id: 5, tipo: 'Apartamento', gestion: 'Amoblado', zona: 'El Poblado', nombre: 'Estudio amoblado El Poblado', precio: 2100000, hab: 1, ban: 1, area: 42, park: 0, estrato: 5, nuevo: false, desc: 'Perfecto para ejecutivos o arrendamiento corto plazo.', asesor: 'Sebastián Pernett' },
+  { id: 6, tipo: 'Casa', gestion: 'Arriendo', zona: 'Bello', nombre: 'Casa bifamiliar en Bello', precio: 1200000, hab: 3, ban: 2, area: 140, park: 1, estrato: 3, nuevo: false, desc: 'Piso independiente, patio privado y excelente iluminación natural.', asesor: 'Beatriz Elena Ruiz' },
+  { id: 7, tipo: 'Bodega', gestion: 'Arriendo', zona: 'Itagüí', nombre: 'Bodega industrial en Itagüí', precio: 4500000, hab: 0, ban: 1, area: 400, park: 4, estrato: 2, nuevo: false, desc: 'Bodega con puerta seccional, portería y oficinas en segundo piso.', asesor: 'Asesor Comercial 2' },
+  { id: 8, tipo: 'Apartamento', gestion: 'Venta', zona: 'Sabaneta', nombre: 'Apartamento nuevo en Sabaneta', precio: 320000000, hab: 2, ban: 2, area: 65, park: 1, estrato: 4, nuevo: true, desc: 'Proyecto sobre planos con entrega inmediata.', asesor: 'Asesor Comercial' },
+  { id: 9, tipo: 'Casa', gestion: 'Venta', zona: 'Robledo', nombre: 'Casa en conjunto cerrado Robledo', precio: 420000000, hab: 3, ban: 2, area: 155, park: 2, estrato: 4, nuevo: false, desc: 'Conjunto con piscina, gimnasio y portería 24 horas.', asesor: 'Sebastián Pernett' },
+  { id: 10, tipo: 'Apartamento', gestion: 'Arriendo', zona: 'Castilla', nombre: 'Apto amplio en Castilla', precio: 900000, hab: 2, ban: 1, area: 60, park: 0, estrato: 2, nuevo: false, desc: 'Muy bien ubicado cerca al metro y servicios.', asesor: 'Beatriz Elena Ruiz' },
+  { id: 11, tipo: 'Oficina', gestion: 'Arriendo', zona: 'El Poblado', nombre: 'Oficina ejecutiva El Poblado', precio: 3800000, hab: 0, ban: 2, area: 90, park: 1, estrato: 5, nuevo: false, desc: 'Oficina con sala de juntas, recepción y vigilancia privada.', asesor: 'Asesor Comercial 2' },
+  { id: 12, tipo: 'Apartamento', gestion: 'Amoblado', zona: 'Laureles', nombre: 'Apto amoblado Laureles', precio: 2600000, hab: 2, ban: 2, area: 72, park: 1, estrato: 5, nuevo: true, desc: 'Completamente equipado, smart TV, internet y parqueo.', asesor: 'Asesor Comercial' },
 ];
 
-async function loadProperties(){
+async function loadProperties() {
 
   const { data, error } = await supabaseClient
-      .from('propiedades')
-      .select('*')
-      .order('created_at', { ascending:false });
+    .from('propiedades')
+    .select('*')
+    .order('created_at', { ascending: false });
 
   console.log(data);
   console.log(error);
 
-  if(error){
+  if (error) {
 
-      console.error('Error cargando propiedades:', error);
+    console.error('Error cargando propiedades:', error);
 
-      return;
+    return;
 
   }
 
   allProps = data.map(p => ({
 
-      id: p.id,
+    id: p.id,
 
-      imagenes: p.imagenes || [],
+    imagenes: p.imagenes || [],
 
-      nombre: p.nombre,
+    nombre: p.nombre,
 
-      tipo: p.tipo,
+    tipo: p.tipo,
 
-      gestion: p.gestion,
+    gestion: p.gestion,
 
-      zona: p.zona,
+    zona: p.zona,
 
-      precio: p.precio,
+    precio: p.precio,
 
-      hab: p.habitaciones,
+    hab: p.habitaciones,
 
-      ban: p.banos,
+    ban: p.banos,
 
-      area: p.area,
+    area: p.area,
 
-      park: p.parqueaderos,
+    park: p.parqueaderos,
 
-      estrato: p.estrato,
+    estrato: p.estrato,
 
-      desc: p.descripcion,
+    desc: p.descripcion,
 
-      asesor: p.asesor,
+    asesor: p.asesor,
 
-      nuevo: true
+    nuevo: true
 
   }));
 
   const container = document.getElementById('props-grid');
 
-if(container){
+  if (container) {
 
     container.innerHTML = '';
 
-}
+  }
 
   renderProps(allProps);
 
@@ -92,45 +92,45 @@ let visibleCount = 6;
 let filteredProps = [];
 window.addEventListener('DOMContentLoaded', () => {
 
-    const activeTab = document.querySelector('.search-tab.active');
+  const activeTab = document.querySelector('.search-tab.active');
 
-    if (activeTab) {
+  if (activeTab) {
 
-        setTab(activeTab, 'arriendo');
+    setTab(activeTab, 'arriendo');
 
-    }
+  }
 
 });
 
 const asesores = [
-    { nombre: 'Sebastián Pernett Ruiz', cargo: 'Gerente · Rep. Legal', cel: '3132211683' },
-    { nombre: 'Maribel Jaramillo', cargo: 'Administradora', cel: '3132211683' },
-    { nombre: 'Esneyder Calle', cargo: 'Asesor Comercial', cel: '3009508722' },
-    { nombre: 'Santiago Pernett', cargo: 'Asesor Comercial', cel: '3112566539' },
+  { nombre: 'Sebastián Pernett Ruiz', cargo: 'Gerente · Rep. Legal', cel: '3132211683' },
+  { nombre: 'Maribel Jaramillo', cargo: 'Administradora', cel: '3132211683' },
+  { nombre: 'Esneyder Calle', cargo: 'Asesor Comercial', cel: '3009508722' },
+  { nombre: 'Santiago Pernett', cargo: 'Asesor Comercial', cel: '3112566539' },
 ];
 
 // ===== FILTERS =====
 function setTab(el, tab) {
 
-    document
-        .querySelectorAll('.search-tab')
-        .forEach(b => b.classList.remove('active'));
+  document
+    .querySelectorAll('.search-tab')
+    .forEach(b => b.classList.remove('active'));
 
-    el.classList.add('active');
+  el.classList.add('active');
 
-    currentTab = tab;
+  currentTab = tab;
 
-    const precio = document.getElementById('s-precio');
+  const precio = document.getElementById('s-precio');
 
-    let options = '';
+  let options = '';
 
-    // =========================
-    // ARRIENDO Y AMOBLADO
-    // =========================
+  // =========================
+  // ARRIENDO Y AMOBLADO
+  // =========================
 
-    if (tab === 'arriendo' || tab === 'amoblado') {
+  if (tab === 'arriendo' || tab === 'amoblado') {
 
-        options = `
+    options = `
 
   <option value="">
     Cualquier precio
@@ -202,15 +202,15 @@ function setTab(el, tab) {
 
 `;
 
-    }
+  }
 
-    // =========================
-    // VENTA
-    // =========================
+  // =========================
+  // VENTA
+  // =========================
 
-    else if (tab === 'venta') {
+  else if (tab === 'venta') {
 
-        options = `
+    options = `
 
   <option value="">
     Cualquier precio
@@ -246,62 +246,62 @@ function setTab(el, tab) {
 
 `;
 
-    }
+  }
 
-    precio.innerHTML = options;
+  precio.innerHTML = options;
 
 }
 function setFilter(el, filter) {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-    currentFilter = filter;
-    visibleCount = 6;
-    renderProps();
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = filter;
+  visibleCount = 6;
+  renderProps();
 }
 function applyFilters() {
-    visibleCount = 6;
-    renderProps();
-    document.getElementById('propiedades').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  visibleCount = 6;
+  renderProps();
+  document.getElementById('propiedades').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 function scrollToProps() {
-    applyFilters();
+  applyFilters();
 }
 
 function getFilteredProps() {
-    const tipo = document.getElementById('s-tipo').value;
-    const zona = document.getElementById('s-zona').value;
-    const precioValue =
-        document.getElementById('s-precio').value;
+  const tipo = document.getElementById('s-tipo').value;
+  const zona = document.getElementById('s-zona').value;
+  const precioValue =
+    document.getElementById('s-precio').value;
 
-    let precioMin = 0;
-    let precioMax = Infinity;
+  let precioMin = 0;
+  let precioMax = Infinity;
 
-    if (precioValue) {
+  if (precioValue) {
 
-        const partes = precioValue.split('|');
+    const partes = precioValue.split('|');
 
-        precioMin = parseInt(partes[0]) || 0;
+    precioMin = parseInt(partes[0]) || 0;
 
-        precioMax = parseInt(partes[1]) || Infinity;
+    precioMax = parseInt(partes[1]) || Infinity;
 
+  }
+
+  return allProps.filter(p => {
+    if (currentFilter !== 'todos') {
+      if (p.gestion === currentFilter || p.tipo === currentFilter) { }
+      else return false;
     }
-
-    return allProps.filter(p => {
-        if (currentFilter !== 'todos') {
-            if (p.gestion === currentFilter || p.tipo === currentFilter) { }
-            else return false;
-        }
-        if (tipo && p.tipo !== tipo) return false;
-        if (zona && p.zona !== zona) return false;
-        if (
-            p.precio < precioMin ||
-            p.precio > precioMax
-        ) return false;
-        return true;
-    });    
+    if (tipo && p.tipo !== tipo) return false;
+    if (zona && p.zona !== zona) return false;
+    if (
+      p.precio < precioMin ||
+      p.precio > precioMax
+    ) return false;
+    return true;
+  });
 }
 
-function renderProps(){
+function renderProps() {
 
   const filteredProps = getFilteredProps();
 
@@ -314,32 +314,32 @@ function renderProps(){
   const shown = filteredProps.slice(0, visibleCount);
 
   counter.textContent =
-      `${filteredProps.length} propiedad${filteredProps.length !== 1 ? 'es' : ''} encontrada${filteredProps.length !== 1 ? 's' : ''}`;
+    `${filteredProps.length} propiedad${filteredProps.length !== 1 ? 'es' : ''} encontrada${filteredProps.length !== 1 ? 's' : ''}`;
 
   grid.innerHTML = shown.map(p => propCard(p)).join('');
 
   btn.style.display =
-      filteredProps.length > visibleCount ? 'block' : 'none';
+    filteredProps.length > visibleCount ? 'block' : 'none';
 
 }
 
 function loadMore() { visibleCount += 6; renderProps(); }
 
 function fmtPrice(p, g) {
-    if (g === 'Venta') return '$' + (p >= 1000000 ? (p / 1000000).toFixed(0) + 'M' : p.toLocaleString('es-CO'));
-    return '$' + p.toLocaleString('es-CO') + '/mes';
+  if (g === 'Venta') return '$' + (p >= 1000000 ? (p / 1000000).toFixed(0) + 'M' : p.toLocaleString('es-CO'));
+  return '$' + p.toLocaleString('es-CO') + '/mes';
 }
 
 const colors = ['#C9D6E3', '#B8CCDC', '#9FBBCB', '#C3D4BE', '#D4C3BE', '#C3C3D4', '#D4C3C3'];
 
 function propCard(p) {
 
-    const image =
-        p.imagen ||
-        (p.imagenes && p.imagenes[0]) ||
-        'https://via.placeholder.com/600x400?text=Sin+Imagen';
+  const image =
+    p.imagen ||
+    (p.imagenes && p.imagenes[0]) ||
+    'https://via.placeholder.com/600x400?text=Sin+Imagen';
 
-    return `
+  return `
 
 <div class="prop-card" onclick="openModal('${p.id}')">
 
@@ -352,18 +352,18 @@ function propCard(p) {
     ">
 
     <span class="prop-badge ${p.gestion === 'Arriendo' || p.gestion === 'Amoblado'
-            ? 'badge-arriendo'
-            : 'badge-venta'
-        }">
+      ? 'badge-arriendo'
+      : 'badge-venta'
+    }">
 
       ${p.gestion}
 
     </span>
 
     ${p.nuevo
-            ? '<span class="prop-badge badge-nuevo" style="left:auto;right:12px">Nuevo</span>'
-            : ''
-        }
+      ? '<span class="prop-badge badge-nuevo" style="left:auto;right:12px">Nuevo</span>'
+      : ''
+    }
 
     <div class="prop-fav" onclick="event.stopPropagation()">♡</div>
 
@@ -383,23 +383,23 @@ function propCard(p) {
     <div class="prop-details">
 
       ${p.hab > 0
-            ? `<div class="prop-detail">🛏 <strong>${p.hab}</strong></div>`
-            : ''
-        }
+      ? `<div class="prop-detail">🛏 <strong>${p.hab}</strong></div>`
+      : ''
+    }
 
       ${p.ban > 0
-            ? `<div class="prop-detail">🚿 <strong>${p.ban}</strong></div>`
-            : ''
-        }
+      ? `<div class="prop-detail">🚿 <strong>${p.ban}</strong></div>`
+      : ''
+    }
 
       <div class="prop-detail">
         📐 <strong>${p.area}m²</strong>
       </div>
 
       ${p.park > 0
-            ? `<div class="prop-detail">🚗 <strong>${p.park}</strong></div>`
-            : ''
-        }
+      ? `<div class="prop-detail">🚗 <strong>${p.park}</strong></div>`
+      : ''
+    }
 
     </div>
 
@@ -413,105 +413,105 @@ function propCard(p) {
 // ===== MODAL =====
 async function loadPropsFromDB() {
 
-    console.log("🔥 cargando desde Supabase...");
+  console.log("🔥 cargando desde Supabase...");
 
-    const { data, error } = await supabaseClient
-        .from('propiedades')
-        .select('*');
+  const { data, error } = await supabaseClient
+    .from('propiedades')
+    .select('*');
 
-    if (error) {
-        console.error('❌ ERROR DB:', error);
-        return;
-    }
+  if (error) {
+    console.error('❌ ERROR DB:', error);
+    return;
+  }
 
-    console.log("✅ DATA:", data);
+  console.log("✅ DATA:", data);
 
-    myProps = data.map(p => ({
+  myProps = data.map(p => ({
 
-        id: p.id,
-        tipo: p.tipo,
+    id: p.id,
+    tipo: p.tipo,
 
-        imagenes: (() => {
+    imagenes: (() => {
 
-            try {
+      try {
 
-                if (Array.isArray(p.imagenes)) {
-                    return p.imagenes;
-                }
+        if (Array.isArray(p.imagenes)) {
+          return p.imagenes;
+        }
 
-                if (typeof p.imagenes === 'string') {
+        if (typeof p.imagenes === 'string') {
 
-                    const parsed = JSON.parse(p.imagenes);
+          const parsed = JSON.parse(p.imagenes);
 
-                    return Array.isArray(parsed)
-                        ? parsed
-                        : [];
-                }
+          return Array.isArray(parsed)
+            ? parsed
+            : [];
+        }
 
-                return [];
+        return [];
 
-            } catch (e) {
+      } catch (e) {
 
-                console.error('ERROR imagenes:', p.imagenes);
+        console.error('ERROR imagenes:', p.imagenes);
 
-                return [];
-            }
+        return [];
+      }
 
-        })(),
+    })(),
 
-        imagen:
-            p.imagen ||
-            p.imagen_url ||
-            (Array.isArray(p.imagenes) && p.imagenes.length > 0
-                ? p.imagenes[0]
-                : null) ||
-            'https://via.placeholder.com/600x400?text=Sin+Imagen',
+    imagen:
+      p.imagen ||
+      p.imagen_url ||
+      (Array.isArray(p.imagenes) && p.imagenes.length > 0
+        ? p.imagenes[0]
+        : null) ||
+      'https://via.placeholder.com/600x400?text=Sin+Imagen',
 
-        gestion: p.gestion,
-        zona: p.zona,
-        nombre: p.nombre,
-        precio: p.precio,
+    gestion: p.gestion,
+    zona: p.zona,
+    nombre: p.nombre,
+    precio: p.precio,
 
-        hab: p.habitaciones || 0,
-        ban: p.banos || 0,
-        area: p.area || 0,
-        park: p.parqueaderos || 0,
+    hab: p.habitaciones || 0,
+    ban: p.banos || 0,
+    area: p.area || 0,
+    park: p.parqueaderos || 0,
 
-        estrato: p.estrato || 0,
-        desc: p.descripcion || '',
+    estrato: p.estrato || 0,
+    desc: p.descripcion || '',
 
-        asesor: p.asesor || 'Asesor Comercial',
+    asesor: p.asesor || 'Asesor Comercial',
 
-        nuevo: false
+    nuevo: false
 
-    }));
+  }));
 
-    allProps = [...myProps];
+  allProps = [...myProps];
 
-    console.log("✅ propiedades cargadas:", myProps);
+  console.log("✅ propiedades cargadas:", myProps);
 
-    renderProps();
+  renderProps();
 
-    document.getElementById('stat-props').textContent =
-        myProps.length + '+';
+  document.getElementById('stat-props').textContent =
+    myProps.length + '+';
 }
 
 function openModal(id) {
 
-    const p = myProps.find(x => x.id === id);
+  const p = myProps.find(x => x.id === id);
 
-    if (!p) return;
+  if (!p) return;
 
-    const asesor = asesores.find(a => a.nombre === p.asesor) || asesores[0];
+  const asesor = asesores.find(a => a.nombre === p.asesor) || asesores[0];
 
-    const imagenPrincipal =
-        p.imagen ||
-        (Array.isArray(p.imagenes) ? p.imagenes[0] : null) ||
-        'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1200&auto=format&fit=crop';
+  const imagenPrincipal =
+    p.imagen ||
+    (Array.isArray(p.imagenes) ? p.imagenes[0] : null) ||
+    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?q=80&w=1200&auto=format&fit=crop';
 
-    console.log("MODAL PROPERTY:", p);
+  console.log("MODAL PROPERTY:", p);
 
-    document.getElementById('modal-content').innerHTML = `
+  document.getElementById('modal-content').innerHTML = `
 
   <button class="modal-close" onclick="closeModal()">✕</button>
   <div class="modal-gallery">
@@ -525,7 +525,7 @@ function openModal(id) {
 </div>
 
 ${Array.isArray(p.imagenes) && p.imagenes.length > 0
-            ? `
+      ? `
       <div class="gallery-thumbs">
 
         ${p.imagenes.map(img => `
@@ -577,8 +577,8 @@ ${Array.isArray(p.imagenes) && p.imagenes.length > 0
 
       </div>
     `
-            : ''
-        }
+      : ''
+    }
 
 <div style="height:20px"></div>
 
@@ -694,167 +694,167 @@ ${Array.isArray(p.imagenes) && p.imagenes.length > 0
 
 `;
 
-    document.getElementById('modal-overlay').classList.add('open');
+  document.getElementById('modal-overlay').classList.add('open');
 
-    document.body.style.overflow = 'hidden';
+  document.body.style.overflow = 'hidden';
 
 
 }
 
 
 function closeModal(e) {
-    if (e && e.target !== document.getElementById('modal-overlay')) return;
-    document.getElementById('modal-overlay').classList.remove('open');
-    document.body.style.overflow = '';
+  if (e && e.target !== document.getElementById('modal-overlay')) return;
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
 }
 
 // ===== ASESORES =====
 function renderAsesores() {
-    document.getElementById('asesores-grid').innerHTML = asesores.map(a => {
-        const initials = a.nombre.split(' ').map(x => x[0]).slice(0, 2).join('');
-        return `<div class="asesor-card">
+  document.getElementById('asesores-grid').innerHTML = asesores.map(a => {
+    const initials = a.nombre.split(' ').map(x => x[0]).slice(0, 2).join('');
+    return `<div class="asesor-card">
       <div class="asesor-avatar">${initials}</div>
       <h3>${a.nombre}</h3>
       <div class="cargo">${a.cargo}</div>
       <a href="https://wa.me/57${a.cel}" target="_blank" class="whatsapp">💬 WhatsApp</a>
     </div>`;
-    }).join('');
+  }).join('');
 }
 
 // ===== CONTACT =====
 function submitContact(e) {
-    e.preventDefault();
-    document.getElementById('contact-success').style.display = 'block';
-    setTimeout(() => { document.getElementById('contact-success').style.display = 'none'; }, 5000);
+  e.preventDefault();
+  document.getElementById('contact-success').style.display = 'block';
+  setTimeout(() => { document.getElementById('contact-success').style.display = 'none'; }, 5000);
 }
 
 // ===== PANEL =====
 function doLogin() {
-    const u = document.getElementById('login-user').value;
-    const p = document.getElementById('login-pass').value;
-    if ((u === 'asesor' || u.includes('@')) && p === '1234') {
-        document.getElementById('panel-login').style.display = 'none';
-        document.getElementById('panel-content').classList.add('visible');
-        renderMyProps();
-    } else {
-        alert('Credenciales incorrectas. Use: asesor / 1234');
-    }
+  const u = document.getElementById('login-user').value;
+  const p = document.getElementById('login-pass').value;
+  if ((u === 'asesor' || u.includes('@')) && p === '1234') {
+    document.getElementById('panel-login').style.display = 'none';
+    document.getElementById('panel-content').classList.add('visible');
+    renderMyProps();
+  } else {
+    alert('Credenciales incorrectas. Use: asesor / 1234');
+  }
 }
 function doLogout() {
-    document.getElementById('panel-login').style.display = 'block';
-    document.getElementById('panel-content').classList.remove('visible');
+  document.getElementById('panel-login').style.display = 'block';
+  document.getElementById('panel-content').classList.remove('visible');
 }
 
-async function optimizeImage(file){
+async function optimizeImage(file) {
 
-  return new Promise((resolve)=>{
+  return new Promise((resolve) => {
 
-      const img = new Image();
+    const img = new Image();
 
-      img.onload = ()=>{
+    img.onload = () => {
 
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
 
-          const MAX_WIDTH = 1600;
-          const MAX_HEIGHT = 1600;
+      const MAX_WIDTH = 1600;
+      const MAX_HEIGHT = 1600;
 
-          let width = img.width;
-          let height = img.height;
+      let width = img.width;
+      let height = img.height;
 
-          // Resize proporcional
-          if(width > height){
+      // Resize proporcional
+      if (width > height) {
 
-              if(width > MAX_WIDTH){
-                  height *= MAX_WIDTH / width;
-                  width = MAX_WIDTH;
-              }
+        if (width > MAX_WIDTH) {
+          height *= MAX_WIDTH / width;
+          width = MAX_WIDTH;
+        }
 
-          } else {
+      } else {
 
-              if(height > MAX_HEIGHT){
-                  width *= MAX_HEIGHT / height;
-                  height = MAX_HEIGHT;
-              }
+        if (height > MAX_HEIGHT) {
+          width *= MAX_HEIGHT / height;
+          height = MAX_HEIGHT;
+        }
 
-          }
+      }
 
-          canvas.width = width;
-          canvas.height = height;
+      canvas.width = width;
+      canvas.height = height;
 
-          ctx.drawImage(img,0,0,width,height);
+      ctx.drawImage(img, 0, 0, width, height);
 
-          // Convertir a WebP comprimido
-          canvas.toBlob(
+      // Convertir a WebP comprimido
+      canvas.toBlob(
 
-              (blob)=>{
+        (blob) => {
 
-                  const optimizedFile = new File(
+          const optimizedFile = new File(
 
-                      [blob],
+            [blob],
 
-                      file.name.replace(/\.[^/.]+$/, "") + '.webp',
+            file.name.replace(/\.[^/.]+$/, "") + '.webp',
 
-                      {
-                          type:'image/webp'
-                      }
-
-                  );
-
-                  resolve(optimizedFile);
-
-              },
-
-              'image/webp',
-
-              0.78
+            {
+              type: 'image/webp'
+            }
 
           );
 
-      };
+          resolve(optimizedFile);
 
-      img.src = URL.createObjectURL(file);
+        },
+
+        'image/webp',
+
+        0.78
+
+      );
+
+    };
+
+    img.src = URL.createObjectURL(file);
 
   });
 
 }
 
-async function uploadImages(propertyId){
+async function uploadImages(propertyId) {
 
   const uploadedUrls = [];
 
   console.log(uploadedImgs);
 
-  for(const file of uploadedImgs){
+  for (const file of uploadedImgs) {
 
-      console.log(file);
+    console.log(file);
 
-      const fileName = `${Date.now()}-${file.name}`;
+    const fileName = `${Date.now()}-${file.name}`;
 
-      const filePath = `propiedades/${propertyId}/${fileName}`;
+    const filePath = `propiedades/${propertyId}/${fileName}`;
 
-      const { error } = await supabaseClient
-          .storage
-          .from('subanca-assets')
-          .upload(filePath, file);
+    const { error } = await supabaseClient
+      .storage
+      .from('subanca-assets')
+      .upload(filePath, file);
 
-      if(error){
+    if (error) {
 
-          console.error(error);
+      console.error(error);
 
-          continue;
+      continue;
 
-      }
+    }
 
-      const { data } = supabaseClient
-          .storage
-          .from('subanca-assets')
-          .getPublicUrl(filePath);
+    const { data } = supabaseClient
+      .storage
+      .from('subanca-assets')
+      .getPublicUrl(filePath);
 
-      uploadedUrls.push(data.publicUrl);
+    uploadedUrls.push(data.publicUrl);
 
-      console.log(data);
-      console.log(error);
+    console.log(data);
+    console.log(error);
 
   }
 
@@ -862,7 +862,7 @@ async function uploadImages(propertyId){
 
 }
 
-async function previewImgs(e){
+async function previewImgs(e) {
 
   const preview = document.getElementById('img-preview');
 
@@ -870,210 +870,208 @@ async function previewImgs(e){
 
   uploadedImgs = [];
 
-  const files = Array.from(e.target.files).slice(0,10);
+  const files = Array.from(e.target.files).slice(0, 10);
 
-  for(const file of files){
+  for (const file of files) {
 
-      // Optimizar automáticamente
-      const optimized = await optimizeImage(file);
+    // Optimizar automáticamente
+    const optimized = await optimizeImage(file);
 
-      uploadedImgs.push(optimized);
+    uploadedImgs.push(optimized);
 
-      const img = document.createElement('img');
+    const img = document.createElement('img');
 
-      img.src = URL.createObjectURL(optimized);
+    img.src = URL.createObjectURL(optimized);
 
-      img.className = 'img-thumb';
+    img.className = 'img-thumb';
 
-      preview.appendChild(img);
+    preview.appendChild(img);
 
   }
 
 }
 
-function saveDraft(){
+function saveDraft() {
 
   const draft = {
 
-      gestion: document.getElementById('p-gestion')?.value || '',
-      tipo: document.getElementById('p-tipo')?.value || '',
-      estado: document.getElementById('p-estado')?.value || '',
+    gestion: document.getElementById('p-gestion')?.value || '',
+    tipo: document.getElementById('p-tipo')?.value || '',
+    estado: document.getElementById('p-estado')?.value || '',
 
-      nombre: document.getElementById('p-nombre')?.value || '',
-      zona: document.getElementById('p-zona')?.value || '',
-      direccion: document.getElementById('p-dir')?.value || '',
+    nombre: document.getElementById('p-nombre')?.value || '',
+    zona: document.getElementById('p-zona')?.value || '',
+    direccion: document.getElementById('p-dir')?.value || '',
 
-      precio: document.getElementById('p-precio')?.value || '',
-      hab: document.getElementById('p-hab')?.value || '',
-      ban: document.getElementById('p-ban')?.value || '',
+    precio: document.getElementById('p-precio')?.value || '',
+    hab: document.getElementById('p-hab')?.value || '',
+    ban: document.getElementById('p-ban')?.value || '',
 
-      area: document.getElementById('p-area')?.value || '',
-      park: document.getElementById('p-park')?.value || '',
-      estrato: document.getElementById('p-estrato')?.value || '',
+    area: document.getElementById('p-area')?.value || '',
+    park: document.getElementById('p-park')?.value || '',
+    estrato: document.getElementById('p-estrato')?.value || '',
 
-      descripcion: document.getElementById('p-desc')?.value || '',
-      asesor: document.getElementById('p-asesor')?.value || ''
+    descripcion: document.getElementById('p-desc')?.value || '',
+    asesor: document.getElementById('p-asesor')?.value || ''
 
   };
 
   localStorage.setItem(
-      'subanca_property_draft',
-      JSON.stringify(draft)
+    'subanca_property_draft',
+    JSON.stringify(draft)
   );
 
 }
 
-function loadDraft(){
+function loadDraft() {
 
   const saved = localStorage.getItem('subanca_property_draft');
 
-  if(!saved) return;
+  if (!saved) return;
 
   const draft = JSON.parse(saved);
 
-  if(document.getElementById('p-gestion'))
-      document.getElementById('p-gestion').value = draft.gestion || '';
+  if (document.getElementById('p-gestion'))
+    document.getElementById('p-gestion').value = draft.gestion || '';
 
-  if(document.getElementById('p-tipo'))
-      document.getElementById('p-tipo').value = draft.tipo || '';
+  if (document.getElementById('p-tipo'))
+    document.getElementById('p-tipo').value = draft.tipo || '';
 
-  if(document.getElementById('p-estado'))
-      document.getElementById('p-estado').value = draft.estado || '';
+  if (document.getElementById('p-estado'))
+    document.getElementById('p-estado').value = draft.estado || '';
 
-  if(document.getElementById('p-nombre'))
-      document.getElementById('p-nombre').value = draft.nombre || '';
+  if (document.getElementById('p-nombre'))
+    document.getElementById('p-nombre').value = draft.nombre || '';
 
-  if(document.getElementById('p-zona'))
-      document.getElementById('p-zona').value = draft.zona || '';
+  if (document.getElementById('p-zona'))
+    document.getElementById('p-zona').value = draft.zona || '';
 
-  if(document.getElementById('p-dir'))
-      document.getElementById('p-dir').value = draft.direccion || '';
+  if (document.getElementById('p-dir'))
+    document.getElementById('p-dir').value = draft.direccion || '';
 
-  if(document.getElementById('p-precio'))
-      document.getElementById('p-precio').value = draft.precio || '';
+  if (document.getElementById('p-precio'))
+    document.getElementById('p-precio').value = draft.precio || '';
 
-  if(document.getElementById('p-hab'))
-      document.getElementById('p-hab').value = draft.hab || '';
+  if (document.getElementById('p-hab'))
+    document.getElementById('p-hab').value = draft.hab || '';
 
-  if(document.getElementById('p-ban'))
-      document.getElementById('p-ban').value = draft.ban || '';
+  if (document.getElementById('p-ban'))
+    document.getElementById('p-ban').value = draft.ban || '';
 
-  if(document.getElementById('p-area'))
-      document.getElementById('p-area').value = draft.area || '';
+  if (document.getElementById('p-area'))
+    document.getElementById('p-area').value = draft.area || '';
 
-  if(document.getElementById('p-park'))
-      document.getElementById('p-park').value = draft.park || '';
+  if (document.getElementById('p-park'))
+    document.getElementById('p-park').value = draft.park || '';
 
-  if(document.getElementById('p-estrato'))
-      document.getElementById('p-estrato').value = draft.estrato || '';
+  if (document.getElementById('p-estrato'))
+    document.getElementById('p-estrato').value = draft.estrato || '';
 
-  if(document.getElementById('p-desc'))
-      document.getElementById('p-desc').value = draft.descripcion || '';
+  if (document.getElementById('p-desc'))
+    document.getElementById('p-desc').value = draft.descripcion || '';
 
-  if(document.getElementById('p-asesor'))
-      document.getElementById('p-asesor').value = draft.asesor || '';
+  if (document.getElementById('p-asesor'))
+    document.getElementById('p-asesor').value = draft.asesor || '';
 
 }
 
 async function publishProp() {
-    const nombre = document.getElementById('p-nombre').value.trim();
-    if (!nombre) { alert('Ingrese el nombre o referencia del inmueble.'); return; }
+  const nombre = document.getElementById('p-nombre').value.trim();
+  if (!nombre) { alert('Ingrese el nombre o referencia del inmueble.'); return; }
 
-    const propertyId = editingPropertyId || crypto.randomUUID();
-    const imageUrls = await uploadImages(propertyId);
-    const newProp = {
+  const propertyId = editingPropertyId || crypto.randomUUID();
+  const imageUrls = await uploadImages(propertyId);
+  const newProp = {
 
-      id: propertyId,
+    id: propertyId,
 
-      imagenes: imageUrls,
+    imagenes: imageUrls,
 
-      nombre: nombre,
-  
-      tipo: document.getElementById('p-tipo').value,
-  
-      gestion: document.getElementById('p-gestion').value,
-  
-      zona: document.getElementById('p-zona').value,
-  
-      precio: parseInt(document.getElementById('p-precio').value) || 0,
-  
-      habitaciones: parseInt(document.getElementById('p-hab').value) || 0,
-  
-      banos: parseInt(document.getElementById('p-ban').value) || 0,
-  
-      area: parseInt(document.getElementById('p-area').value) || 0,
-  
-      parqueaderos: parseInt(document.getElementById('p-park').value) || 0,
-  
-      estrato: parseInt(document.getElementById('p-estrato').value) || 0,
-  
-      descripcion: document.getElementById('p-desc').value,
-  
-      asesor: document.getElementById('p-asesor').value,
-  
-      created_at: new Date().toISOString()
-  
-    };
+    nombre: nombre,
 
-    let error;
+    tipo: document.getElementById('p-tipo').value,
 
-if(editingPropertyId){
+    gestion: document.getElementById('p-gestion').value,
+
+    zona: document.getElementById('p-zona').value,
+
+    precio: parseInt(document.getElementById('p-precio').value) || 0,
+
+    habitaciones: parseInt(document.getElementById('p-hab').value) || 0,
+
+    banos: parseInt(document.getElementById('p-ban').value) || 0,
+
+    area: parseInt(document.getElementById('p-area').value) || 0,
+
+    parqueaderos: parseInt(document.getElementById('p-park').value) || 0,
+
+    estrato: parseInt(document.getElementById('p-estrato').value) || 0,
+
+    descripcion: document.getElementById('p-desc').value,
+
+    asesor: document.getElementById('p-asesor').value,
+
+    created_at: new Date().toISOString()
+
+  };
+
+  let error;
+
+  if (editingPropertyId) {
 
     const response = await supabaseClient
-        .from('propiedades')
-        .update(newProp)
-        .eq('id', editingPropertyId);
+      .from('propiedades')
+      .update(newProp)
+      .eq('id', editingPropertyId);
 
     error = response.error;
 
-}else{
+  } else {
 
     const response = await supabaseClient
-        .from('propiedades')
-        .insert([newProp]);
+      .from('propiedades')
+      .insert([newProp]);
 
     error = response.error;
 
-}
+  }
 
-console.log(error);
+  console.log(error);
 
-if(error){
+  if (error) {
 
     alert('Error guardando inmueble');
 
     return;
 
-}
+  }
 
-myProps.unshift(newProp);
+  document.getElementById('p-nombre').value = '';
+  document.getElementById('p-precio').value = '';
+  document.getElementById('p-desc').value = '';
+  document.getElementById('img-preview').innerHTML = '';
 
-renderMyProps();
-    document.getElementById('p-nombre').value = '';
-    document.getElementById('p-precio').value = '';
-    document.getElementById('p-desc').value = '';
-    document.getElementById('img-preview').innerHTML = '';
+  await loadProperties();
 
+  renderProps();
 
-    await loadProperties();
+  renderMyProps();
 
-    renderMyProps();
-    
-    editingPropertyId = null;
-    
-    const btn = document.getElementById('publish-btn');
-    
-    if(btn){
-    
-        btn.textContent = 'Publicar inmueble';
-    
-    }
+  editingPropertyId = null;
+
+  const btn = document.getElementById('publish-btn');
+
+  if (btn) {
+
+    btn.textContent = 'Publicar inmueble';
+
+  }
 }
 
 function renderMyProps() {
-    const list = document.getElementById('my-props-list');
-    if (myProps.length === 0) { list.innerHTML = '<p style="color:var(--text-muted);font-size:14px">No hay inmuebles publicados aún.</p>'; return; }
-    list.innerHTML = myProps.slice(0, 8).map(p => `
+  const list = document.getElementById('my-props-list');
+  if (myProps.length === 0) { list.innerHTML = '<p style="color:var(--text-muted);font-size:14px">No hay inmuebles publicados aún.</p>'; return; }
+  list.innerHTML = myProps.slice(0, 8).map(p => `
     <div class="panel-prop-row">
       <div class="pp-info">
         <strong>${p.nombre}</strong>
@@ -1086,70 +1084,70 @@ function renderMyProps() {
     </div>`).join('');
 }
 
-async function deleteProp(id){
+async function deleteProp(id) {
 
-  if(!confirm('¿Eliminar este inmueble?')) return;
+  if (!confirm('¿Eliminar este inmueble?')) return;
 
   // Buscar propiedad completa
   const prop = allProps.find(p => p.id === id);
 
-  if(!prop){
+  if (!prop) {
 
-      alert('Propiedad no encontrada');
+    alert('Propiedad no encontrada');
 
-      return;
+    return;
 
   }
 
   // Eliminar imágenes Storage
-  if(prop.imagenes && prop.imagenes.length){
+  if (prop.imagenes && prop.imagenes.length) {
 
     const paths = prop.imagenes.map(url => {
 
       console.log(url);
-  
+
       const marker = '/storage/v1/object/public/subanca-assets/';
-  
+
       const index = url.indexOf(marker);
-  
-      if(index === -1){
-  
-          console.error('Path inválido:', url);
-  
-          return null;
-  
+
+      if (index === -1) {
+
+        console.error('Path inválido:', url);
+
+        return null;
+
       }
-  
+
       const path = url.substring(index + marker.length);
-  
+
       console.log(path);
-  
+
       return path;
-  
-  }).filter(Boolean);
 
-      const { error:storageError } = await supabaseClient
-          .storage
-          .from('subanca-assets')
-          .remove(paths);
+    }).filter(Boolean);
 
-      console.log(storageError);
+    const { error: storageError } = await supabaseClient
+      .storage
+      .from('subanca-assets')
+      .remove(paths);
+
+    console.log(storageError);
 
   }
 
   // Eliminar DB
   const { error } = await supabaseClient
-      .from('propiedades')
-      .delete()
-      .eq('id', id);
+    .from('propiedades')
+    .delete()
+    .eq('id', id);
 
   console.log(error);
 
-  if(error){
+  if (error) {
 
-      alert('Error eliminando propiedad');
+    alert('Error eliminando propiedad');
 
-      return;
+    return;
 
   }
 
@@ -1163,15 +1161,15 @@ async function deleteProp(id){
   renderMyProps();
 }
 
-function editProp(id){
+function editProp(id) {
 
   const prop = allProps.find(p => p.id === id);
 
-  if(!prop){
+  if (!prop) {
 
-      alert('Propiedad no encontrada');
+    alert('Propiedad no encontrada');
 
-      return;
+    return;
 
   }
 
@@ -1203,15 +1201,15 @@ function editProp(id){
 
   // Scroll panel
   document.getElementById('panel').scrollIntoView({
-      behavior:'smooth'
+    behavior: 'smooth'
   });
 
   // Cambiar botón
   const btn = document.getElementById('publish-btn');
 
-  if(btn){
+  if (btn) {
 
-      btn.textContent = 'Guardar cambios';
+    btn.textContent = 'Guardar cambios';
 
   }
 
@@ -1219,19 +1217,19 @@ function editProp(id){
 
 // ===== MOBILE MENU =====
 function toggleMobileMenu() {
-    // Simple implementation
-    const links = document.querySelector('.nav-links');
-    if (links) {
-        links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-        links.style.flexDirection = 'column';
-        links.style.position = 'absolute';
-        links.style.top = '68px';
-        links.style.left = '0';
-        links.style.width = '100%';
-        links.style.background = 'rgba(26,39,68,0.98)';
-        links.style.padding = '16px 5%';
-        links.style.gap = '16px';
-    }
+  // Simple implementation
+  const links = document.querySelector('.nav-links');
+  if (links) {
+    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '68px';
+    links.style.left = '0';
+    links.style.width = '100%';
+    links.style.background = 'rgba(26,39,68,0.98)';
+    links.style.padding = '16px 5%';
+    links.style.gap = '16px';
+  }
 }
 
 // ===== INIT =====
@@ -1241,13 +1239,13 @@ document.getElementById('stat-props').textContent = myProps.length + '+';
 
 // Nav scroll effect
 window.addEventListener('scroll', () => {
-    const nav = document.querySelector('nav');
-    nav.style.boxShadow = window.scrollY > 40 ? '0 4px 24px rgba(0,0,0,0.25)' : 'none';
+  const nav = document.querySelector('nav');
+  nav.style.boxShadow = window.scrollY > 40 ? '0 4px 24px rgba(0,0,0,0.25)' : 'none';
 });
 
 loadDraft();
 
-setInterval(saveDraft,3000);
+setInterval(saveDraft, 3000);
 
 loadPropsFromDB();
 
