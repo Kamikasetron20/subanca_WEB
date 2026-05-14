@@ -73,6 +73,14 @@ async function loadProperties(){
 
   }));
 
+  const container = document.getElementById('props-grid');
+
+if(container){
+
+    container.innerHTML = '';
+
+}
+
   renderProps();
 
 }
