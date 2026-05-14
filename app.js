@@ -1027,7 +1027,7 @@ function renderMyProps() {
       </div>
       <div class="pp-actions">
         <button class="btn-edit" onclick="alert('Editar: función disponible en versión completa')">Editar</button>
-        <button class="btn-del" onclick="deleteProp(${p.id})">Eliminar</button>
+        <button class="btn-del" onclick="deleteProp('${p.id}')">Eliminar</button>
       </div>
     </div>`).join('');
 }
