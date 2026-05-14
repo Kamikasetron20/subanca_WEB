@@ -3,6 +3,7 @@ const supabaseClient = supabase.createClient(
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBpdXp0enBqZ3dvdWFwbGJ4YnFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc5ODY1ODAsImV4cCI6MjA5MzU2MjU4MH0.3QVRdgikykyrql8nv0yx7ZdrskmZWdVi6XRWQJDgstk' // la que empieza por sb_publishable_ o tu anon
 );
 let uploadedImgs = [];
+let editingPropertyId = null;
 
 // ===== DATA =====
 let allProps = [
@@ -1026,7 +1027,7 @@ function renderMyProps() {
         <span>${p.gestion} · ${p.tipo} · ${p.zona} · ${fmtPrice(p.precio, p.gestion)}</span>
       </div>
       <div class="pp-actions">
-        <button class="btn-edit" onclick="alert('Editar: función disponible en versión completa')">Editar</button>
+        <button class="btn-edit" onclick="editProp('${p.id}')">Editar</button>
         <button class="btn-del" onclick="deleteProp('${p.id}')">Eliminar</button>
       </div>
     </div>`).join('');
@@ -1107,9 +1108,61 @@ async function deleteProp(id){
   renderProps();
 
   renderMyProps();
-
 }
 
+function editProp(id){
+
+  const prop = allProps.find(p => p.id === id);
+
+  if(!prop){
+
+      alert('Propiedad no encontrada');
+
+      return;
+
+  }
+
+  editingPropertyId = id;
+
+  document.getElementById('p-nombre').value = prop.nombre || '';
+
+  document.getElementById('p-tipo').value = prop.tipo || '';
+
+  document.getElementById('p-gestion').value = prop.gestion || '';
+
+  document.getElementById('p-zona').value = prop.zona || '';
+
+  document.getElementById('p-precio').value = prop.precio || '';
+
+  document.getElementById('p-hab').value = prop.hab || '';
+
+  document.getElementById('p-ban').value = prop.ban || '';
+
+  document.getElementById('p-area').value = prop.area || '';
+
+  document.getElementById('p-park').value = prop.park || '';
+
+  document.getElementById('p-estrato').value = prop.estrato || '';
+
+  document.getElementById('p-desc').value = prop.desc || '';
+
+  document.getElementById('p-asesor').value = prop.asesor || '';
+
+  // Scroll panel
+  document.getElementById('panel').scrollIntoView({
+      behavior:'smooth'
+  });
+
+  // Cambiar botón
+  const btn = document.getElementById('publish-btn');
+
+  if(btn){
+
+      btn.textContent = 'Guardar cambios';
+
+  }
+
+}
 
 // ===== MOBILE MENU =====
 function toggleMobileMenu() {
