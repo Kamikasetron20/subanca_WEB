@@ -43,7 +43,11 @@ async function loadProperties() {
 
     id: p.id,
 
-    imagenes: p.imagenes || [],
+    imagenes: Array.isArray(p.imagenes)
+      ? p.imagenes
+      : typeof p.imagenes === 'string'
+        ? JSON.parse(p.imagenes)
+        : [],
 
     nombre: p.nombre,
 
