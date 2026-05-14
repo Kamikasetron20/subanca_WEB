@@ -286,7 +286,7 @@ function getFilteredProps() {
 
     }
 
-    return myProps.filter(p => {
+    return allProps.filter(p => {
         if (currentFilter !== 'todos') {
             if (p.gestion === currentFilter || p.tipo === currentFilter) { }
             else return false;
@@ -298,17 +298,29 @@ function getFilteredProps() {
             p.precio > precioMax
         ) return false;
         return true;
-    });
+    });    
+}
 
-function renderProps(props = allProps){    
-    const filteredProps = getFilteredProps(props = allProps);
-    const grid = document.getElementById('props-grid');
-    const btn = document.getElementById('load-more-btn');
-    const counter = document.getElementById('props-count');
-    const shown = filteredProps.slice(0, visibleCount);
-    counter.textContent = `${filteredProps.length} propiedad${filteredProps.length !== 1 ? 'es' : ''} encontrada${filteredProps.length !== 1 ? 's' : ''}`;
-    grid.innerHTML = shown.map(p => propCard(p)).join('');
-    btn.style.display = filteredProps.length > visibleCount ? 'block' : 'none';
+function renderProps(){
+
+  const filteredProps = getFilteredProps();
+
+  const grid = document.getElementById('props-grid');
+
+  const btn = document.getElementById('load-more-btn');
+
+  const counter = document.getElementById('props-count');
+
+  const shown = filteredProps.slice(0, visibleCount);
+
+  counter.textContent =
+      `${filteredProps.length} propiedad${filteredProps.length !== 1 ? 'es' : ''} encontrada${filteredProps.length !== 1 ? 's' : ''}`;
+
+  grid.innerHTML = shown.map(p => propCard(p)).join('');
+
+  btn.style.display =
+      filteredProps.length > visibleCount ? 'block' : 'none';
+
 }
 
 function loadMore() { visibleCount += 6; renderProps(); }
@@ -1239,4 +1251,4 @@ setInterval(saveDraft,3000);
 
 loadPropsFromDB();
 
-loadProperties();}
+loadProperties();
