@@ -1035,6 +1035,8 @@ renderMyProps();
     document.getElementById('img-preview').innerHTML = '';
 }
 
+await loadProperties();
+
 editingPropertyId = null;
 
 const btn = document.getElementById('publish-btn');
