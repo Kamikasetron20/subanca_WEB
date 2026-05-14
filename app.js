@@ -43,11 +43,62 @@ async function loadProperties() {
 
     id: p.id,
 
-    imagenes: Array.isArray(p.imagenes)
-      ? p.imagenes
-      : typeof p.imagenes === 'string'
-        ? JSON.parse(p.imagenes)
-        : [],
+    imagenes: (() => {
+
+      try {
+
+        // si ya es array
+        if (Array.isArray(p.imagenes)) {
+          return p.imagenes.filter(Boolean);
+        }
+
+        // si viene como string JSON
+        if (typeof p.imagenes === 'string') {
+
+          const parsed = JSON.parse(p.imagenes);
+
+          return Array.isArray(parsed)
+            ? parsed.filter(Boolean)
+            : [];
+        }
+
+        return [];
+
+      } catch (e) {
+
+        console.warn('Formato viejo de imagenes:', p.imagenes);
+
+        return [];
+      }
+
+    })(),
+
+    imagen:
+      p.imagen ||
+      p.imagen_url ||
+      (() => {
+
+        try {
+
+          if (Array.isArray(p.imagenes) && p.imagenes.length > 0) {
+            return p.imagenes[0];
+          }
+
+          if (typeof p.imagenes === 'string') {
+
+            const parsed = JSON.parse(p.imagenes);
+
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              return parsed[0];
+            }
+          }
+
+        } catch (e) { }
+
+        return null;
+
+      })(),
+
 
     nombre: p.nombre,
 
