@@ -42,6 +42,8 @@ async function loadProperties(){
 
       id: p.id,
 
+      imagenes: p.imagenes || [],
+
       nombre: p.nombre,
 
       tipo: p.tipo,
@@ -1029,11 +1031,67 @@ function renderMyProps() {
       </div>
     </div>`).join('');
 }
-function deleteProp(id) {
-    if (!confirm('¿Eliminar este inmueble?')) return;
-    myProps = myProps.filter(p => p.id !== id);
-    renderProps();
-    renderMyProps();
+
+async function deleteProp(id){
+
+  if(!confirm('¿Eliminar este inmueble?')) return;
+
+  // Buscar propiedad completa
+  const prop = allProps.find(p => p.id === id);
+
+  if(!prop){
+
+      alert('Propiedad no encontrada');
+
+      return;
+
+  }
+
+  // Eliminar imágenes Storage
+  if(prop.imagenes && prop.imagenes.length){
+
+      const paths = prop.imagenes.map(url => {
+
+          const split = url.split('/storage/v1/object/public/subanca-assets/');
+
+          return split[1];
+
+      });
+
+      const { error:storageError } = await supabaseClient
+          .storage
+          .from('subanca-assets')
+          .remove(paths);
+
+      console.log(storageError);
+
+  }
+
+  // Eliminar DB
+  const { error } = await supabaseClient
+      .from('propiedades')
+      .delete()
+      .eq('id', id);
+
+  console.log(error);
+
+  if(error){
+
+      alert('Error eliminando propiedad');
+
+      return;
+
+  }
+
+  // Actualizar frontend
+  allProps = allProps.filter(p => p.id !== id);
+
+  myProps = myProps.filter(p => p.id !== id);
+
+  renderProps();
+
+  renderMyProps();
+
 }
 
 
