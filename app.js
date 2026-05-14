@@ -876,6 +876,102 @@ async function optimizeImage(file) {
 
 }
 
+async function optimizeImage(file) {
+
+  return new Promise((resolve, reject) => {
+
+    const img = new Image();
+
+    const reader = new FileReader();
+
+    reader.onload = (event) => {
+
+      img.src = event.target.result;
+
+    };
+
+    img.onload = () => {
+
+      // Tamaño máximo
+      const MAX_WIDTH = 1600;
+      const MAX_HEIGHT = 1200;
+
+      let width = img.width;
+      let height = img.height;
+
+      // Resize inteligente
+      if (width > MAX_WIDTH || height > MAX_HEIGHT) {
+
+        const ratio = Math.min(
+          MAX_WIDTH / width,
+          MAX_HEIGHT / height
+        );
+
+        width *= ratio;
+        height *= ratio;
+      }
+
+      const canvas = document.createElement('canvas');
+
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext('2d');
+
+      // Mejor calidad de render
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+
+      ctx.drawImage(img, 0, 0, width, height);
+
+      // Convertir a WEBP
+      canvas.toBlob(
+
+        (blob) => {
+
+          if (!blob) {
+
+            reject(new Error('Error optimizando imagen'));
+
+            return;
+          }
+
+          // Crear archivo WEBP final
+          const optimizedFile = new File(
+
+            [blob],
+
+            file.name.replace(/\.\w+$/, '.webp'),
+
+            {
+              type: 'image/webp'
+            }
+
+          );
+
+          console.log(
+            `Optimizada: ${file.name}`,
+            `Original: ${(file.size / 1024 / 1024).toFixed(2)} MB`,
+            `Nueva: ${(optimizedFile.size / 1024 / 1024).toFixed(2)} MB`
+          );
+
+          resolve(optimizedFile);
+
+        },
+
+        'image/webp',
+
+        0.82 // calidad
+      );
+    };
+
+    img.onerror = reject;
+
+    reader.readAsDataURL(file);
+
+  });
+}
+
 async function uploadImages(propertyId) {
 
   const uploadedUrls = [];
