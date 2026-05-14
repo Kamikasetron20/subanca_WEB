@@ -959,7 +959,7 @@ async function publishProp() {
     const nombre = document.getElementById('p-nombre').value.trim();
     if (!nombre) { alert('Ingrese el nombre o referencia del inmueble.'); return; }
 
-    const propertyId = crypto.randomUUID();
+    const propertyId = editingPropertyId || crypto.randomUUID();
     const imageUrls = await uploadImages(propertyId);
     const newProp = {
 
@@ -995,9 +995,26 @@ async function publishProp() {
   
     };
 
-    const { data, error } = await supabaseClient
-    .from('propiedades')
-    .insert([newProp]);
+    let error;
+
+if(editingPropertyId){
+
+    const response = await supabaseClient
+        .from('propiedades')
+        .update(newProp)
+        .eq('id', editingPropertyId);
+
+    error = response.error;
+
+}else{
+
+    const response = await supabaseClient
+        .from('propiedades')
+        .insert([newProp]);
+
+    error = response.error;
+
+}
 
 console.log(error);
 
@@ -1017,6 +1034,17 @@ renderMyProps();
     document.getElementById('p-desc').value = '';
     document.getElementById('img-preview').innerHTML = '';
 }
+
+editingPropertyId = null;
+
+const btn = document.getElementById('publish-btn');
+
+if(btn){
+
+    btn.textContent = 'Publicar inmueble';
+
+}
+
 function renderMyProps() {
     const list = document.getElementById('my-props-list');
     if (myProps.length === 0) { list.innerHTML = '<p style="color:var(--text-muted);font-size:14px">No hay inmuebles publicados aún.</p>'; return; }
