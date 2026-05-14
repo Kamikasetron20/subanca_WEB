@@ -346,7 +346,7 @@ function propCard(p) {
   <div
     class="prop-img"
     style="
-      background-image:url('${p.image || (Array.isArray(p.imagenes) ? p.imagenes[0] : '')}');
+      background-image:url('${image}');
       background-size:cover;
       background-position:center;
     ">
