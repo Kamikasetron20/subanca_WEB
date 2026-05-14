@@ -1033,18 +1033,21 @@ renderMyProps();
     document.getElementById('p-precio').value = '';
     document.getElementById('p-desc').value = '';
     document.getElementById('img-preview').innerHTML = '';
-}
 
-await loadProperties();
 
-editingPropertyId = null;
+    await loadProperties();
 
-const btn = document.getElementById('publish-btn');
-
-if(btn){
-
-    btn.textContent = 'Publicar inmueble';
-
+    renderMyProps();
+    
+    editingPropertyId = null;
+    
+    const btn = document.getElementById('publish-btn');
+    
+    if(btn){
+    
+        btn.textContent = 'Publicar inmueble';
+    
+    }
 }
 
 function renderMyProps() {
