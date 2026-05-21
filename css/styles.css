@@ -367,7 +367,13 @@ appearance: none;
 
 .search-field {
 
-  position: relative;
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+
+  min-width: 0;
 }
 
 .search-field::after {
@@ -408,16 +414,15 @@ box-shadow:
 
 .search-fields {
 
-display: grid;
+  display: grid;
 
-grid-template-columns:
-  repeat(6,1fr)
-  auto;
+  grid-template-columns:
+    repeat(6, minmax(140px,1fr))
+    170px;
 
-gap: 16px;
+  gap: 18px;
 
-align-items: end;
-
+  align-items: end;
 }
 
 .search-field label {
