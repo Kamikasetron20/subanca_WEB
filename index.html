@@ -3,8 +3,15 @@
 
 <head>
   <meta charset="UTF-8">
+  <link 
+  rel="icon"
+  type="image/webp"
+  href="https://piuztzpjgwouaplbxbqc.supabase.co/storage/v1/object/public/subanca-assets/branding/logo.webp"
+  >
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Su Banca Inmobiliaria | Arriendos y ventas en Medellín</title>
+  <title>
+    Su Banca Inmobiliaria | Apartamentos, casas y arriendos en Medellín
+    </title>
   <meta name="description"
     content="Encuentra apartamentos, casas, locales y propiedades en arriendo, venta y amoblados en Medellín y el Valle de Aburrá con Su Banca Inmobiliaria.">
   <meta property="og:image"
@@ -25,6 +32,64 @@
 <body>
 
   <!-- NAV -->
+  <div class="mobile-menu" id="mobile-menu">
+
+    <div class="mobile-menu-header">
+  
+      <div class="mobile-logo">
+  
+        <img
+          src="https://piuztzpjgwouaplbxbqc.supabase.co/storage/v1/object/public/subanca-assets/branding/logo.webp"
+          alt="Logo"
+        >
+  
+        <div>
+          <strong>Su Banca</strong>
+          <span>Inmobiliaria</span>
+        </div>
+  
+      </div>
+  
+      <button
+        class="mobile-close"
+        onclick="toggleMobileMenu()"
+      >
+        ✕
+      </button>
+  
+    </div>
+  
+    <div class="mobile-links">
+  
+      <a href="#propiedades" onclick="toggleMobileMenu()">
+        Propiedades
+      </a>
+  
+      <a href="#servicios" onclick="toggleMobileMenu()">
+        Servicios
+      </a>
+  
+      <a href="#asesores" onclick="toggleMobileMenu()">
+        Asesores
+      </a>
+  
+      <a href="#contacto" onclick="toggleMobileMenu()">
+        Contacto
+      </a>
+  
+    </div>
+  
+    <a
+      href="https://wa.me/573132211683"
+      class="mobile-cta"
+      target="_blank"
+    >
+      WhatsApp
+    </a>
+  
+  </div>
+
+
   <nav>
     <a href="#" class="nav-logo">
 
@@ -413,7 +478,8 @@
           </div>
           <button class="submit-btn" onclick="doLogin()">Ingresar al panel</button>
           <p style="font-size:12px;color:var(--text-muted);margin-top:12px;text-align:center">Demo: usuario
-            <strong>asesor</strong> · contraseña <strong>1234</strong></p>
+            <strong>asesor</strong> · contraseña <strong>1234</strong>
+          </p>
         </div>
 
         <!-- FORM NUEVO INMUEBLE -->
@@ -573,19 +639,13 @@
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="footer-brand-box">
-          <svg width="40" height="40" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="44" height="44" rx="5" fill="#C9A84C" />
-            <clipPath id="clip1">
-              <rect width="44" height="44" rx="5" />
-            </clipPath>
-            <g clip-path="url(#clip1)">
-              <line x1="-4" y1="14" x2="58" y2="14" stroke="rgba(26,39,68,0.15)" stroke-width="6" />
-              <line x1="-4" y1="22" x2="58" y2="22" stroke="rgba(26,39,68,0.15)" stroke-width="6" />
-              <line x1="-4" y1="30" x2="58" y2="30" stroke="rgba(26,39,68,0.15)" stroke-width="6" />
-              <text x="22" y="29" text-anchor="middle" font-family="serif" font-weight="700" font-size="19"
-                fill="#1A2744">SB</text>
-            </g>
-          </svg>
+          <img src="https://piuztzpjgwouaplbxbqc.supabase.co/storage/v1/object/public/subanca-assets/branding/logo.webp"
+            alt="Su Banca Inmobiliaria" style="
+            width:52px;
+            height:52px;
+            object-fit:contain;
+            border-radius:10px;
+          ">
           <div>
             <div class="footer-brand-title">Su Banca Inmobiliaria</div>
             <div class="footer-brand-subtitle">Su mejor inversión</div>

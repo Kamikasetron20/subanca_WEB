@@ -400,13 +400,15 @@ function propCard(p) {
 
 <div class="prop-card" onclick="openModal('${p.id}')">
 
-  <div
-    class="prop-img"
-    style="
-      background-image:url('${image}');
-      background-size:cover;
-      background-position:center;
-    ">
+  <div class="prop-img">
+
+    <img
+      src="${img}"
+      alt="${p.nombre}"
+      loading="lazy"
+      decoding="async"
+    >
+
 
     <span class="prop-badge ${p.gestion === 'Arriendo' || p.gestion === 'Amoblado'
       ? 'badge-arriendo'
@@ -1385,6 +1387,14 @@ function toggleMobileMenu() {
   }
 }
 
+function toggleMobileMenu(){
+
+  const menu =
+    document.getElementById('mobile-menu');
+
+  menu.classList.toggle('open');
+}
+
 // ===== INIT =====
 renderProps();
 renderAsesores();
@@ -1403,3 +1413,19 @@ setInterval(saveDraft, 3000);
 loadPropsFromDB();
 
 loadProperties();
+
+window.addEventListener('scroll', () => {
+
+  const nav = document.querySelector('nav');
+
+  if(window.scrollY > 40){
+
+    nav.classList.add('scrolled');
+
+  } else {
+
+    nav.classList.remove('scrolled');
+
+  }
+
+});

@@ -1,0 +1,5 @@
+User-agent: *
+
+Allow: /
+
+Sitemap: https://kamikasetron20.github.io/subanca_WEB/sitemap.xml
