@@ -403,7 +403,7 @@ function propCard(p) {
   <div class="prop-img">
 
     <img
-      src="${imgage}"
+      src="${image}"
       alt="${p.nombre}"
       loading="lazy"
       decoding="async"
