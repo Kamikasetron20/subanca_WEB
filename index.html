@@ -144,7 +144,7 @@
       </div>
 
       <!-- BUSCADOR -->
-      <div class="search-box">
+      <div class="search-box search-sticky">
         <div class="search-tabs">
           <button class="search-tab active" onclick="setTab(this,'arriendo')">Arriendo</button>
           <button class="search-tab" onclick="setTab(this,'venta')">Venta</button>
@@ -190,6 +190,67 @@
             </svg>
             Buscar
           </button>
+        </div>
+        <div class="search-field">
+
+          <label>Habitaciones</label>
+        
+          <select id="s-hab">
+        
+            <option value="">Cualquiera</option>
+        
+            <option value="1">1+</option>
+        
+            <option value="2">2+</option>
+        
+            <option value="3">3+</option>
+        
+            <option value="4">4+</option>
+        
+          </select>
+        
+        </div>
+        
+        <div class="search-field">
+        
+          <label>Baños</label>
+        
+          <select id="s-ban">
+        
+            <option value="">Cualquiera</option>
+        
+            <option value="1">1+</option>
+        
+            <option value="2">2+</option>
+        
+            <option value="3">3+</option>
+        
+          </select>
+        
+        </div>
+        
+        <div class="search-field">
+        
+          <label>Ordenar</label>
+        
+          <select id="s-order">
+        
+            <option value="">Más relevantes</option>
+        
+            <option value="price-asc">
+              Precio menor
+            </option>
+        
+            <option value="price-desc">
+              Precio mayor
+            </option>
+        
+            <option value="recent">
+              Más recientes
+            </option>
+        
+          </select>
+        
         </div>
       </div>
     </div>
@@ -287,7 +348,11 @@
         <h2 class="section-title">Propiedades disponibles</h2>
       </div>
       <div>
-        <span id="props-count" style="font-size:14px;color:var(--text-muted)"></span>
+        <div class="results-counter">
+
+          📍 <span id="props-count"></span>
+        
+        </div> style="font-size:14px;color:var(--text-muted)"></span>
       </div>
     </div>
     <div class="props-filters" id="props-filters">

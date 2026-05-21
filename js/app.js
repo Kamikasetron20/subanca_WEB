@@ -318,6 +318,7 @@ function applyFilters() {
   renderProps();
   document.getElementById('propiedades').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+
 function scrollToProps() {
   applyFilters();
 }
@@ -327,6 +328,14 @@ function getFilteredProps() {
   const zona = document.getElementById('s-zona').value;
   const precioValue =
     document.getElementById('s-precio').value;
+    const hab =
+    document.getElementById('s-hab')?.value || '';
+  
+  const ban =
+    document.getElementById('s-ban')?.value || '';
+  
+  const order =
+    document.getElementById('s-order')?.value || '';
 
   let precioMin = 0;
   let precioMax = Infinity;
@@ -339,6 +348,49 @@ function getFilteredProps() {
 
     precioMax = parseInt(partes[1]) || Infinity;
 
+  }
+
+  if(hab){
+
+    filtered = filtered.filter(p =>
+  
+      Number(p.habitaciones || 0)
+        >= Number(hab)
+    );
+  }
+
+  if(ban){
+
+    filtered = filtered.filter(p =>
+  
+      Number(p.banos || 0)
+        >= Number(ban)
+    );
+  }
+
+  if(order === 'price-asc'){
+
+    filtered.sort((a,b)=>
+  
+      Number(a.precio || 0)
+      -
+      Number(b.precio || 0)
+    );
+  }
+  
+  if(order === 'price-desc'){
+  
+    filtered.sort((a,b)=>
+  
+      Number(b.precio || 0)
+      -
+      Number(a.precio || 0)
+    );
+  }
+  
+  if(order === 'recent'){
+  
+    filtered.reverse();
   }
 
   return allProps.filter(p => {

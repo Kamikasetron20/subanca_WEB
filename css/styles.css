@@ -302,6 +302,10 @@ position: relative;
 
 overflow: hidden;
 
+backdrop-filter: blur(14px);
+
+-webkit-backdrop-filter: blur(14px);
+
 }
 
 .search-box::before {
@@ -352,7 +356,37 @@ color: var(--navy);
 outline: none;
 
 transition: all 0.25s ease;
+
+cursor: pointer;
+
+appearance: none;
+
+-webkit-appearance: none;
+
 }
+
+.search-field {
+
+  position: relative;
+}
+
+.search-field::after {
+
+  content: '⌄';
+
+  position: absolute;
+
+  right: 18px;
+
+  bottom: 18px;
+
+  font-size: 14px;
+
+  color: var(--text-muted);
+
+  pointer-events: none;
+}
+
 
 .search-box select:focus {
 
@@ -377,9 +411,7 @@ box-shadow:
 display: grid;
 
 grid-template-columns:
-  1fr
-  1fr
-  1fr
+  repeat(6,1fr)
   auto;
 
 gap: 16px;
@@ -441,10 +473,38 @@ align-items: center;
 justify-content: center;
 gap: 10px;
 
+letter-spacing: 0.3px;
+
 cursor: pointer;
 
 transition: all 0.25s ease;
 
+}
+
+.results-counter {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  background:
+    rgba(201,168,76,0.10);
+
+  border:
+    1px solid rgba(201,168,76,0.22);
+
+  color: var(--navy);
+
+  padding:
+    10px 16px;
+
+  border-radius: 999px;
+
+  font-size: 13px;
+
+  font-weight: 700;
 }
 
 .search-btn:hover {
@@ -1201,6 +1261,17 @@ color: var(--navy);
 /* =========================
    HERO / BUSCADOR
 ========================= */
+
+/* STICKY SEARCH */
+
+.search-sticky {
+
+  position: sticky;
+
+  top: 110px;
+
+  z-index: 80;
+}
 
 .search-box {
 
