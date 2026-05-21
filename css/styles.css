@@ -922,7 +922,7 @@ position: relative;
 
 max-height: 94vh;
 
-padding: 42px;
+padding: 48px;
 
 box-shadow:
   0 12px 40px rgba(15,23,42,0.14);
@@ -933,14 +933,17 @@ box-shadow:
 
 .modal-layout {
 
-display: flex;
+  display: grid;
 
-flex-direction: column;
+  grid-template-columns:
+    minmax(0,1fr)
+    380px;
 
-gap: 34px;
+  gap: 34px;
 
-margin-top: 30px;
+  align-items: start;
 
+  margin-top: 30px;
 }
 
 /* COLUMNA IZQUIERDA */
@@ -966,6 +969,10 @@ border: 1px solid rgba(15,23,42,0.06);
 box-shadow:
   inset 0 1px 0 rgba(255,255,255,0.8),
   0 14px 34px rgba(15,23,42,0.06);
+
+position: sticky;
+
+top: 20px;
 
 }
 
@@ -1136,48 +1143,60 @@ color: var(--navy);
 
 .modal-whatsapp {
 
-display: flex;
+  display: flex;
 
-align-items: center;
+  align-items: center;
 
-justify-content: center;
+  justify-content: center;
 
-gap: 10px;
+  gap: 12px;
 
-width: 100%;
+  width: 100%;
 
-height: 62px;
+  height: 64px;
 
-border-radius: 18px;
+  border-radius: 20px;
 
-background: #25D366;
+  background:
+    linear-gradient(
+      135deg,
+      #25D366,
+      #1EBE5D
+    );
 
-color: white;
+  color: white;
 
-font-size: 16px;
+  font-size: 17px;
 
-font-weight: 700;
+  font-weight: 800;
 
-text-decoration: none;
+  text-decoration: none;
 
-transition: 0.25s ease;
+  transition: 0.28s ease;
 
-margin-top: 18px;
+  margin-top: 22px;
 
+  box-shadow:
+    0 16px 34px rgba(37,211,102,0.24);
 }
 
 .modal-whatsapp:hover {
 
-transform: translateY(-2px);
+  transform:
+    translateY(-3px);
 
-box-shadow:
-  0 14px 30px rgba(37,211,102,0.24);
-
+  box-shadow:
+    0 20px 40px rgba(37,211,102,0.30);
 }
 
 /* RESPONSIVE */
 
 @media (max-width: 980px) {
+
+  .modal-layout {
+
+    grid-template-columns: 1fr;
+  }
 
 /* =========================
    HERO / BUSCADOR
