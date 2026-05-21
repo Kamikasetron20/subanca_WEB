@@ -57,7 +57,9 @@ nav {
 
   align-items: center;
 
-  justify-content: space-between;
+  justify-content: unset;
+
+  gap: 40px;
 
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
