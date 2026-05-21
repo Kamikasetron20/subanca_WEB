@@ -39,39 +39,25 @@ body {
 
 nav {
 
-position: fixed;
-top: 18px;
-left: 50%;
+  position: fixed;
 
-transform: translateX(-50%);
+  top: 18px;
 
-width: 92%;
-max-width: 1380px;
+  left: 50%;
 
-z-index: 1000;
+  transform: translateX(-50%);
 
-display: flex;
-align-items: center;
-justify-content: space-between;
+  width: 92%;
 
-backdrop-filter: blur(18px);
--webkit-backdrop-filter: blur(18px);
+  max-width: 1380px;
 
-padding: 0 24px;
+  z-index: 1000;
 
-height: 74px;
+  display: flex;
 
-background: rgba(255,255,255,0.96);
+  align-items: center;
 
-border:
-  1px solid rgba(255,255,255,0.4);
-
-border-radius: 22px;
-
-box-shadow:
-  0 12px 40px rgba(15,23,42,0.10);
-
-transition: all 0.3s ease;
+  justify-content: space-between;
 }
 
 nav.scrolled {
