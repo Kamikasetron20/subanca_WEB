@@ -592,7 +592,7 @@ ${Array.isArray(p.imagenes) && p.imagenes.length > 0
           <img
             class="${img === imagenPrincipal ? 'active-thumb' : ''}"
 
-            src="${image}" loading="lazy"
+            src="${img}" loading="lazy"
 
             onclick="
               document.getElementById('main-property-image').src='${img}';
