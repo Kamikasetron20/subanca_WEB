@@ -1499,7 +1499,8 @@ margin-top:22px;
   position: fixed;
 
   top: 0;
-  right: -100%;
+  right: 0;
+  transform: translateX(100%);
 
   width: 82%;
   max-width: 340px;
@@ -1522,7 +1523,7 @@ margin-top:22px;
   flex-direction: column;
 
   transition:
-    right 0.35s ease;
+    transform 0.35s ease;
 
   box-shadow:
     -10px 0 40px rgba(15,23,42,0.12);
@@ -1530,7 +1531,7 @@ margin-top:22px;
 
 .mobile-menu.open {
 
-  right: 0;
+  transform: translateX(0);
 }
 
 .mobile-menu-header {
@@ -1661,9 +1662,10 @@ margin-top:22px;
       rgba(255,255,255,0.96);
   }
   .nav-links, .nav-cta { display: none; }
+
   .nav-menu-btn {
 
-    display: none;
+    display: flex;
   
     width: 46px;
     height: 46px;
