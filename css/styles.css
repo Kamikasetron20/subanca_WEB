@@ -58,6 +58,25 @@ nav {
   align-items: center;
 
   justify-content: space-between;
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  padding: 0 28px;
+
+  height: 78px;
+
+  background: rgba(255,255,255,0.96);
+
+  border:
+    1px solid rgba(255,255,255,0.45);
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 12px 40px rgba(15,23,42,0.10);
+
+  transition: all 0.3s ease;
 }
 
 nav.scrolled {
@@ -184,7 +203,7 @@ position: relative;
 z-index: 2;
 
 width: 100%;
-max-width: 1050px;
+max-width: 1240px;
 
 margin: 0 auto;
 
@@ -212,7 +231,7 @@ text-shadow:
 font-family: 'Cormorant Garamond', serif;
 
 font-size:
-  clamp(46px, 6vw, 76px);
+  clamp(58px, 6vw, 92px);
 
 line-height: 1;
 
@@ -235,12 +254,12 @@ letter-spacing: -2px;
 color:
   rgba(255,255,255,0.78);
 
-font-size: 20px;
+font-size: 24px;
 letter-spacing: 0.2px;
 
 line-height: 1.8;
 
-max-width: 760px;
+max-width: 920px;
 
 margin:
   0 auto 46px;
