@@ -988,44 +988,79 @@ async function optimizeImage(file) {
 async function uploadImages(propertyId) {
 
   const uploadedUrls = [];
+  const uploadedPaths = [];
 
-  console.log(uploadedImgs);
+  for (let i = 0; i < uploadedImgs.length; i++) {
 
-  for (const file of uploadedImgs) {
+    const file = uploadedImgs[i];
 
-    console.log(file);
+    const fileName =
+      `${Date.now()}-${i}-${file.name}`;
 
-    const fileName = `${Date.now()}-${file.name}`;
+    const filePath =
+      `propiedades/${propertyId}/${fileName}`;
 
-    const filePath = `propiedades/${propertyId}/${fileName}`;
+    try {
 
-    const { error } = await supabaseClient
-      .storage
-      .from('subanca-assets')
-      .upload(filePath, file);
+      const { error } = await supabaseClient
+        .storage
+        .from('subanca-assets')
+        .upload(filePath, file);
 
-    if (error) {
+      if (error) {
+        throw new Error(
+          `No se pudo subir "${file.name}": ${error.message}`
+        );
+      }
 
-      console.error(error);
+      uploadedPaths.push(filePath);
 
-      continue;
+      const { data } = supabaseClient
+        .storage
+        .from('subanca-assets')
+        .getPublicUrl(filePath);
 
+      if (!data?.publicUrl) {
+        throw new Error(
+          `No se pudo obtener la URL de "${file.name}".`
+        );
+      }
+
+      uploadedUrls.push(data.publicUrl);
+
+      console.log(
+        `Imagen subida correctamente: ${file.name}`
+      );
+
+    } catch (error) {
+
+      console.error(
+        `Error subiendo la imagen ${file.name}:`,
+        error
+      );
+
+      // Intentar limpiar las imágenes que ya se habían subido
+      if (uploadedPaths.length > 0) {
+
+        const { error: cleanupError } =
+          await supabaseClient
+            .storage
+            .from('subanca-assets')
+            .remove(uploadedPaths);
+
+        if (cleanupError) {
+          console.error(
+            'No fue posible limpiar las imágenes subidas:',
+            cleanupError
+          );
+        }
+      }
+
+      throw error;
     }
-
-    const { data } = supabaseClient
-      .storage
-      .from('subanca-assets')
-      .getPublicUrl(filePath);
-
-    uploadedUrls.push(data.publicUrl);
-
-    console.log(data);
-    console.log(error);
-
   }
 
   return uploadedUrls;
-
 }
 
 async function previewImgs(e) {
