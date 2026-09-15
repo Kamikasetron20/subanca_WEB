@@ -1429,73 +1429,169 @@ async function deleteProp(id) {
   const prop = allProps.find(p => p.id === id);
 
   if (!prop) {
-
-    alert('Propiedad no encontrada');
-
+    alert('Propiedad no encontrada.');
     return;
-
   }
 
-  // Eliminar imágenes Storage
-  if (prop.imagenes && prop.imagenes.length) {
+  try {
 
-    const paths = prop.imagenes.map(url => {
+    // ================================
+    // 1. Obtener imágenes de la propiedad
+    // ================================
 
-      console.log(url);
+    let imageUrls = [];
 
-      const marker = '/storage/v1/object/public/subanca-assets/';
+    if (Array.isArray(prop.imagenes)) {
 
-      const index = url.indexOf(marker);
+      imageUrls = prop.imagenes.filter(Boolean);
 
-      if (index === -1) {
+    } else if (typeof prop.imagenes === 'string' && prop.imagenes.trim()) {
 
-        console.error('Path inválido:', url);
+      try {
 
-        return null;
+        // Formato JSON: ["url1","url2"]
+        const parsed = JSON.parse(prop.imagenes);
+
+        if (Array.isArray(parsed)) {
+          imageUrls = parsed.filter(Boolean);
+        }
+
+      } catch (parseError) {
+
+        console.warn(
+          'No fue posible interpretar las imágenes como JSON:',
+          parseError
+        );
 
       }
 
-      const path = url.substring(index + marker.length);
+    }
 
-      console.log(path);
+    // Si existe imagen principal y no está en la galería,
+    // también la incluimos para evitar dejar archivos huérfanos.
+    if (
+      prop.imagen &&
+      !imageUrls.includes(prop.imagen)
+    ) {
+      imageUrls.push(prop.imagen);
+    }
 
-      return path;
 
-    }).filter(Boolean);
+    // ================================
+    // 2. Convertir URLs → paths Storage
+    // ================================
 
-    const { error: storageError } = await supabaseClient
-      .storage
-      .from('subanca-assets')
-      .remove(paths);
+    const marker =
+      '/storage/v1/object/public/subanca-assets/';
 
-    console.log(storageError);
+    const paths = imageUrls
+      .map(url => {
 
+        if (typeof url !== 'string') {
+          return null;
+        }
+
+        const index = url.indexOf(marker);
+
+        if (index === -1) {
+
+          console.warn(
+            'No se pudo obtener el path Storage:',
+            url
+          );
+
+          return null;
+        }
+
+        return url.substring(
+          index + marker.length
+        );
+
+      })
+      .filter(Boolean);
+
+
+    // ================================
+    // 3. Eliminar imágenes del Storage
+    // ================================
+
+    if (paths.length > 0) {
+
+      const { error: storageError } =
+        await supabaseClient
+          .storage
+          .from('subanca-assets')
+          .remove(paths);
+
+      if (storageError) {
+
+        console.error(
+          'Error eliminando imágenes:',
+          storageError
+        );
+
+        alert(
+          `No se pudieron eliminar las imágenes: ${storageError.message}`
+        );
+
+        return;
+      }
+    }
+
+
+    // ================================
+    // 4. Eliminar registro de la BD
+    // ================================
+
+    const { error: dbError } =
+      await supabaseClient
+        .from('propiedades')
+        .delete()
+        .eq('id', id);
+
+    if (dbError) {
+
+      console.error(
+        'Error eliminando propiedad de la BD:',
+        dbError
+      );
+
+      alert(
+        `No se pudo eliminar la propiedad: ${dbError.message}`
+      );
+
+      return;
+    }
+
+
+    // ================================
+    // 5. Actualizar estado del frontend
+    // ================================
+
+    allProps = allProps.filter(
+      p => p.id !== id
+    );
+
+    myProps = myProps.filter(
+      p => p.id !== id
+    );
+
+    renderProps();
+    renderMyProps();
+
+    alert('Inmueble eliminado correctamente.');
+
+  } catch (err) {
+
+    console.error(
+      'Error inesperado eliminando inmueble:',
+      err
+    );
+
+    alert(
+      `No fue posible eliminar el inmueble: ${err.message}`
+    );
   }
-
-  // Eliminar DB
-  const { error } = await supabaseClient
-    .from('propiedades')
-    .delete()
-    .eq('id', id);
-
-  console.log(error);
-
-  if (error) {
-
-    alert('Error eliminando propiedad');
-
-    return;
-
-  }
-
-  // Actualizar frontend
-  allProps = props.filter(p => p.id !== id);
-
-  myProps = myProps.filter(p => p.id !== id);
-
-  renderProps();
-
-  renderMyProps();
 }
 
 function editProp(id) {
