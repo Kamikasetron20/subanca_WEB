@@ -1184,15 +1184,16 @@ function loadDraft() {
 
 async function publishProp() {
   const nombre = document.getElementById('p-nombre').value.trim();
-  if (!nombre) { alert('Ingrese el nombre o referencia del inmueble.'); return; }
+
+  if (!nombre) {
+    alert('Ingrese el nombre o referencia del inmueble.');
+    return;
+  }
 
   const propertyId = editingPropertyId || crypto.randomUUID();
-  const imageUrls = await uploadImages(propertyId);
+
   const newProp = {
-
     id: propertyId,
-
-    imagenes: imageUrls,
 
     nombre: nombre,
 
@@ -1200,80 +1201,125 @@ async function publishProp() {
 
     gestion: document.getElementById('p-gestion').value,
 
+    estado: document.getElementById('p-estado').value || 'Disponible',
+
     zona: document.getElementById('p-zona').value,
 
-    precio: parseInt(document.getElementById('p-precio').value) || 0,
+    precio: document.getElementById('p-precio').value
+      ? Number(document.getElementById('p-precio').value)
+      : null,
 
-    habitaciones: parseInt(document.getElementById('p-hab').value) || 0,
+    habitaciones: document.getElementById('p-hab').value
+      ? Number(document.getElementById('p-hab').value)
+      : null,
 
-    banos: parseInt(document.getElementById('p-ban').value) || 0,
+    banos: document.getElementById('p-ban').value
+      ? Number(document.getElementById('p-ban').value)
+      : null,
 
-    area: parseInt(document.getElementById('p-area').value) || 0,
+    area: document.getElementById('p-area').value
+      ? Number(document.getElementById('p-area').value)
+      : null,
 
-    parqueaderos: parseInt(document.getElementById('p-park').value) || 0,
+    parqueaderos: document.getElementById('p-park').value
+      ? Number(document.getElementById('p-park').value)
+      : null,
 
-    estrato: parseInt(document.getElementById('p-estrato').value) || 0,
+    estrato: document.getElementById('p-estrato').value
+      ? Number(document.getElementById('p-estrato').value)
+      : null,
 
-    descripcion: document.getElementById('p-desc').value,
+    descripcion: document.getElementById('p-desc').value.trim(),
 
-    asesor: document.getElementById('p-asesor').value,
-
-    created_at: new Date().toISOString()
-
+    asesor: document.getElementById('p-asesor').value.trim()
   };
 
-  let error;
+  try {
 
-  if (editingPropertyId) {
+    // Subir imágenes seleccionadas
+    const imageUrls = await uploadImages(propertyId);
 
-    const response = await supabaseClient
-      .from('propiedades')
-      .update(newProp)
-      .eq('id', editingPropertyId);
+    // Si hay imágenes nuevas, guardarlas
+    if (imageUrls && imageUrls.length > 0) {
 
-    error = response.error;
+      newProp.imagenes = JSON.stringify(imageUrls);
 
-  } else {
+      // Primera imagen = portada
+      newProp.imagen = imageUrls[0];
+    }
 
-    const response = await supabaseClient
-      .from('propiedades')
-      .insert([newProp]);
+    let error;
 
-    error = response.error;
+    if (editingPropertyId) {
 
-  }
+      // EDITAR
+      const response = await supabaseClient
+        .from('propiedades')
+        .update(newProp)
+        .eq('id', editingPropertyId);
 
-  console.log(error);
+      error = response.error;
 
-  if (error) {
+    } else {
 
-    alert('Error guardando inmueble');
+      // CREAR
+      const response = await supabaseClient
+        .from('propiedades')
+        .insert([newProp]);
 
-    return;
+      error = response.error;
+    }
 
-  }
+    if (error) {
+      console.error('Error guardando inmueble:', error);
+      alert(`Error guardando inmueble: ${error.message}`);
+      return;
+    }
 
-  document.getElementById('p-nombre').value = '';
-  document.getElementById('p-precio').value = '';
-  document.getElementById('p-desc').value = '';
-  document.getElementById('img-preview').innerHTML = '';
+    // Confirmación
+    alert(
+      editingPropertyId
+        ? 'Inmueble actualizado correctamente.'
+        : 'Inmueble publicado correctamente.'
+    );
 
-  await loadProperties();
+    // Limpiar formulario
+    document.getElementById('p-nombre').value = '';
+    document.getElementById('p-precio').value = '';
+    document.getElementById('p-hab').value = '';
+    document.getElementById('p-ban').value = '';
+    document.getElementById('p-area').value = '';
+    document.getElementById('p-park').value = '';
+    document.getElementById('p-estrato').value = '';
+    document.getElementById('p-desc').value = '';
+    document.getElementById('img-preview').innerHTML = '';
 
-  renderProps();
+    // Limpiar imágenes seleccionadas
+    uploadedImgs = [];
 
-  renderMyProps();
+    // Recargar propiedades
+    await loadProperties();
 
-  editingPropertyId = null;
+    renderProps();
+    renderMyProps();
 
-  const btn = document.getElementById('publish-btn');
+    // Salir del modo edición
+    editingPropertyId = null;
 
-  if (btn) {
+    const btn = document.getElementById('publish-btn');
 
-    btn.textContent = 'Publicar inmueble';
+    if (btn) {
+      btn.textContent = 'Publicar inmueble';
+    }
 
+  } catch (err) {
+
+    console.error('Error inesperado publicando inmueble:', err);
+
+    alert(`No fue posible guardar el inmueble: ${err.message}`);
   }
 }
+
 
 function renderMyProps() {
   const list = document.getElementById('my-props-list');
