@@ -2040,3 +2040,26 @@ transform:
       translateY(0);
   }
 }
+
+.img-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.img-preview-item {
+  width: 110px;
+  height: 85px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ddd8ce;
+  background: #f5f5f5;
+}
+
+.img-preview-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

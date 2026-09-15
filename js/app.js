@@ -1632,6 +1632,20 @@ function editProp(id) {
 
   document.getElementById('p-asesor').value = prop.asesor || '';
 
+  const preview = document.getElementById('img-preview');
+
+  if (preview) {
+    preview.innerHTML = '';
+
+    if (Array.isArray(prop.imagenes) && prop.imagenes.length > 0) {
+      preview.innerHTML = prop.imagenes.map((url, index) => `
+        <div class="img-preview-item">
+          <img src="${url}" alt="Imagen ${index + 1}">
+        </div>
+      `).join('');
+    }
+  }
+
   // Scroll panel
   document.getElementById('panel').scrollIntoView({
     behavior: 'smooth'
