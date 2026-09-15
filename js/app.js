@@ -1216,6 +1216,7 @@ function loadDraft() {
 }
 
 async function publishProp() {
+
   const nombre = document.getElementById('p-nombre').value.trim();
 
   if (!nombre) {
@@ -1225,7 +1226,34 @@ async function publishProp() {
 
   const propertyId = editingPropertyId || crypto.randomUUID();
 
+  // Buscar propiedad existente cuando estamos editando
+  const existingProp = editingPropertyId
+    ? allProps.find(p => p.id === editingPropertyId)
+    : null;
+
+  // Recuperar imágenes existentes
+  let existingImageUrls = [];
+
+  if (existingProp && Array.isArray(existingProp.imagenes)) {
+    existingImageUrls = existingProp.imagenes.filter(Boolean);
+  }
+
+  // Las imágenes nuevas seleccionadas por el asesor
+  const newImageCount = uploadedImgs.length;
+
+  // Validar máximo de 10 imágenes
+  if (existingImageUrls.length + newImageCount > 10) {
+
+    alert(
+      `La propiedad ya tiene ${existingImageUrls.length} imagen(es). ` +
+      `Solo puede agregar ${10 - existingImageUrls.length} imagen(es) más.`
+    );
+
+    return;
+  }
+
   const newProp = {
+
     id: propertyId,
 
     nombre: nombre,
@@ -1265,20 +1293,31 @@ async function publishProp() {
     descripcion: document.getElementById('p-desc').value.trim(),
 
     asesor: document.getElementById('p-asesor').value.trim()
+
   };
 
   try {
 
-    // Subir imágenes seleccionadas
-    const imageUrls = await uploadImages(propertyId);
+    // Subir imágenes nuevas
+    const newImageUrls = await uploadImages(propertyId);
 
-    // Si hay imágenes nuevas, guardarlas
-    if (imageUrls && imageUrls.length > 0) {
+    // Combinar imágenes existentes + imágenes nuevas
+    const allImageUrls = [
+      ...existingImageUrls,
+      ...newImageUrls
+    ];
 
-      newProp.imagenes = JSON.stringify(imageUrls);
+    // Guardar galería completa
+    if (allImageUrls.length > 0) {
 
-      // Primera imagen = portada
-      newProp.imagen = imageUrls[0];
+      newProp.imagenes = JSON.stringify(allImageUrls);
+
+      // Mantener la portada existente
+      // Si no existía portada, usar la primera imagen
+      newProp.imagen =
+        existingProp?.imagen ||
+        allImageUrls[0];
+
     }
 
     let error;
@@ -1301,15 +1340,19 @@ async function publishProp() {
         .insert([newProp]);
 
       error = response.error;
+
     }
 
     if (error) {
+
       console.error('Error guardando inmueble:', error);
+
       alert(`Error guardando inmueble: ${error.message}`);
+
       return;
+
     }
 
-    // Confirmación
     alert(
       editingPropertyId
         ? 'Inmueble actualizado correctamente.'
@@ -1329,6 +1372,13 @@ async function publishProp() {
 
     // Limpiar imágenes seleccionadas
     uploadedImgs = [];
+
+    // Limpiar input de archivos
+    const imgInput = document.getElementById('img-input');
+
+    if (imgInput) {
+      imgInput.value = '';
+    }
 
     // Recargar propiedades
     await loadProperties();
@@ -1350,9 +1400,10 @@ async function publishProp() {
     console.error('Error inesperado publicando inmueble:', err);
 
     alert(`No fue posible guardar el inmueble: ${err.message}`);
-  }
-}
 
+  }
+
+}
 
 function renderMyProps() {
   const list = document.getElementById('my-props-list');
