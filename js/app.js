@@ -1688,8 +1688,6 @@ loadDraft();
 
 setInterval(saveDraft, 3000);
 
-loadPropsFromDB();
-
 loadProperties();
 
 window.addEventListener('scroll', () => {
