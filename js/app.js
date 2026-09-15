@@ -1602,6 +1602,12 @@ function editProp(id) {
       preview.innerHTML = prop.imagenes.map((url, index) => `
         <div class="img-preview-item">
           <img src="${url}" alt="Imagen ${index + 1}">
+          <button
+            type="button"
+            class="btn-remove-img"
+            onclick="removeExistingImage('${prop.id}', ${index})">
+            ×
+          </button>
         </div>
       `).join('');
     }
@@ -1621,6 +1627,94 @@ function editProp(id) {
 
   }
 
+}
+
+async function removeExistingImage(propertyId, imageIndex) {
+  const prop = allProps.find(p => p.id === propertyId);
+
+  if (!prop || !Array.isArray(prop.imagenes)) {
+    alert('No se pudo encontrar la imagen.');
+    return;
+  }
+
+  const imageUrl = prop.imagenes[imageIndex];
+
+  if (!imageUrl) {
+    alert('Imagen no encontrada.');
+    return;
+  }
+
+  const confirmed = confirm('¿Desea eliminar esta imagen?');
+
+  if (!confirmed) return;
+
+  try {
+    const marker = '/storage/v1/object/public/subanca-assets/';
+    const markerIndex = imageUrl.indexOf(marker);
+
+    if (markerIndex === -1) {
+      throw new Error('No se pudo identificar la ubicación de la imagen.');
+    }
+
+    const filePath = decodeURIComponent(
+      imageUrl.substring(markerIndex + marker.length)
+    );
+
+    const { error: storageError } = await supabaseClient
+      .storage
+      .from('subanca-assets')
+      .remove([filePath]);
+
+    if (storageError) {
+      throw storageError;
+    }
+
+    const updatedImages = prop.imagenes.filter(
+      (_, index) => index !== imageIndex
+    );
+
+    const newCover = updatedImages[0] || null;
+
+    const { error: dbError } = await supabaseClient
+      .from('propiedades')
+      .update({
+        imagenes: JSON.stringify(updatedImages),
+        imagen: newCover
+      })
+      .eq('id', propertyId);
+
+    if (dbError) {
+      throw dbError;
+    }
+
+    prop.imagenes = updatedImages;
+    prop.imagen = newCover;
+
+    const preview = document.getElementById('img-preview');
+
+    if (preview) {
+      preview.innerHTML = updatedImages.map((url, index) => `
+        <div class="img-preview-item">
+          <img src="${url}" alt="Imagen ${index + 1}">
+          <button
+            type="button"
+            class="btn-remove-img"
+            onclick="removeExistingImage('${propertyId}', ${index})">
+            ×
+          </button>
+        </div>
+      `).join('');
+    }
+
+    renderProps();
+    renderMyProps();
+
+    alert('Imagen eliminada correctamente.');
+
+  } catch (error) {
+    console.error('Error eliminando imagen:', error);
+    alert('No fue posible eliminar la imagen.');
+  }
 }
 
 // ===== MOBILE MENU =====
