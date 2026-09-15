@@ -840,15 +840,48 @@ function submitContact(e) {
 }
 
 // ===== PANEL =====
-function doLogin() {
-  const u = document.getElementById('login-user').value;
+async function doLogin() {
+
+  const u = document.getElementById('login-user').value.trim();
   const p = document.getElementById('login-pass').value;
-  if ((u === 'asesor' || u.includes('@')) && p === '1234') {
+
+  if (!u || !p) {
+    alert('Ingrese su correo y contraseña.');
+    return;
+  }
+
+  try {
+
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email: u,
+      password: p
+    });
+
+    if (error) {
+      console.error('Error de autenticación:', error);
+      alert('Correo o contraseña incorrectos.');
+      return;
+    }
+
+    if (!data.session) {
+      alert('No se pudo iniciar la sesión.');
+      return;
+    }
+
+    console.log('Usuario autenticado:', data.user.email);
+
+    // Mostrar panel
     document.getElementById('panel-login').style.display = 'none';
     document.getElementById('panel-content').classList.add('visible');
+
+    // Cargar propiedades del asesor
     renderMyProps();
-  } else {
-    alert('Credenciales incorrectas. Use: asesor / 1234');
+
+  } catch (err) {
+
+    console.error('Error inesperado iniciando sesión:', err);
+    alert('No fue posible iniciar sesión. Inténtelo nuevamente.');
+
   }
 }
 function doLogout() {
