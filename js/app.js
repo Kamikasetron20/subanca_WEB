@@ -1222,6 +1222,7 @@ function loadDraft() {
 
 }
 
+
 async function publishProp() {
 
   const nombre = document.getElementById('p-nombre').value.trim();
@@ -1232,6 +1233,7 @@ async function publishProp() {
   }
 
   const propertyId = editingPropertyId || crypto.randomUUID();
+
   if (!editingPropertyId) {
     selectedCoverImage = null;
   }
@@ -1246,10 +1248,25 @@ async function publishProp() {
     return;
   }
 
-  // Buscar propiedad existente cuando estamos editando
+  // Buscar propiedad existente
   const existingProp = editingPropertyId
     ? allProps.find(p => p.id === editingPropertyId)
     : null;
+
+  // Verificar propiedad existente
+  if (editingPropertyId) {
+
+    if (!existingProp) {
+      alert('No se encontró la propiedad que desea editar.');
+      return;
+    }
+
+    if (existingProp.propietario_id !== user.id) {
+      alert('No tiene permisos para editar esta propiedad.');
+      return;
+    }
+
+  }
 
   // Recuperar imágenes existentes
   let existingImageUrls = [];
@@ -1258,7 +1275,6 @@ async function publishProp() {
     existingImageUrls = existingProp.imagenes.filter(Boolean);
   }
 
-  // Las imágenes nuevas seleccionadas por el asesor
   const newImageCount = uploadedImgs.length;
 
   // Validar máximo de 10 imágenes
@@ -1272,6 +1288,7 @@ async function publishProp() {
     return;
   }
 
+  // Datos principales de la propiedad
   const newProp = {
 
     id: propertyId,
@@ -1318,62 +1335,77 @@ async function publishProp() {
 
   };
 
+  let propertyCreated = false;
+
   try {
-
-    // Subir imágenes nuevas
-    const newImageUrls = await uploadImages(propertyId);
-
-    // Combinar imágenes existentes + imágenes nuevas
-    const allImageUrls = [
-      ...existingImageUrls,
-      ...newImageUrls
-    ];
-
-    // Guardar galería completa
-    if (allImageUrls.length > 0) {
-
-      newProp.imagenes = JSON.stringify(allImageUrls);
-
-      // Guardar la portada seleccionada
-      // Si no se seleccionó una nueva portada, mantener la existente
-      // Si no existe ninguna, usar la primera imagen
-      newProp.imagen =
-      selectedCoverImage ||
-      existingProp?.imagen ||
-      allImageUrls[0];
-
-    }
 
     let error;
 
+    // 1. CREAR O ACTUALIZAR EL REGISTRO ANTES DE SUBIR IMÁGENES
     if (editingPropertyId) {
 
-      // EDITAR
       const response = await supabaseClient
         .from('propiedades')
         .update(newProp)
-        .eq('id', editingPropertyId);
+        .eq('id', editingPropertyId)
+        .eq('propietario_id', user.id);
 
       error = response.error;
 
     } else {
 
-      // CREAR
       const response = await supabaseClient
         .from('propiedades')
         .insert([newProp]);
 
       error = response.error;
 
+      if (!error) {
+        propertyCreated = true;
+      }
+
     }
 
     if (error) {
+      throw new Error(`Error guardando la propiedad: ${error.message}`);
+    }
 
-      console.error('Error guardando inmueble:', error);
+    // 2. SUBIR IMÁGENES NUEVAS
+    const newImageUrls = await uploadImages(propertyId);
 
-      alert(`Error guardando inmueble: ${error.message}`);
+    // 3. COMBINAR IMÁGENES EXISTENTES Y NUEVAS
+    const allImageUrls = [
+      ...existingImageUrls,
+      ...newImageUrls
+    ];
 
-      return;
+    const imageUpdate = {};
+
+    if (allImageUrls.length > 0) {
+
+      imageUpdate.imagenes = JSON.stringify(allImageUrls);
+
+      imageUpdate.imagen =
+        selectedCoverImage ||
+        existingProp?.imagen ||
+        allImageUrls[0];
+
+    }
+
+    // 4. ACTUALIZAR LA PROPIEDAD CON LAS IMÁGENES
+    if (Object.keys(imageUpdate).length > 0) {
+
+      const response = await supabaseClient
+        .from('propiedades')
+        .update(imageUpdate)
+        .eq('id', propertyId)
+        .eq('propietario_id', user.id);
+
+      if (response.error) {
+        throw new Error(
+          `Error guardando las imágenes: ${response.error.message}`
+        );
+      }
 
     }
 
@@ -1394,23 +1426,19 @@ async function publishProp() {
     document.getElementById('p-desc').value = '';
     document.getElementById('img-preview').innerHTML = '';
 
-    // Limpiar imágenes seleccionadas
     uploadedImgs = [];
 
-    // Limpiar input de archivos
     const imgInput = document.getElementById('img-input');
 
     if (imgInput) {
       imgInput.value = '';
     }
 
-    // Recargar propiedades
     await loadProperties();
 
     renderProps();
-    renderMyProps();
+    await renderMyProps();
 
-    // Salir del modo edición
     editingPropertyId = null;
 
     const btn = document.getElementById('publish-btn');
@@ -1422,6 +1450,25 @@ async function publishProp() {
   } catch (err) {
 
     console.error('Error inesperado publicando inmueble:', err);
+
+    // Si se creó una propiedad nueva y algo falló,
+    // eliminar el registro para evitar propiedades incompletas.
+    if (propertyCreated) {
+
+      const { error: rollbackError } = await supabaseClient
+        .from('propiedades')
+        .delete()
+        .eq('id', propertyId)
+        .eq('propietario_id', user.id);
+
+      if (rollbackError) {
+        console.error(
+          'No fue posible eliminar el registro incompleto:',
+          rollbackError
+        );
+      }
+
+    }
 
     alert(`No fue posible guardar el inmueble: ${err.message}`);
 
