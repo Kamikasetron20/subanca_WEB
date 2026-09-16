@@ -1070,11 +1070,40 @@ async function previewImgs(e) {
 
   const preview = document.getElementById('img-preview');
 
+  if (!preview) return;
+
   preview.innerHTML = '';
 
   uploadedImgs = [];
 
-  const files = Array.from(e.target.files).slice(0, 10);
+  const files = Array.from(e.target.files);
+
+  // Buscar la propiedad que se está editando
+  const existingProp = editingPropertyId
+    ? allProps.find(p => p.id === editingPropertyId)
+    : null;
+
+  const existingImageCount =
+    existingProp && Array.isArray(existingProp.imagenes)
+      ? existingProp.imagenes.length
+      : 0;
+
+  const totalImages = existingImageCount + files.length;
+
+  // Validar máximo de 10 imágenes
+  if (totalImages > 10) {
+
+    const allowed = 10 - existingImageCount;
+
+    alert(
+      `La propiedad ya tiene ${existingImageCount} imagen(es). ` +
+      `Solo puede agregar ${allowed} imagen(es) más.`
+    );
+
+    e.target.value = '';
+
+    return;
+  }
 
   for (const file of files) {
 
