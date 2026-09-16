@@ -4,6 +4,7 @@ const supabaseClient = supabase.createClient(
 );
 let uploadedImgs = [];
 let editingPropertyId = null;
+let selectedCoverImage = null;
 
 // ===== DATA =====
 let allProps = [
@@ -332,10 +333,10 @@ function getFilteredProps() {
     document.getElementById('s-precio').value;
     const hab =
     document.getElementById('s-hab')?.value || '';
-  
+
   const ban =
     document.getElementById('s-ban')?.value || '';
-  
+
   const order =
     document.getElementById('s-order')?.value || '';
 
@@ -355,7 +356,7 @@ function getFilteredProps() {
   if(hab){
 
     filtered = filtered.filter(p =>
-  
+
       Number(p.habitaciones || 0)
         >= Number(hab)
     );
@@ -364,7 +365,7 @@ function getFilteredProps() {
   if(ban){
 
     filtered = filtered.filter(p =>
-  
+
       Number(p.banos || 0)
         >= Number(ban)
     );
@@ -373,25 +374,25 @@ function getFilteredProps() {
   if(order === 'price-asc'){
 
     filtered.sort((a,b)=>
-  
+
       Number(a.precio || 0)
       -
       Number(b.precio || 0)
     );
   }
-  
+
   if(order === 'price-desc'){
-  
+
     filtered.sort((a,b)=>
-  
+
       Number(b.precio || 0)
       -
       Number(a.precio || 0)
     );
   }
-  
+
   if(order === 'recent'){
-  
+
     filtered.reverse();
   }
 
@@ -1188,6 +1189,9 @@ async function publishProp() {
   }
 
   const propertyId = editingPropertyId || crypto.randomUUID();
+  if (!editingPropertyId) {
+    selectedCoverImage = null;
+  }
 
   // Buscar propiedad existente cuando estamos editando
   const existingProp = editingPropertyId
@@ -1275,11 +1279,13 @@ async function publishProp() {
 
       newProp.imagenes = JSON.stringify(allImageUrls);
 
-      // Mantener la portada existente
-      // Si no existía portada, usar la primera imagen
+      // Guardar la portada seleccionada
+      // Si no se seleccionó una nueva portada, mantener la existente
+      // Si no existe ninguna, usar la primera imagen
       newProp.imagen =
-        existingProp?.imagen ||
-        allImageUrls[0];
+      selectedCoverImage ||
+      existingProp?.imagen ||
+      allImageUrls[0];
 
     }
 
@@ -1570,6 +1576,7 @@ function editProp(id) {
   }
 
   editingPropertyId = id;
+  selectedCoverImage = prop.imagen || null;
 
   document.getElementById('p-nombre').value = prop.nombre || '';
 
@@ -1602,14 +1609,24 @@ function editProp(id) {
 
     if (Array.isArray(prop.imagenes) && prop.imagenes.length > 0) {
       preview.innerHTML = prop.imagenes.map((url, index) => `
-        <div class="img-preview-item">
+        <div class="img-preview-item ${selectedCoverImage === url ? 'is-cover' : ''}">
+
           <img src="${url}" alt="Imagen ${index + 1}">
+
+          <button
+            type="button"
+            class="btn-cover-img"
+            onclick="selectCoverImage('${prop.id}', ${index})">
+            ${selectedCoverImage === url ? '★ Portada' : '☆ Portada'}
+          </button>
+
           <button
             type="button"
             class="btn-remove-img"
             onclick="removeExistingImage('${prop.id}', ${index})">
             ×
           </button>
+
         </div>
       `).join('');
     }
@@ -1626,6 +1643,54 @@ function editProp(id) {
   if (btn) {
 
     btn.textContent = 'Guardar cambios';
+
+  }
+
+}
+
+function selectCoverImage(propertyId, imageIndex) {
+
+  const prop = allProps.find(p => p.id === propertyId);
+
+  if (!prop || !Array.isArray(prop.imagenes)) {
+    alert('No se pudo encontrar la propiedad o sus imágenes.');
+    return;
+  }
+
+  const selectedImage = prop.imagenes[imageIndex];
+
+  if (!selectedImage) {
+    alert('Imagen no encontrada.');
+    return;
+  }
+
+  selectedCoverImage = selectedImage;
+
+  const preview = document.getElementById('img-preview');
+
+  if (preview) {
+
+    preview.innerHTML = prop.imagenes.map((url, index) => `
+      <div class="img-preview-item ${selectedCoverImage === url ? 'is-cover' : ''}">
+
+        <img src="${url}" alt="Imagen ${index + 1}">
+
+        <button
+          type="button"
+          class="btn-cover-img"
+          onclick="selectCoverImage('${propertyId}', ${index})">
+          ${selectedCoverImage === url ? '★ Portada' : '☆ Portada'}
+        </button>
+
+        <button
+          type="button"
+          class="btn-remove-img"
+          onclick="removeExistingImage('${propertyId}', ${index})">
+          ×
+        </button>
+
+      </div>
+    `).join('');
 
   }
 
