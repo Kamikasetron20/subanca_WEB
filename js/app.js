@@ -128,6 +128,8 @@ async function loadProperties() {
 
   }));
 
+  myProps = [...allProps];
+
   const container = document.getElementById('props-grid');
 
   if (container) {
