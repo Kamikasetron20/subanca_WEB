@@ -43,6 +43,7 @@ async function loadProperties() {
   allProps = data.map(p => ({
 
     id: p.id,
+    propietario_id: p.propietario_id || null,
 
     imagenes: (() => {
 
@@ -1222,6 +1223,16 @@ async function publishProp() {
     selectedCoverImage = null;
   }
 
+  const {
+    data: { user },
+    error: authError
+  } = await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    alert('Debe iniciar sesión para administrar inmuebles.');
+    return;
+  }
+
   // Buscar propiedad existente cuando estamos editando
   const existingProp = editingPropertyId
     ? allProps.find(p => p.id === editingPropertyId)
@@ -1251,6 +1262,8 @@ async function publishProp() {
   const newProp = {
 
     id: propertyId,
+
+    propietario_id: user.id,
 
     nombre: nombre,
 
@@ -1403,20 +1416,64 @@ async function publishProp() {
 
 }
 
-function renderMyProps() {
+async function renderMyProps() {
+
   const list = document.getElementById('my-props-list');
-  if (myProps.length === 0) { list.innerHTML = '<p style="color:var(--text-muted);font-size:14px">No hay inmuebles publicados aún.</p>'; return; }
-  list.innerHTML = myProps.slice(0, 8).map(p => `
+
+  if (!list) return;
+
+  const {
+    data: { user },
+    error
+  } = await supabaseClient.auth.getUser();
+
+  if (error || !user) {
+    list.innerHTML =
+      '<p style="color:var(--text-muted);font-size:14px">Debe iniciar sesión.</p>';
+    return;
+  }
+
+  const myProperties = allProps.filter(
+    p => p.propietario_id === user.id
+  );
+
+  if (myProperties.length === 0) {
+
+    list.innerHTML =
+      '<p style="color:var(--text-muted);font-size:14px">' +
+      'No hay inmuebles publicados aún.' +
+      '</p>';
+
+    return;
+  }
+
+  list.innerHTML = myProperties.slice(0, 8).map(p => `
     <div class="panel-prop-row">
+
       <div class="pp-info">
         <strong>${p.nombre}</strong>
-        <span>${p.gestion} · ${p.tipo} · ${p.zona} · ${fmtPrice(p.precio, p.gestion)}</span>
+        <span>
+          ${p.gestion} · ${p.tipo} · ${p.zona} ·
+          ${fmtPrice(p.precio, p.gestion)}
+        </span>
       </div>
+
       <div class="pp-actions">
-        <button class="btn-edit" onclick="editProp('${p.id}')">Editar</button>
-        <button class="btn-del" onclick="deleteProp('${p.id}')">Eliminar</button>
+        <button
+          class="btn-edit"
+          onclick="editProp('${p.id}')">
+          Editar
+        </button>
+
+        <button
+          class="btn-del"
+          onclick="deleteProp('${p.id}')">
+          Eliminar
+        </button>
       </div>
-    </div>`).join('');
+
+    </div>
+  `).join('');
 }
 
 async function deleteProp(id) {
