@@ -888,9 +888,22 @@ async function doLogin() {
 
   }
 }
-function doLogout() {
+
+async function doLogout() {
+
+  const { error } = await supabaseClient.auth.signOut();
+
+  if (error) {
+    console.error('Error cerrando sesión:', error);
+    alert('No fue posible cerrar la sesión.');
+    return;
+  }
+
   document.getElementById('panel-login').style.display = 'block';
   document.getElementById('panel-content').classList.remove('visible');
+
+  editingPropertyId = null;
+  uploadedImgs = [];
 }
 
 async function optimizeImage(file) {
