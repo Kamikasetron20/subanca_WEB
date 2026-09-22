@@ -1353,6 +1353,13 @@ async function publishProp() {
       return;
     }
 
+    console.log('DEBUG EDICION:', {
+  editingPropertyId,
+  propietarioPropiedad: existingProp.propietario_id,
+  usuarioActual: user.id,
+  coincide: existingProp.propietario_id === user.id
+});
+
     if (existingProp.propietario_id !== user.id) {
       alert('No tiene permisos para editar esta propiedad.');
       return;
