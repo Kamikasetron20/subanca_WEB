@@ -47,6 +47,9 @@ async function loadProperties() {
   `)
   .order('created_at', { ascending: false });
 
+  console.log('MIS PROPIEDADES - DATA:', data);
+  console.log('MIS PROPIEDADES - ERROR:', error);
+
   console.log(data);
   console.log(error);
 
@@ -160,6 +163,85 @@ async function loadProperties() {
 
   renderProps(allProps);
 
+}
+
+async function loadMyProperties() {
+  const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    myProps = [];
+    return;
+  }
+
+  const { data, error } = await supabaseClient
+    .from('propiedades')
+    .select(`
+      id,
+      propietario_id,
+      nombre,
+      tipo,
+      gestion,
+      zona,
+      precio,
+      habitaciones,
+      banos,
+      area,
+      parqueaderos,
+      estrato,
+      descripcion,
+      asesor,
+      created_at,
+      imagen,
+      imagenes,
+      direccion,
+      estado
+    `)
+    .eq('propietario_id', user.id)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error cargando mis propiedades:', error);
+    myProps = [];
+    return;
+  }
+
+  myProps = data.map(p => {
+    let imagenes = [];
+
+    try {
+      imagenes = p.imagenes
+        ? (typeof p.imagenes === 'string' ? JSON.parse(p.imagenes) : p.imagenes)
+        : [];
+    } catch (e) {
+      imagenes = [];
+    }
+
+    if (!Array.isArray(imagenes)) {
+      imagenes = [];
+    }
+
+    return {
+      id: p.id,
+      propietario_id: p.propietario_id,
+      imagenes,
+      imagen: p.imagen || imagenes[0] || '',
+      nombre: p.nombre,
+      tipo: p.tipo,
+      gestion: p.gestion,
+      zona: p.zona,
+      precio: p.precio,
+      hab: p.habitaciones,
+      ban: p.banos,
+      area: p.area,
+      park: p.parqueaderos,
+      estrato: p.estrato,
+      desc: p.descripcion,
+      asesor: p.asesor,
+      direccion: p.direccion,
+      estado: p.estado,
+      nuevo: true
+    };
+  });
 }
 
 let myProps = [...allProps]; // panel props
@@ -1511,9 +1593,9 @@ async function renderMyProps() {
     return;
   }
 
-  const myProperties = allProps.filter(
-    p => p.propietario_id === user.id
-  );
+  await loadMyProperties();
+
+  const myProperties = myProps;
 
   if (myProperties.length === 0) {
 
