@@ -1342,8 +1342,8 @@ async function publishProp() {
 
   // Buscar propiedad existente
   const existingProp = editingPropertyId
-    ? allProps.find(p => p.id === editingPropertyId)
-    : null;
+  ? myProps.find(p => p.id === editingPropertyId)
+  : null;
 
   // Verificar propiedad existente
   if (editingPropertyId) {
