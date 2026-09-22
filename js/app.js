@@ -1538,21 +1538,12 @@ async function renderMyProps() {
 
 async function deleteProp(id) {
 
-  // ================================
-  // 1. Confirmación
-  // ================================
-
   if (!confirm(
     '¿Está seguro de eliminar este inmueble?\n\n' +
-    'También se eliminarán sus imágenes almacenadas.'
+    'También se eliminarán todas sus imágenes almacenadas.'
   )) {
     return;
   }
-
-
-  // ================================
-  // 2. Verificar usuario autenticado
-  // ================================
 
   const {
     data: { user },
@@ -1560,167 +1551,82 @@ async function deleteProp(id) {
   } = await supabaseClient.auth.getUser();
 
   if (authError || !user) {
-
-    alert(
-      'Debe iniciar sesión para eliminar inmuebles.'
-    );
-
+    alert('Debe iniciar sesión para eliminar inmuebles.');
     return;
   }
 
-
-  // ================================
-  // 3. Buscar propiedad
-  // ================================
-
-  const prop = allProps.find(
-    p => p.id === id
-  );
+  const prop = allProps.find(p => p.id === id);
 
   if (!prop) {
-
-    alert(
-      'Propiedad no encontrada.'
-    );
-
+    alert('Propiedad no encontrada.');
     return;
   }
-
-
-  // ================================
-  // 4. Verificar propietario
-  // ================================
 
   if (prop.propietario_id !== user.id) {
-
-    console.warn(
-      'Intento de eliminar propiedad ajena:',
-      id
-    );
-
-    alert(
-      'No tiene permisos para eliminar esta propiedad.'
-    );
-
+    console.warn('Intento de eliminar propiedad ajena:', id);
+    alert('No tiene permisos para eliminar esta propiedad.');
     return;
   }
-
 
   try {
 
-    // ================================
-    // 5. Obtener imágenes
-    // ================================
+    /*
+     * 1. Buscar TODOS los archivos asociados
+     *    a la carpeta del inmueble en Storage.
+     */
 
-    let imageUrls = [];
+    const folderPath = `propiedades/${id}`;
 
+    const {
+      data: storageFiles,
+      error: listError
+    } = await supabaseClient
+      .storage
+      .from('subanca-assets')
+      .list(folderPath);
 
-    if (Array.isArray(prop.imagenes)) {
+    if (listError) {
+      console.error(
+        'Error consultando imágenes de Storage:',
+        listError
+      );
 
-      imageUrls =
-        prop.imagenes.filter(Boolean);
+      alert(
+        `No se pudieron consultar las imágenes del inmueble: ${listError.message}`
+      );
 
-    } else if (
-      typeof prop.imagenes === 'string' &&
-      prop.imagenes.trim()
-    ) {
-
-      try {
-
-        const parsed =
-          JSON.parse(prop.imagenes);
-
-        if (Array.isArray(parsed)) {
-
-          imageUrls =
-            parsed.filter(Boolean);
-
-        }
-
-      } catch (parseError) {
-
-        console.warn(
-          'No fue posible interpretar las imágenes como JSON:',
-          parseError
-        );
-
-      }
-
+      return;
     }
 
+    /*
+     * 2. Construir las rutas completas de todos
+     *    los archivos encontrados.
+     */
 
-    // Agregar imagen principal si no está
-    // incluida en la galería
+    const storagePaths = (storageFiles || [])
+      .filter(file => file && file.name)
+      .map(file => `${folderPath}/${file.name}`);
 
-    if (
-      prop.imagen &&
-      !imageUrls.includes(prop.imagen)
-    ) {
+    console.log(
+      'Archivos encontrados para eliminar:',
+      storagePaths
+    );
 
-      imageUrls.push(prop.imagen);
+    /*
+     * 3. Eliminar TODOS los archivos de Storage.
+     */
 
-    }
-
-
-    // ================================
-    // 6. Convertir URLs a paths
-    // ================================
-
-    const marker =
-      '/storage/v1/object/public/subanca-assets/';
-
-
-    const paths = imageUrls
-      .map(url => {
-
-        if (
-          typeof url !== 'string'
-        ) {
-          return null;
-        }
-
-
-        const index =
-          url.indexOf(marker);
-
-
-        if (index === -1) {
-
-          console.warn(
-            'No se pudo obtener el path Storage:',
-            url
-          );
-
-          return null;
-        }
-
-
-        return url.substring(
-          index + marker.length
-        );
-
-      })
-      .filter(Boolean);
-
-
-    // ================================
-    // 7. Eliminar imágenes Storage
-    // ================================
-
-    if (paths.length > 0) {
+    if (storagePaths.length > 0) {
 
       const {
         data: storageData,
         error: storageError
-      } =
-        await supabaseClient
-          .storage
-          .from('subanca-assets')
-          .remove(paths);
-
+      } = await supabaseClient
+        .storage
+        .from('subanca-assets')
+        .remove(storagePaths);
 
       if (storageError) {
-
         console.error(
           'Error eliminando imágenes:',
           storageError
@@ -1733,34 +1639,31 @@ async function deleteProp(id) {
         return;
       }
 
-
       console.log(
         'Imágenes eliminadas de Storage:',
         storageData
       );
-
     }
 
-
-    // ================================
-    // 8. Eliminar propiedad de BD
-    // ================================
+    /*
+     * 4. Eliminar el inmueble de la base de datos.
+     *
+     *    También filtramos por propietario_id para
+     *    reforzar la seguridad en la consulta.
+     */
 
     const {
       data: deletedProperty,
       error: dbError
-    } =
-      await supabaseClient
-        .from('propiedades')
-        .delete()
-        .eq('id', id)
-        .eq('propietario_id', user.id)
-        .select('id')
-        .maybeSingle();
-
+    } = await supabaseClient
+      .from('propiedades')
+      .delete()
+      .eq('id', id)
+      .eq('propietario_id', user.id)
+      .select('id')
+      .maybeSingle();
 
     if (dbError) {
-
       console.error(
         'Error eliminando propiedad de la BD:',
         dbError
@@ -1773,13 +1676,11 @@ async function deleteProp(id) {
       return;
     }
 
-
-    // ================================
-    // 9. Confirmar eliminación real
-    // ================================
+    /*
+     * 5. Confirmar que realmente se eliminó.
+     */
 
     if (!deletedProperty) {
-
       console.warn(
         'La propiedad no fue eliminada. Puede que RLS haya bloqueado la operación.'
       );
@@ -1791,36 +1692,20 @@ async function deleteProp(id) {
       return;
     }
 
+    /*
+     * 6. Actualizar los datos del frontend
+     *    sin recargar la página.
+     */
 
-    // ================================
-    // 10. Actualizar frontend
-    // ================================
-
-    allProps =
-      allProps.filter(
-        p => p.id !== id
-      );
-
-
-    myProps =
-      myProps.filter(
-        p => p.id !== id
-      );
-
+    allProps = allProps.filter(p => p.id !== id);
+    myProps = myProps.filter(p => p.id !== id);
 
     renderProps();
-
     await renderMyProps();
-
-
-    // ================================
-    // 11. Confirmación final
-    // ================================
 
     alert(
       'Inmueble eliminado correctamente.'
     );
-
 
   } catch (err) {
 
@@ -1832,9 +1717,7 @@ async function deleteProp(id) {
     alert(
       `No fue posible eliminar el inmueble: ${err.message}`
     );
-
   }
-
 }
 
 function editProp(id) {
