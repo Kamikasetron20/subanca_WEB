@@ -47,12 +47,6 @@ async function loadProperties() {
   `)
   .order('created_at', { ascending: false });
 
-  console.log('MIS PROPIEDADES - DATA:', data);
-  console.log('MIS PROPIEDADES - ERROR:', error);
-
-  console.log(data);
-  console.log(error);
-
   if (error) {
 
     console.error('Error cargando propiedades:', error);
@@ -150,8 +144,6 @@ async function loadProperties() {
     nuevo: true
 
   }));
-
-  myProps = [...allProps];
 
   const container = document.getElementById('props-grid');
 
