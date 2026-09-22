@@ -25,9 +25,27 @@ let allProps = [
 async function loadProperties() {
 
   const { data, error } = await supabaseClient
-    .from('propiedades')
-    .select('*')
-    .order('created_at', { ascending: false });
+  .from('propiedades')
+  .select(`
+    id,
+    nombre,
+    tipo,
+    gestion,
+    zona,
+    precio,
+    habitaciones,
+    banos,
+    area,
+    parqueaderos,
+    estrato,
+    descripcion,
+    asesor,
+    created_at,
+    imagen,
+    imagenes,
+    estado
+  `)
+  .order('created_at', { ascending: false });
 
   console.log(data);
   console.log(error);
