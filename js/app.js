@@ -1538,37 +1538,103 @@ async function renderMyProps() {
 
 async function deleteProp(id) {
 
-  if (!confirm('¿Eliminar este inmueble?')) return;
+  // ================================
+  // 1. Confirmación
+  // ================================
 
-  // Buscar propiedad completa
-  const prop = allProps.find(p => p.id === id);
-
-  if (!prop) {
-    alert('Propiedad no encontrada.');
+  if (!confirm(
+    '¿Está seguro de eliminar este inmueble?\n\n' +
+    'También se eliminarán sus imágenes almacenadas.'
+  )) {
     return;
   }
+
+
+  // ================================
+  // 2. Verificar usuario autenticado
+  // ================================
+
+  const {
+    data: { user },
+    error: authError
+  } = await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+
+    alert(
+      'Debe iniciar sesión para eliminar inmuebles.'
+    );
+
+    return;
+  }
+
+
+  // ================================
+  // 3. Buscar propiedad
+  // ================================
+
+  const prop = allProps.find(
+    p => p.id === id
+  );
+
+  if (!prop) {
+
+    alert(
+      'Propiedad no encontrada.'
+    );
+
+    return;
+  }
+
+
+  // ================================
+  // 4. Verificar propietario
+  // ================================
+
+  if (prop.propietario_id !== user.id) {
+
+    console.warn(
+      'Intento de eliminar propiedad ajena:',
+      id
+    );
+
+    alert(
+      'No tiene permisos para eliminar esta propiedad.'
+    );
+
+    return;
+  }
+
 
   try {
 
     // ================================
-    // 1. Obtener imágenes de la propiedad
+    // 5. Obtener imágenes
     // ================================
 
     let imageUrls = [];
 
+
     if (Array.isArray(prop.imagenes)) {
 
-      imageUrls = prop.imagenes.filter(Boolean);
+      imageUrls =
+        prop.imagenes.filter(Boolean);
 
-    } else if (typeof prop.imagenes === 'string' && prop.imagenes.trim()) {
+    } else if (
+      typeof prop.imagenes === 'string' &&
+      prop.imagenes.trim()
+    ) {
 
       try {
 
-        // Formato JSON: ["url1","url2"]
-        const parsed = JSON.parse(prop.imagenes);
+        const parsed =
+          JSON.parse(prop.imagenes);
 
         if (Array.isArray(parsed)) {
-          imageUrls = parsed.filter(Boolean);
+
+          imageUrls =
+            parsed.filter(Boolean);
+
         }
 
       } catch (parseError) {
@@ -1582,31 +1648,41 @@ async function deleteProp(id) {
 
     }
 
-    // Si existe imagen principal y no está en la galería,
-    // también la incluimos para evitar dejar archivos huérfanos.
+
+    // Agregar imagen principal si no está
+    // incluida en la galería
+
     if (
       prop.imagen &&
       !imageUrls.includes(prop.imagen)
     ) {
+
       imageUrls.push(prop.imagen);
+
     }
 
 
     // ================================
-    // 2. Convertir URLs → paths Storage
+    // 6. Convertir URLs a paths
     // ================================
 
     const marker =
       '/storage/v1/object/public/subanca-assets/';
 
+
     const paths = imageUrls
       .map(url => {
 
-        if (typeof url !== 'string') {
+        if (
+          typeof url !== 'string'
+        ) {
           return null;
         }
 
-        const index = url.indexOf(marker);
+
+        const index =
+          url.indexOf(marker);
+
 
         if (index === -1) {
 
@@ -1618,6 +1694,7 @@ async function deleteProp(id) {
           return null;
         }
 
+
         return url.substring(
           index + marker.length
         );
@@ -1627,16 +1704,20 @@ async function deleteProp(id) {
 
 
     // ================================
-    // 3. Eliminar imágenes del Storage
+    // 7. Eliminar imágenes Storage
     // ================================
 
     if (paths.length > 0) {
 
-      const { error: storageError } =
+      const {
+        data: storageData,
+        error: storageError
+      } =
         await supabaseClient
           .storage
           .from('subanca-assets')
           .remove(paths);
+
 
       if (storageError) {
 
@@ -1651,18 +1732,32 @@ async function deleteProp(id) {
 
         return;
       }
+
+
+      console.log(
+        'Imágenes eliminadas de Storage:',
+        storageData
+      );
+
     }
 
 
     // ================================
-    // 4. Eliminar registro de la BD
+    // 8. Eliminar propiedad de BD
     // ================================
 
-    const { error: dbError } =
+    const {
+      data: deletedProperty,
+      error: dbError
+    } =
       await supabaseClient
         .from('propiedades')
         .delete()
-        .eq('id', id);
+        .eq('id', id)
+        .eq('propietario_id', user.id)
+        .select('id')
+        .maybeSingle();
+
 
     if (dbError) {
 
@@ -1680,21 +1775,52 @@ async function deleteProp(id) {
 
 
     // ================================
-    // 5. Actualizar estado del frontend
+    // 9. Confirmar eliminación real
     // ================================
 
-    allProps = allProps.filter(
-      p => p.id !== id
-    );
+    if (!deletedProperty) {
 
-    myProps = myProps.filter(
-      p => p.id !== id
-    );
+      console.warn(
+        'La propiedad no fue eliminada. Puede que RLS haya bloqueado la operación.'
+      );
+
+      alert(
+        'No fue posible eliminar el inmueble. Verifique que sea de su propiedad.'
+      );
+
+      return;
+    }
+
+
+    // ================================
+    // 10. Actualizar frontend
+    // ================================
+
+    allProps =
+      allProps.filter(
+        p => p.id !== id
+      );
+
+
+    myProps =
+      myProps.filter(
+        p => p.id !== id
+      );
+
 
     renderProps();
-    renderMyProps();
 
-    alert('Inmueble eliminado correctamente.');
+    await renderMyProps();
+
+
+    // ================================
+    // 11. Confirmación final
+    // ================================
+
+    alert(
+      'Inmueble eliminado correctamente.'
+    );
+
 
   } catch (err) {
 
@@ -1706,7 +1832,9 @@ async function deleteProp(id) {
     alert(
       `No fue posible eliminar el inmueble: ${err.message}`
     );
+
   }
+
 }
 
 function editProp(id) {
