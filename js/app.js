@@ -1647,7 +1647,7 @@ async function deleteProp(id) {
     return;
   }
 
-  const prop = allProps.find(p => p.id === id);
+  const prop = myProps.find(p => p.id === id);
 
   if (!prop) {
     alert('Propiedad no encontrada.');
