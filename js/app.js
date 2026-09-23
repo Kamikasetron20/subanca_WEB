@@ -1899,7 +1899,7 @@ function editProp(id) {
 
 function selectCoverImage(propertyId, imageIndex) {
 
-  const prop = allProps.find(p => p.id === propertyId);
+  const prop = myProps.find(p => p.id === propertyId);
 
   if (!prop || !Array.isArray(prop.imagenes)) {
     alert('No se pudo encontrar la propiedad o sus imágenes.');
@@ -1946,10 +1946,26 @@ function selectCoverImage(propertyId, imageIndex) {
 }
 
 async function removeExistingImage(propertyId, imageIndex) {
-  const prop = allProps.find(p => p.id === propertyId);
+
+  const {
+    data: { user },
+    error: authError
+  } = await supabaseClient.auth.getUser();
+
+  if (authError || !user) {
+    alert('Debe iniciar sesión para eliminar imágenes.');
+    return;
+  }
+
+  const prop = myProps.find(p => p.id === propertyId);
 
   if (!prop || !Array.isArray(prop.imagenes)) {
     alert('No se pudo encontrar la imagen.');
+    return;
+  }
+
+  if (prop.propietario_id !== user.id) {
+    alert('No tiene permisos para eliminar esta imagen.');
     return;
   }
 
@@ -1965,72 +1981,155 @@ async function removeExistingImage(propertyId, imageIndex) {
   if (!confirmed) return;
 
   try {
-    const marker = '/storage/v1/object/public/subanca-assets/';
+
+    const marker =
+      '/storage/v1/object/public/subanca-assets/';
+
     const markerIndex = imageUrl.indexOf(marker);
 
     if (markerIndex === -1) {
-      throw new Error('No se pudo identificar la ubicación de la imagen.');
+      throw new Error(
+        'No se pudo identificar la ubicación de la imagen.'
+      );
     }
 
     const filePath = decodeURIComponent(
       imageUrl.substring(markerIndex + marker.length)
     );
 
-    const { error: storageError } = await supabaseClient
-      .storage
-      .from('subanca-assets')
-      .remove([filePath]);
-
-    if (storageError) {
-      throw storageError;
-    }
-
     const updatedImages = prop.imagenes.filter(
       (_, index) => index !== imageIndex
     );
 
-    const newCover = updatedImages[0] || null;
+    /*
+     * Mantener la portada actual si la imagen eliminada
+     * NO era la portada.
+     *
+     * Si se elimina la portada, utilizar la primera
+     * imagen restante como nueva portada.
+     */
 
-    const { error: dbError } = await supabaseClient
+    const newCover =
+      prop.imagen === imageUrl
+        ? (updatedImages[0] || null)
+        : prop.imagen;
+
+    /*
+     * 1. Actualizar primero la base de datos.
+     *
+     * La consulta está protegida por propietario_id.
+     */
+
+    const {
+      data: updatedProperty,
+      error: dbError
+    } = await supabaseClient
       .from('propiedades')
       .update({
         imagenes: JSON.stringify(updatedImages),
         imagen: newCover
       })
-      .eq('id', propertyId);
+      .eq('id', propertyId)
+      .eq('propietario_id', user.id)
+      .select('id')
+      .maybeSingle();
 
     if (dbError) {
       throw dbError;
     }
 
+    if (!updatedProperty) {
+      throw new Error(
+        'No fue posible actualizar la propiedad. Verifique que sea de su propiedad.'
+      );
+    }
+
+    /*
+     * 2. Eliminar el archivo de Storage.
+     */
+
+    const {
+      error: storageError
+    } = await supabaseClient
+      .storage
+      .from('subanca-assets')
+      .remove([filePath]);
+
+    if (storageError) {
+
+      console.error(
+        'La imagen fue retirada de la BD, pero no pudo eliminarse de Storage:',
+        storageError
+      );
+
+      alert(
+        'La imagen fue retirada de la propiedad, pero no pudo eliminarse completamente del almacenamiento.'
+      );
+
+    }
+
+    /*
+     * 3. Actualizar estado local.
+     */
+
     prop.imagenes = updatedImages;
     prop.imagen = newCover;
 
-    const preview = document.getElementById('img-preview');
+    /*
+     * 4. Actualizar previsualización.
+     */
+
+    const preview =
+      document.getElementById('img-preview');
 
     if (preview) {
+
       preview.innerHTML = updatedImages.map((url, index) => `
         <div class="img-preview-item">
-          <img src="${url}" alt="Imagen ${index + 1}">
+
+          <img
+            src="${url}"
+            alt="Imagen ${index + 1}"
+          >
+
           <button
             type="button"
             class="btn-remove-img"
-            onclick="removeExistingImage('${propertyId}', ${index})">
+            onclick="removeExistingImage('${propertyId}', ${index})"
+          >
             ×
           </button>
+
         </div>
       `).join('');
+
     }
 
+    /*
+     * 5. Sincronizar catálogo y panel.
+     */
+
+    await loadProperties();
+
     renderProps();
-    renderMyProps();
+
+    await renderMyProps();
 
     alert('Imagen eliminada correctamente.');
 
   } catch (error) {
-    console.error('Error eliminando imagen:', error);
-    alert('No fue posible eliminar la imagen.');
+
+    console.error(
+      'Error eliminando imagen:',
+      error
+    );
+
+    alert(
+      `No fue posible eliminar la imagen: ${error.message}`
+    );
+
   }
+
 }
 
 // ===== MOBILE MENU =====
