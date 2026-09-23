@@ -58,7 +58,6 @@ async function loadProperties() {
   allProps = data.map(p => ({
 
     id: p.id,
-    propietario_id: p.propietario_id || null,
 
     imagenes: (() => {
 
@@ -705,7 +704,7 @@ async function loadPropsFromDB() {
 
 function openModal(id) {
 
-  const p = myProps.find(x => x.id === id);
+  const p = allProps.find(x => x.id === id);
 
   if (!p) return;
 
@@ -1953,19 +1952,24 @@ async function removeExistingImage(propertyId, imageIndex) {
   } = await supabaseClient.auth.getUser();
 
   if (authError || !user) {
-    alert('Debe iniciar sesión para eliminar imágenes.');
+    alert('Debe iniciar sesión para administrar imágenes.');
     return;
   }
 
   const prop = myProps.find(p => p.id === propertyId);
 
-  if (!prop || !Array.isArray(prop.imagenes)) {
-    alert('No se pudo encontrar la imagen.');
+  if (!prop) {
+    alert('Propiedad no encontrada.');
     return;
   }
 
   if (prop.propietario_id !== user.id) {
-    alert('No tiene permisos para eliminar esta imagen.');
+    alert('No tiene permisos para modificar esta propiedad.');
+    return;
+  }
+
+  if (!Array.isArray(prop.imagenes)) {
+    alert('No se pudo encontrar la imagen.');
     return;
   }
 
@@ -1982,48 +1986,20 @@ async function removeExistingImage(propertyId, imageIndex) {
 
   try {
 
-    const marker =
-      '/storage/v1/object/public/subanca-assets/';
-
-    const markerIndex = imageUrl.indexOf(marker);
-
-    if (markerIndex === -1) {
-      throw new Error(
-        'No se pudo identificar la ubicación de la imagen.'
-      );
-    }
-
-    const filePath = decodeURIComponent(
-      imageUrl.substring(markerIndex + marker.length)
-    );
-
     const updatedImages = prop.imagenes.filter(
       (_, index) => index !== imageIndex
     );
 
-    /*
-     * Mantener la portada actual si la imagen eliminada
-     * NO era la portada.
-     *
-     * Si se elimina la portada, utilizar la primera
-     * imagen restante como nueva portada.
-     */
-
+    // Si eliminamos la portada actual,
+    // la primera imagen restante pasa a ser la nueva portada.
     const newCover =
       prop.imagen === imageUrl
         ? (updatedImages[0] || null)
         : prop.imagen;
 
-    /*
-     * 1. Actualizar primero la base de datos.
-     *
-     * La consulta está protegida por propietario_id.
-     */
-
-    const {
-      data: updatedProperty,
-      error: dbError
-    } = await supabaseClient
+    // Primero actualizamos la base de datos.
+    // La autorización real la controla RLS.
+    const { data: updatedRow, error: dbError } = await supabaseClient
       .from('propiedades')
       .update({
         imagenes: JSON.stringify(updatedImages),
@@ -2038,19 +2014,33 @@ async function removeExistingImage(propertyId, imageIndex) {
       throw dbError;
     }
 
-    if (!updatedProperty) {
+    if (!updatedRow) {
       throw new Error(
-        'No fue posible actualizar la propiedad. Verifique que sea de su propiedad.'
+        'No se pudo actualizar la propiedad. Verifique los permisos.'
       );
     }
 
-    /*
-     * 2. Eliminar el archivo de Storage.
-     */
+    // Identificar archivo en Storage.
+    const marker =
+      '/storage/v1/object/public/subanca-assets/';
 
-    const {
-      error: storageError
-    } = await supabaseClient
+    const markerIndex =
+      imageUrl.indexOf(marker);
+
+    if (markerIndex === -1) {
+      throw new Error(
+        'La imagen fue eliminada de la base de datos, pero no se pudo identificar su archivo en Storage.'
+      );
+    }
+
+    const filePath = decodeURIComponent(
+      imageUrl.substring(
+        markerIndex + marker.length
+      )
+    );
+
+    // Eliminar archivo físico de Storage.
+    const { error: storageError } = await supabaseClient
       .storage
       .from('subanca-assets')
       .remove([filePath]);
@@ -2058,61 +2048,65 @@ async function removeExistingImage(propertyId, imageIndex) {
     if (storageError) {
 
       console.error(
-        'La imagen fue retirada de la BD, pero no pudo eliminarse de Storage:',
+        'La BD se actualizó, pero Storage no pudo eliminar el archivo:',
         storageError
       );
 
       alert(
-        'La imagen fue retirada de la propiedad, pero no pudo eliminarse completamente del almacenamiento.'
+        'La imagen fue retirada de la propiedad, pero hubo un problema al eliminar el archivo físico de Storage.'
       );
 
     }
 
-    /*
-     * 3. Actualizar estado local.
-     */
-
+    // Actualizar estado local privado.
     prop.imagenes = updatedImages;
     prop.imagen = newCover;
 
-    /*
-     * 4. Actualizar previsualización.
-     */
-
+    // Actualizar la vista previa del panel.
     const preview =
       document.getElementById('img-preview');
 
     if (preview) {
 
-      preview.innerHTML = updatedImages.map((url, index) => `
-        <div class="img-preview-item">
+      preview.innerHTML =
+        updatedImages.map((url, index) => `
 
-          <img
-            src="${url}"
-            alt="Imagen ${index + 1}"
-          >
+          <div class="img-preview-item ${
+            newCover === url ? 'is-cover' : ''
+          }">
 
-          <button
-            type="button"
-            class="btn-remove-img"
-            onclick="removeExistingImage('${propertyId}', ${index})"
-          >
-            ×
-          </button>
+            <img
+              src="${url}"
+              alt="Imagen ${index + 1}"
+            >
 
-        </div>
-      `).join('');
+            <button
+              type="button"
+              class="btn-cover-img"
+              onclick="selectCoverImage('${propertyId}', ${index})"
+            >
+              ${newCover === url
+                ? '★ Portada'
+                : '☆ Portada'}
+            </button>
 
+            <button
+              type="button"
+              class="btn-remove-img"
+              onclick="removeExistingImage('${propertyId}', ${index})"
+            >
+              ×
+            </button>
+
+          </div>
+
+        `).join('');
     }
 
-    /*
-     * 5. Sincronizar catálogo y panel.
-     */
-
+    // Recargar catálogo público desde Supabase.
     await loadProperties();
 
-    renderProps();
-
+    // Recargar inventario privado.
     await renderMyProps();
 
     alert('Imagen eliminada correctamente.');
@@ -2125,11 +2119,9 @@ async function removeExistingImage(propertyId, imageIndex) {
     );
 
     alert(
-      `No fue posible eliminar la imagen: ${error.message}`
+      'No fue posible eliminar la imagen.'
     );
-
   }
-
 }
 
 // ===== MOBILE MENU =====
