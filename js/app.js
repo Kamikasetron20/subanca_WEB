@@ -1481,7 +1481,7 @@ async function publishProp() {
       imageUpdate.imagen =
         selectedCoverImage ||
         existingProp?.imagen ||
-        allImageUrls[0];
+        null;
 
     }
 
