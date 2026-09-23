@@ -22,6 +22,8 @@ let allProps = [
   { id: 12, tipo: 'Apartamento', gestion: 'Amoblado', zona: 'Laureles', nombre: 'Apto amoblado Laureles', precio: 2600000, hab: 2, ban: 2, area: 72, park: 1, estrato: 5, nuevo: true, desc: 'Completamente equipado, smart TV, internet y parqueo.', asesor: 'Asesor Comercial' },
 ];
 
+let draggedImageIndex = null;
+
 async function loadProperties() {
 
   const { data, error } = await supabaseClient
@@ -1896,52 +1898,154 @@ function editProp(id) {
 
 }
 
-function selectCoverImage(propertyId, imageIndex) {
+function startImageDrag(event, propertyId, imageIndex) {
+  draggedImageIndex = imageIndex;
+
+  event.dataTransfer.effectAllowed = 'move';
+  event.dataTransfer.setData('text/plain', imageIndex);
+
+  const item = event.currentTarget;
+
+  setTimeout(() => {
+    item.classList.add('dragging');
+  }, 0);
+}
+
+
+function allowImageDrop(event) {
+  event.preventDefault();
+
+  const item = event.currentTarget;
+
+  if (!item.classList.contains('dragging')) {
+    item.classList.add('drag-over');
+  }
+
+  event.dataTransfer.dropEffect = 'move';
+}
+
+
+function leaveImageDrop(event) {
+  event.currentTarget.classList.remove('drag-over');
+}
+
+
+function dropImage(event, propertyId, targetIndex) {
+  event.preventDefault();
+
+  const targetItem = event.currentTarget;
+  targetItem.classList.remove('drag-over');
+
+  const sourceIndex = draggedImageIndex;
+
+  if (
+    sourceIndex === null ||
+    sourceIndex === targetIndex
+  ) {
+    draggedImageIndex = null;
+    return;
+  }
 
   const prop = myProps.find(p => p.id === propertyId);
 
   if (!prop || !Array.isArray(prop.imagenes)) {
-    alert('No se pudo encontrar la propiedad o sus imágenes.');
+    draggedImageIndex = null;
+    return;
+  }
+
+  const images = [...prop.imagenes];
+
+  const [movedImage] = images.splice(sourceIndex, 1);
+
+  images.splice(targetIndex, 0, movedImage);
+
+  /*
+   * Importante:
+   * Solo cambia el orden de imagenes.
+   * NO modifica prop.imagen.
+   * Por tanto, la portada permanece independiente.
+   */
+  prop.imagenes = images;
+
+  draggedImageIndex = null;
+
+  renderImagePreview(propertyId);
+}
+
+
+function endImageDrag(event) {
+  draggedImageIndex = null;
+
+  document
+    .querySelectorAll('.img-preview-item')
+    .forEach(item => {
+      item.classList.remove('dragging');
+      item.classList.remove('drag-over');
+    });
+}
+
+function renderImagePreview(propertyId) {
+  const prop = myProps.find(p => p.id === propertyId);
+  const preview = document.getElementById('img-preview');
+
+  if (!preview || !prop || !Array.isArray(prop.imagenes)) {
+    return;
+  }
+
+  preview.innerHTML = prop.imagenes.map((url, index) => `
+    <div
+      class="img-preview-item ${selectedCoverImage === url ? 'is-cover' : ''}"
+      draggable="true"
+      ondragstart="startImageDrag(event, '${propertyId}', ${index})"
+      ondragover="allowImageDrop(event)"
+      ondragleave="leaveImageDrop(event)"
+      ondrop="dropImage(event, '${propertyId}', ${index})"
+      ondragend="endImageDrag(event)"
+    >
+      <img
+        src="${url}"
+        alt="Imagen ${index + 1} del inmueble"
+        loading="lazy"
+        decoding="async"
+      >
+
+      <button
+        type="button"
+        class="btn-cover-img"
+        onclick="event.stopPropagation(); selectCoverImage('${propertyId}', ${index})"
+      >
+        ${selectedCoverImage === url ? '★ Portada' : '☆ Portada'}
+      </button>
+
+      <button
+        type="button"
+        class="btn-remove-img"
+        onclick="event.stopPropagation(); removeExistingImage('${propertyId}', '${url}')"
+      >
+        ×
+      </button>
+    </div>
+  `).join('');
+}
+
+function selectCoverImage(propertyId, imageIndex) {
+  const prop = myProps.find(p => p.id === propertyId);
+
+  if (!prop || !Array.isArray(prop.imagenes)) {
+    alert('No se encontraron las imágenes del inmueble.');
     return;
   }
 
   const selectedImage = prop.imagenes[imageIndex];
 
   if (!selectedImage) {
-    alert('Imagen no encontrada.');
+    alert('La imagen seleccionada no existe.');
     return;
   }
 
   selectedCoverImage = selectedImage;
 
-  const preview = document.getElementById('img-preview');
-
-  if (preview) {
-
-    preview.innerHTML = prop.imagenes.map((url, index) => `
-      <div class="img-preview-item ${selectedCoverImage === url ? 'is-cover' : ''}">
-
-        <img src="${url}" alt="Imagen ${index + 1}">
-
-        <button
-          type="button"
-          class="btn-cover-img"
-          onclick="selectCoverImage('${propertyId}', ${index})">
-          ${selectedCoverImage === url ? '★ Portada' : '☆ Portada'}
-        </button>
-
-        <button
-          type="button"
-          class="btn-remove-img"
-          onclick="removeExistingImage('${propertyId}', ${index})">
-          ×
-        </button>
-
-      </div>
-    `).join('');
-
-  }
-
+  renderImagePreview(propertyId);
 }
 
 async function removeExistingImage(propertyId, imageIndex) {
@@ -1994,7 +2098,7 @@ async function removeExistingImage(propertyId, imageIndex) {
     // la primera imagen restante pasa a ser la nueva portada.
     const newCover =
       prop.imagen === imageUrl
-        ? (updatedImages[0] || null)
+        ? null
         : prop.imagen;
 
     // Primero actualizamos la base de datos.

@@ -2115,3 +2115,38 @@ transform:
   color: #fff;
   font-weight: 700;
 }
+
+/* =========================================
+   US-12.1 — Orden manual de imágenes
+   ========================================= */
+
+   .img-order-help {
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  
+  .img-preview-item {
+    cursor: grab;
+    transition:
+      transform .18s ease,
+      border-color .18s ease,
+      opacity .18s ease,
+      box-shadow .18s ease;
+  }
+  
+  .img-preview-item:active {
+    cursor: grabbing;
+  }
+  
+  .img-preview-item.dragging {
+    opacity: .45;
+    transform: scale(.96);
+  }
+  
+  .img-preview-item.drag-over {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(198, 166, 92, .20);
+    transform: translateY(-3px);
+  }
