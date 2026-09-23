@@ -1186,8 +1186,8 @@ async function previewImgs(e) {
 
   // Buscar la propiedad que se está editando
   const existingProp = editingPropertyId
-    ? allProps.find(p => p.id === editingPropertyId)
-    : null;
+      ? myProps.find(p => p.id === editingPropertyId)
+      : null;
 
   const existingImageCount =
     existingProp && Array.isArray(existingProp.imagenes)
