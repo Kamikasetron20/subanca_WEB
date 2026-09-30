@@ -1493,13 +1493,59 @@ async function publishProp() {
         .update(imageUpdate)
         .eq('id', propertyId)
         .eq('propietario_id', user.id);
-
+    
       if (response.error) {
+    
+        // Rollback: eliminar de Storage las imágenes
+        // que acabamos de subir y que la BD no pudo registrar.
+        if (newImageUrls.length > 0) {
+    
+          const uploadedPaths = newImageUrls
+            .map(url => {
+              const marker =
+                '/storage/v1/object/public/subanca-assets/';
+    
+              const markerIndex =
+                url.indexOf(marker);
+    
+              if (markerIndex === -1) {
+                return null;
+              }
+    
+              return decodeURIComponent(
+                url.substring(
+                  markerIndex + marker.length
+                )
+              );
+            })
+            .filter(Boolean);
+    
+          if (uploadedPaths.length > 0) {
+    
+            const { error: cleanupError } =
+              await supabaseClient
+                .storage
+                .from('subanca-assets')
+                .remove(uploadedPaths);
+    
+            if (cleanupError) {
+    
+              console.error(
+                'No fue posible limpiar las imágenes después del fallo de BD:',
+                cleanupError
+              );
+    
+            }
+    
+          }
+    
+        }
+    
         throw new Error(
           `Error guardando las imágenes: ${response.error.message}`
         );
       }
-
+    
     }
 
     alert(
@@ -1666,6 +1712,9 @@ async function deleteProp(id) {
     /*
      * 1. Buscar TODOS los archivos asociados
      *    a la carpeta del inmueble en Storage.
+     *
+     *    Solo los identificamos en este punto.
+     *    Todavía NO los eliminamos.
      */
 
     const folderPath = `propiedades/${id}`;
@@ -1706,43 +1755,14 @@ async function deleteProp(id) {
     );
 
     /*
-     * 3. Eliminar TODOS los archivos de Storage.
-     */
-
-    if (storagePaths.length > 0) {
-
-      const {
-        data: storageData,
-        error: storageError
-      } = await supabaseClient
-        .storage
-        .from('subanca-assets')
-        .remove(storagePaths);
-
-      if (storageError) {
-        console.error(
-          'Error eliminando imágenes:',
-          storageError
-        );
-
-        alert(
-          `No se pudieron eliminar las imágenes: ${storageError.message}`
-        );
-
-        return;
-      }
-
-      console.log(
-        'Imágenes eliminadas de Storage:',
-        storageData
-      );
-    }
-
-    /*
-     * 4. Eliminar el inmueble de la base de datos.
+     * 3. Eliminar primero el inmueble de la BD.
      *
-     *    También filtramos por propietario_id para
-     *    reforzar la seguridad en la consulta.
+     *    Esto evita que una propiedad existente
+     *    quede apuntando a imágenes que ya fueron
+     *    eliminadas de Storage.
+     *
+     *    También filtramos por propietario_id
+     *    para reforzar la seguridad.
      */
 
     const {
@@ -1766,11 +1786,16 @@ async function deleteProp(id) {
         `No se pudo eliminar la propiedad: ${dbError.message}`
       );
 
+      /*
+       * Importante:
+       * Si la BD falla, NO eliminamos nada
+       * de Storage.
+       */
       return;
     }
 
     /*
-     * 5. Confirmar que realmente se eliminó.
+     * 4. Confirmar que realmente se eliminó.
      */
 
     if (!deletedProperty) {
@@ -1782,7 +1807,63 @@ async function deleteProp(id) {
         'No fue posible eliminar el inmueble. Verifique que sea de su propiedad.'
       );
 
+      /*
+       * Como la BD no confirmó la eliminación,
+       * Storage permanece intacto.
+       */
       return;
+    }
+
+    /*
+     * 5. La propiedad ya fue eliminada correctamente
+     *    de la BD.
+     *
+     *    Ahora podemos eliminar sus archivos de Storage.
+     */
+
+    if (storagePaths.length > 0) {
+
+      const {
+        data: storageData,
+        error: storageError
+      } = await supabaseClient
+        .storage
+        .from('subanca-assets')
+        .remove(storagePaths);
+
+      if (storageError) {
+
+        console.error(
+          'La propiedad fue eliminada de la BD, pero no se pudieron eliminar todas sus imágenes de Storage:',
+          {
+            propertyId: id,
+            storagePaths,
+            error: storageError
+          }
+        );
+
+        /*
+         * El inmueble ya no existe en la BD.
+         * Por eso NO intentamos revertir la eliminación.
+         *
+         * Las imágenes que permanezcan en Storage
+         * quedan identificadas como archivos pendientes
+         * de limpieza.
+         */
+
+        alert(
+          'El inmueble fue eliminado correctamente, pero algunas imágenes no pudieron eliminarse de Storage. ' +
+          'El cambio del inmueble sí quedó guardado.'
+        );
+
+      } else {
+
+        console.log(
+          'Imágenes eliminadas correctamente de Storage:',
+          storageData
+        );
+
+      }
     }
 
     /*
@@ -1796,9 +1877,35 @@ async function deleteProp(id) {
     renderProps();
     await renderMyProps();
 
-    alert(
-      'Inmueble eliminado correctamente.'
-    );
+    /*
+     * Si Storage también se eliminó correctamente,
+     * mostramos confirmación completa.
+     *
+     * Si hubo un fallo de Storage, el usuario ya recibió
+     * el aviso correspondiente arriba.
+     */
+
+    if (storagePaths.length === 0) {
+
+      alert(
+        'Inmueble eliminado correctamente.'
+      );
+
+    } else {
+
+      /*
+       * Verificamos nuevamente si hubo un error de Storage
+       * mediante una consulta simple del estado no es necesaria;
+       * el flujo ya informó al usuario si ocurrió un error.
+       *
+       * El mensaje principal se mantiene para el caso
+       * normal de eliminación completa.
+       */
+
+      console.log(
+        'Eliminación de inmueble completada.'
+      );
+    }
 
   } catch (err) {
 
@@ -2140,18 +2247,42 @@ async function replaceExistingImage(propertyId, imageIndex) {
 
       if (oldPathMatch?.[1]) {
         const oldImagePath = decodeURIComponent(oldPathMatch[1]);
-
+      
         const { error: deleteError } = await supabaseClient.storage
           .from('subanca-assets')
           .remove([oldImagePath]);
-
+      
         if (deleteError) {
-          console.warn(
-            'La imagen fue reemplazada en BD, pero no se pudo eliminar la anterior de Storage:',
-            deleteError
+          console.error(
+            'La imagen fue reemplazada correctamente en BD, pero la imagen anterior quedó pendiente de eliminación en Storage:',
+            {
+              propertyId,
+              oldImagePath,
+              error: deleteError
+            }
+          );
+      
+          alert(
+            'La imagen fue reemplazada correctamente, pero no se pudo eliminar la imagen anterior de Storage. ' +
+            'El cambio del inmueble sí quedó guardado.'
           );
         }
-      }
+      
+        } else {
+        
+          console.error(
+            'La imagen fue reemplazada correctamente en BD, pero no se pudo identificar la imagen anterior en Storage.',
+            {
+              propertyId,
+              oldImageUrl
+            }
+          );
+        
+          alert(
+            'La imagen fue reemplazada correctamente, pero no se pudo identificar la imagen anterior en Storage. ' +
+            'El cambio del inmueble sí quedó guardado.'
+          );
+        }
 
       /*
        * Actualizar estado local.
@@ -2231,6 +2362,25 @@ async function removeExistingImage(propertyId, imageIndex) {
         ? null
         : prop.imagen;
 
+    // Identificar archivo en Storage.
+    const marker =
+      '/storage/v1/object/public/subanca-assets/';
+
+    const markerIndex =
+      imageUrl.indexOf(marker);
+
+    if (markerIndex === -1) {
+      throw new Error(
+        'No se pudo identificar el archivo de la imagen en Storage. La propiedad no fue modificada.'
+      );
+    }
+
+    const filePath = decodeURIComponent(
+      imageUrl.substring(
+        markerIndex + marker.length
+      )
+    );
+
     // Primero actualizamos la base de datos.
     // La autorización real la controla RLS.
     const { data: updatedRow, error: dbError } = await supabaseClient
@@ -2253,25 +2403,6 @@ async function removeExistingImage(propertyId, imageIndex) {
         'No se pudo actualizar la propiedad. Verifique los permisos.'
       );
     }
-
-    // Identificar archivo en Storage.
-    const marker =
-      '/storage/v1/object/public/subanca-assets/';
-
-    const markerIndex =
-      imageUrl.indexOf(marker);
-
-    if (markerIndex === -1) {
-      throw new Error(
-        'La imagen fue eliminada de la base de datos, pero no se pudo identificar su archivo en Storage.'
-      );
-    }
-
-    const filePath = decodeURIComponent(
-      imageUrl.substring(
-        markerIndex + marker.length
-      )
-    );
 
     // Eliminar archivo físico de Storage.
     const { error: storageError } = await supabaseClient
@@ -2305,7 +2436,9 @@ async function removeExistingImage(propertyId, imageIndex) {
     // Recargar inventario privado.
     await renderMyProps();
 
-    alert('Imagen eliminada correctamente.');
+    if (!storageError) {
+      alert('Imagen eliminada correctamente.');
+    }
 
   } catch (error) {
 
