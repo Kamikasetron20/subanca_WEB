@@ -6,6 +6,35 @@ let uploadedImgs = [];
 let editingPropertyId = null;
 let selectedCoverImage = null;
 
+// ===== UBICACIONES =====
+const ubicaciones = [
+  'El Poblado',
+  'Laureles',
+  'La América',
+  'San Javier',
+  'Belén',
+  'Robledo',
+  'Castilla',
+  'Doce de Octubre',
+  'Popular',
+  'Santa Cruz',
+  'Manrique',
+  'Aranjuez',
+  'Villa Hermosa',
+  'Buenos Aires',
+  'La Candelaria',
+  'Guayabal',
+  'Altavista',
+  'San Cristóbal',
+  'San Antonio de Prado',
+  'Santa Elena',
+  'San Sebastián de Palmitas',
+  'Envigado',
+  'Sabaneta',
+  'Itagüí',
+  'Bello'
+];
+
 // ===== DATA =====
 let allProps = [
   { id: 1, tipo: 'Apartamento', gestion: 'Arriendo', zona: 'El Poblado', nombre: 'Apartamento moderno en El Poblado', precio: 2800000, hab: 3, ban: 2, area: 85, park: 1, estrato: 5, nuevo: true, desc: 'Hermoso apartamento con acabados de lujo, cocina integral y zona de lavandería.', asesor: 'Sebastián Pernett' },
@@ -410,6 +439,70 @@ function setFilter(el, filter) {
   visibleCount = 6;
   renderProps();
 }
+
+function initLocationSearch() {
+  const input = document.getElementById('s-zona');
+  const suggestions = document.getElementById('location-suggestions');
+
+  if (!input || !suggestions) return;
+
+  input.addEventListener('input', () => {
+    const query = input.value.trim().toLowerCase();
+
+    if (!query) {
+      suggestions.innerHTML = '';
+      suggestions.style.display = 'none';
+      return;
+    }
+
+    const matches = ubicaciones
+      .filter(location =>
+        location.toLowerCase().includes(query)
+      )
+      .slice(0, 8);
+
+    if (matches.length === 0) {
+      suggestions.innerHTML = '';
+      suggestions.style.display = 'none';
+      return;
+    }
+
+    suggestions.innerHTML = matches
+      .map(location => `
+        <button
+          type="button"
+          class="location-suggestion"
+          onclick="selectLocation('${location.replace(/'/g, "\\'")}')"
+        >
+          ${location}
+        </button>
+      `)
+      .join('');
+
+    suggestions.style.display = 'block';
+  });
+
+  document.addEventListener('click', (event) => {
+    if (
+      !event.target.closest('.location-search')
+    ) {
+      suggestions.innerHTML = '';
+      suggestions.style.display = 'none';
+    }
+  });
+}
+
+function selectLocation(location) {
+  const input = document.getElementById('s-zona');
+  const suggestions = document.getElementById('location-suggestions');
+
+  if (!input || !suggestions) return;
+
+  input.value = location;
+  suggestions.innerHTML = '';
+  suggestions.style.display = 'none';
+}
+
 function applyFilters() {
   visibleCount = 6;
   renderProps();
@@ -2462,10 +2555,12 @@ function toggleMobileMenu(){
 }
 
 // ===== INIT =====
+// ===== INIT =====
 renderProps();
 renderAsesores();
 document.getElementById('stat-props').textContent = myProps.length + '+';
 
+initLocationSearch();
 // Nav scroll effect
 window.addEventListener('scroll', () => {
   const nav = document.querySelector('nav');

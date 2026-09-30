@@ -163,19 +163,17 @@
               <option value="Lote">Lote / Terreno</option>
             </select>
           </div>
-          <div class="search-field">
+          <div class="search-field location-search">
             <label>Sector / Barrio</label>
-            <select id="s-zona">
-              <option value="">Toda Medellín</option>
-              <option value="El Poblado">El Poblado</option>
-              <option value="Laureles">Laureles</option>
-              <option value="Envigado">Envigado</option>
-              <option value="Bello">Bello</option>
-              <option value="Sabaneta">Sabaneta</option>
-              <option value="Itagüí">Itagüí</option>
-              <option value="Robledo">Robledo</option>
-              <option value="Castilla">Castilla</option>
-            </select>
+          
+            <input
+              type="text"
+              id="s-zona"
+              placeholder="Ej: Calasanz, Laureles..."
+              autocomplete="off"
+            >
+          
+            <div id="location-suggestions" class="location-suggestions"></div>
           </div>
           <div class="search-field">
             <label>Precio máximo</label>
