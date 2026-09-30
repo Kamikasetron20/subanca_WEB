@@ -1852,35 +1852,7 @@ function editProp(id) {
 
   document.getElementById('p-asesor').value = prop.asesor || '';
 
-  const preview = document.getElementById('img-preview');
-
-  if (preview) {
-    preview.innerHTML = '';
-
-    if (Array.isArray(prop.imagenes) && prop.imagenes.length > 0) {
-      preview.innerHTML = prop.imagenes.map((url, index) => `
-        <div class="img-preview-item ${selectedCoverImage === url ? 'is-cover' : ''}">
-
-          <img src="${url}" alt="Imagen ${index + 1}">
-
-          <button
-            type="button"
-            class="btn-cover-img"
-            onclick="selectCoverImage('${prop.id}', ${index})">
-            ${selectedCoverImage === url ? '★ Portada' : '☆ Portada'}
-          </button>
-
-          <button
-            type="button"
-            class="btn-remove-img"
-            onclick="removeExistingImage('${prop.id}', ${index})">
-            ×
-          </button>
-
-        </div>
-      `).join('');
-    }
-  }
+  renderImagePreview(prop.id);
 
   // Scroll panel
   document.getElementById('panel').scrollIntoView({
@@ -2019,11 +1991,19 @@ function renderImagePreview(propertyId) {
 
       <button
         type="button"
+        class="btn-replace-img"
+        onclick="event.stopPropagation(); replaceExistingImage('${propertyId}', ${index})"
+      >
+        ↻ Reemplazar
+      </button>
+
+      <button
+        type="button"
         class="btn-remove-img"
-        onclick="event.stopPropagation(); removeExistingImage('${propertyId}', '${url}')"
+        onclick="event.stopPropagation(); removeExistingImage('${propertyId}', ${index})"
       >
         ×
-      </button>
+</button>
     </div>
   `).join('');
 }
@@ -2046,6 +2026,156 @@ function selectCoverImage(propertyId, imageIndex) {
   selectedCoverImage = selectedImage;
 
   renderImagePreview(propertyId);
+}
+
+async function replaceExistingImage(propertyId, imageIndex) {
+  const user = supabaseClient.auth.getUser
+    ? (await supabaseClient.auth.getUser()).data.user
+    : null;
+
+  if (!user) {
+    alert('Debes iniciar sesión para reemplazar una imagen.');
+    return;
+  }
+
+  const prop = myProps.find(p => p.id === propertyId);
+
+  if (!prop) {
+    alert('No se encontró el inmueble.');
+    return;
+  }
+
+  if (prop.propietario_id !== user.id) {
+    alert('No tienes permiso para modificar este inmueble.');
+    return;
+  }
+
+  if (!Array.isArray(prop.imagenes) || !prop.imagenes[imageIndex]) {
+    alert('No se encontró la imagen que deseas reemplazar.');
+    return;
+  }
+
+  const oldImageUrl = prop.imagenes[imageIndex];
+
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+
+  input.onchange = async (event) => {
+    const file = event.target.files?.[0];
+
+    if (!file) return;
+
+    try {
+      const optimizedFile = await optimizeImage(file);
+
+      const newImagePath =
+        `propiedades/${propertyId}/${crypto.randomUUID()}.webp`;
+
+      const { error: uploadError } = await supabaseClient.storage
+        .from('subanca-assets')
+        .upload(newImagePath, optimizedFile, {
+          contentType: 'image/webp',
+          upsert: false
+        });
+
+      if (uploadError) {
+        console.error('Error subiendo nueva imagen:', uploadError);
+        alert('No fue posible subir la nueva imagen.');
+        return;
+      }
+
+      const { data: publicUrlData } = supabaseClient.storage
+        .from('subanca-assets')
+        .getPublicUrl(newImagePath);
+
+      const newImageUrl = publicUrlData?.publicUrl;
+
+      if (!newImageUrl) {
+        alert('No se pudo obtener la URL de la nueva imagen.');
+
+        await supabaseClient.storage
+          .from('subanca-assets')
+          .remove([newImagePath]);
+
+        return;
+      }
+
+      const updatedImages = [...prop.imagenes];
+      updatedImages[imageIndex] = newImageUrl;
+
+      const newCover =
+        prop.imagen === oldImageUrl
+          ? newImageUrl
+          : prop.imagen;
+
+      const { error: updateError } = await supabaseClient
+        .from('propiedades')
+        .update({
+          imagenes: JSON.stringify(updatedImages),
+          imagen: newCover || null
+        })
+        .eq('id', propertyId)
+        .eq('propietario_id', user.id);
+
+      if (updateError) {
+        console.error('Error actualizando la propiedad:', updateError);
+
+        // Rollback: eliminar la nueva imagen que acabamos de subir.
+        await supabaseClient.storage
+          .from('subanca-assets')
+          .remove([newImagePath]);
+
+        alert('No se pudo actualizar la propiedad. La imagen anterior permanece intacta.');
+        return;
+      }
+
+      /*
+       * La BD ya apunta a la nueva imagen.
+       * Ahora eliminamos la imagen anterior de Storage.
+       */
+      const oldPathMatch = oldImageUrl.match(
+        /\/storage\/v1\/object\/public\/subanca-assets\/(.+)$/
+      );
+
+      if (oldPathMatch?.[1]) {
+        const oldImagePath = decodeURIComponent(oldPathMatch[1]);
+
+        const { error: deleteError } = await supabaseClient.storage
+          .from('subanca-assets')
+          .remove([oldImagePath]);
+
+        if (deleteError) {
+          console.warn(
+            'La imagen fue reemplazada en BD, pero no se pudo eliminar la anterior de Storage:',
+            deleteError
+          );
+        }
+      }
+
+      /*
+       * Actualizar estado local.
+       */
+      prop.imagenes = updatedImages;
+      prop.imagen = newCover || null;
+
+      if (selectedCoverImage === oldImageUrl) {
+        selectedCoverImage = newImageUrl;
+      }
+
+      renderImagePreview(propertyId);
+
+      await loadProperties();
+      await renderMyProps();
+
+      alert('Imagen reemplazada correctamente.');
+    } catch (error) {
+      console.error('Error inesperado reemplazando imagen:', error);
+      alert('Ocurrió un error al reemplazar la imagen.');
+    }
+  };
+
+  input.click();
 }
 
 async function removeExistingImage(propertyId, imageIndex) {
@@ -2095,7 +2225,7 @@ async function removeExistingImage(propertyId, imageIndex) {
     );
 
     // Si eliminamos la portada actual,
-    // la primera imagen restante pasa a ser la nueva portada.
+    // la propiedad queda temporalmente sin portada.
     const newCover =
       prop.imagen === imageUrl
         ? null
