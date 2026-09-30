@@ -7,28 +7,302 @@ let editingPropertyId = null;
 let selectedCoverImage = null;
 
 // ===== UBICACIONES =====
+// ===== UBICACIONES =====
+// Barrios oficiales de Medellín + ubicaciones del Área Metropolitana
 const ubicaciones = [
-  'El Poblado',
-  'Laureles',
-  'La América',
-  'San Javier',
-  'Belén',
-  'Robledo',
-  'Castilla',
-  'Doce de Octubre',
+  // COMUNA 1 - POPULAR
+  'Santo Domingo Savio Nº 1',
+  'Santo Domingo Sabio Nº 2',
   'Popular',
+  'Granizal',
+  'Moscú Nº 2',
+  'Villa Guadalupe',
+  'San Pablo',
+  'Aldea Pablo VI',
+  'La Esperanza Nº 2',
+  'El Compromiso',
+  'La Avanzada',
+  'Carpinelo',
+
+  // COMUNA 2 - SANTA CRUZ
+  'La Isla',
+  'El Playón de Los Comuneros',
+  'Pablo VI',
+  'La Frontera',
+  'La Francia',
+  'Andalucía',
+  'Villa del Socorro',
+  'Villa Niza',
+  'Moscú Nº 1',
   'Santa Cruz',
-  'Manrique',
+  'La Rosa',
+
+  // COMUNA 3 - MANRIQUE
+  'La Salle',
+  'Las Granjas',
+  'Campo Valdes Nº 2',
+  'Santa Inés',
+  'El Raizal',
+  'El Pomar',
+  'Manrique Central No. 2',
+  'Manrique Oriental',
+  'Versalles Nº 1',
+  'Versalles Nº 2',
+  'La Cruz',
+  'Oriente',
+  'Maria Cano – Carambolas',
+  'San José La Cima Nº 1',
+  'San José La Cima Nº 2',
+
+  // COMUNA 4 - ARANJUEZ
+  'Berlín',
+  'San Isidro',
+  'Palermo',
+  'Bermejal – Los Álamos',
+  'Moravia',
+  'Sevilla',
+  'San Pedro',
+  'Manrique Central Nº 1',
+  'Campo Valdes Nº 1',
+  'Las Esmeraldas',
+  'La Piñuela',
   'Aranjuez',
+  'Brasilia',
+  'Miranda',
+
+  // COMUNA 5 - CASTILLA
+  'Toscana',
+  'Las Brisas',
+  'Florencia',
+  'Tejelo',
+  'Boyacá',
+  'Héctor Abad Gómez',
+  'Belalcazar',
+  'Girardot',
+  'Tricentenario',
+  'Castilla',
+  'Francisco Antonio Zea',
+  'Alfonso López',
+  'Caribe',
+  'El Progreso',
+
+  // COMUNA 6 - DOCE DE OCTUBRE
+  'Santander',
+  'Doce de Octubre Nº 1',
+  'Doce de Octubre Nº 2',
+  'Pedregal',
+  'La Esperanza',
+  'San Martín de Porres',
+  'Kennedy',
+  'Picacho',
+  'Picachito',
+  'Mirador del Doce',
+  'Progreso Nº 2',
+  'El Triunfo',
+
+  // COMUNA 7 - ROBLEDO
+  'Cerro El Volador',
+  'San Germán',
+  'Barrio Facultad de Minas Universidad Nacional',
+  'La Pilarica',
+  'Bosques de San Pablo',
+  'Altamira',
+  'Córdoba',
+  'López de Mesa',
+  'El Diamante',
+  'Aures Nº 1',
+  'Aures Nº 2',
+  'Bello Horizonte',
+  'Villa Flora',
+  'Palenque',
+  'Robledo',
+  'Cucaracho',
+  'Fuente Clara',
+  'Santa Margarita',
+  'Olaya Herrera',
+  'Pajarito',
+  'Monteclaro',
+  'Nueva Villa de La Iguaná',
+
+  // COMUNA 8 - VILLA HERMOSA
   'Villa Hermosa',
+  'La Mansión',
+  'San Miguel',
+  'La Ladera',
+  'Batallón Girardot',
+  'Llanaditas',
+  'Los Mangos',
+  'Enciso',
+  'Sucre',
+  'El Pinal',
+  'Trece de Noviembre',
+  'La Libertad',
+  'Villatina',
+  'San Antonio',
+  'Las Estancias',
+  'Villa Turbay',
+  'La Sierra (Santa Lucía – Las Estancias)',
+  'Villa Lilliam',
+
+  // COMUNA 9 - BUENOS AIRES
+  'Juan Pablo II',
+  'Barrios de Jesús',
+  'Bombona Nº 2',
+  'Los Cerros El Vergel',
+  'Alejandro Echavarría',
+  'Barrio Caicedo',
   'Buenos Aires',
+  'Miraflores',
+  'Cataluña',
+  'La Milagrosa',
+  'Gerona',
+  'El Salvador',
+  'Loreto',
+  'Asomadera Nº 1',
+  'Asomadera Nº 2',
+  'Asomadera Nº 3',
+  'Ocho de Marzo',
+
+  // COMUNA 10 - LA CANDELARIA
+  'Prado',
+  'Jesús Nazareno',
+  'El Chagualo',
+  'Estación Villa',
+  'San Benito',
+  'Guayaquil',
+  'Corazón de Jesús',
+  'Calle Nueva',
+  'Perpetuo Socorro',
+  'Barrio Colón',
+  'Las Palmas',
+  'Bomboná Nº 1',
+  'Boston',
+  'Los Ángeles',
+  'Villa Nueva',
   'La Candelaria',
+  'San Diego',
+
+  // COMUNA 11 - LAURELES - ESTADIO
+  'Carlos E. Restrepo',
+  'Suramericana',
+  'Naranjal',
+  'San Joaquín',
+  'Los Conquistadores',
+  'Bolivariana',
+  'Laureles',
+  'Las Acacias',
+  'La Castellana',
+  'Lorena',
+  'El Velódromo',
+  'Estadio',
+  'Los Colores',
+  'Cuarta Brigada',
+  'Florida Nueva',
+
+  // COMUNA 12 - LA AMÉRICA
+  'Ferrini',
+  'Calasanz',
+  'Los Pinos',
+  'La América',
+  'La Floresta',
+  'Santa Lucia',
+  'El Danubio',
+  'Campo Alegre',
+  'Santa Mónica',
+  'Barrio Cristóbal',
+  'Simón Bolívar',
+  'Santa Teresita',
+  'Calasanz Parte Alta',
+
+  // COMUNA 13 - SAN JAVIER
+  'El Pesebre',
+  'Blanquizal',
+  'Santa Rosa de Lima',
+  'Los Alcázares',
+  'Metropolitano',
+  'La Pradera',
+  'Juan XIII – La Quiebra',
+  'San Javier Nº 2',
+  'San Javier Nº 1',
+  'Veinte de Julio',
+  'Belencito',
+  'Betania',
+  'El Corazón',
+  'Las Independencias',
+  'Nuevos Conquistadores',
+  'El Salado',
+  'Eduardo Santos',
+  'Antonio Nariño',
+  'El Socorro',
+
+  // COMUNA 14 - EL POBLADO
+  'Barrio Colombia',
+  'Simesa',
+  'Villa Carlota',
+  'Castropol',
+  'Lalinde',
+  'Las Lomas Nº 1',
+  'Las Lomas Nº 2',
+  'Altos del Poblado',
+  'El Tesoro',
+  'Los Naranjos',
+  'Los Balsos Nº 1',
+  'San Lucas',
+  'El Diamante Nº 2',
+  'El Castillo',
+  'Los Balsos Nº 2',
+  'Alejandría',
+  'La Florida',
+  'El Poblado',
+  'Manila',
+  'Astorga',
+  'Patio Bonito',
+  'La Aguacatala',
+  'Santa María de Los Ángeles',
+
+  // COMUNA 15 - GUAYABAL
+  'Tenche',
+  'Trinidad',
+  'Santa Fé',
+  'Parque Juan Pablo II',
+  'Campo Amor',
+  'Noel',
+  'Cristo Rey',
   'Guayabal',
+  'La Colina',
+  'El Rodeo',
+
+  // COMUNA 16 - BELÉN
+  'Fátima',
+  'Rosales',
+  'Belén',
+  'Granada',
+  'San Bernardo',
+  'Las Playas',
+  'Diego Echevarria',
+  'La Mota',
+  'La Hondonada',
+  'El Rincón',
+  'La Loma de Los Bernal',
+  'La Gloria',
   'Altavista',
+  'La Palma',
+  'Los Alpes',
+  'Las Violetas',
+  'Las Mercedes',
+  'Nueva Villa de Aburrá',
+  'Miravalle',
+  'El Nogal – Los Almendros',
+  'Cerro Nutibara',
+
+  // CORREGIMIENTOS
+  'San Sebastián de Palmitas',
   'San Cristóbal',
+  'Altavista',
   'San Antonio de Prado',
   'Santa Elena',
-  'San Sebastián de Palmitas',
+
+  // ÁREA METROPOLITANA
   'Envigado',
   'Sabaneta',
   'Itagüí',
@@ -440,6 +714,14 @@ function setFilter(el, filter) {
   renderProps();
 }
 
+function normalizeLocationText(value) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
 function initLocationSearch() {
   const input = document.getElementById('s-zona');
   const suggestions = document.getElementById('location-suggestions');
@@ -447,7 +729,7 @@ function initLocationSearch() {
   if (!input || !suggestions) return;
 
   input.addEventListener('input', () => {
-    const query = input.value.trim().toLowerCase();
+    const query = normalizeLocationText(input.value);
 
     if (!query) {
       suggestions.innerHTML = '';
@@ -457,7 +739,7 @@ function initLocationSearch() {
 
     const matches = ubicaciones
       .filter(location =>
-        location.toLowerCase().includes(query)
+        normalizeLocationText(location).includes(query)
       )
       .slice(0, 8);
 
@@ -514,11 +796,16 @@ function scrollToProps() {
 }
 
 function getFilteredProps() {
-  const tipo = document.getElementById('s-tipo').value;
-  const zona = document.getElementById('s-zona').value;
+  const tipo =
+    document.getElementById('s-tipo')?.value || '';
+
+  const zona =
+    document.getElementById('s-zona')?.value.trim() || '';
+
   const precioValue =
-    document.getElementById('s-precio').value;
-    const hab =
+    document.getElementById('s-precio')?.value || '';
+
+  const hab =
     document.getElementById('s-hab')?.value || '';
 
   const ban =
@@ -531,71 +818,90 @@ function getFilteredProps() {
   let precioMax = Infinity;
 
   if (precioValue) {
-
     const partes = precioValue.split('|');
 
     precioMin = parseInt(partes[0]) || 0;
-
     precioMax = parseInt(partes[1]) || Infinity;
-
   }
 
-  if(hab){
+  let filtered = allProps.filter(p => {
 
-    filtered = filtered.filter(p =>
-
-      Number(p.habitaciones || 0)
-        >= Number(hab)
-    );
-  }
-
-  if(ban){
-
-    filtered = filtered.filter(p =>
-
-      Number(p.banos || 0)
-        >= Number(ban)
-    );
-  }
-
-  if(order === 'price-asc'){
-
-    filtered.sort((a,b)=>
-
-      Number(a.precio || 0)
-      -
-      Number(b.precio || 0)
-    );
-  }
-
-  if(order === 'price-desc'){
-
-    filtered.sort((a,b)=>
-
-      Number(b.precio || 0)
-      -
-      Number(a.precio || 0)
-    );
-  }
-
-  if(order === 'recent'){
-
-    filtered.reverse();
-  }
-
-  return allProps.filter(p => {
+    // Filtro por gestión o tipo desde los botones
     if (currentFilter !== 'todos') {
-      if (p.gestion === currentFilter || p.tipo === currentFilter) { }
-      else return false;
+      if (
+        p.gestion !== currentFilter &&
+        p.tipo !== currentFilter
+      ) {
+        return false;
+      }
     }
-    if (tipo && p.tipo !== tipo) return false;
-    if (zona && p.zona !== zona) return false;
+
+    // Tipo de inmueble
+    if (tipo && p.tipo !== tipo) {
+      return false;
+    }
+
+    // Sector / Barrio
     if (
-      p.precio < precioMin ||
-      p.precio > precioMax
-    ) return false;
+      zona &&
+      p.zona.toLowerCase() !== zona.toLowerCase()
+    ) {
+      return false;
+    }
+
+    // Precio
+    if (
+      Number(p.precio || 0) < precioMin ||
+      Number(p.precio || 0) > precioMax
+    ) {
+      return false;
+    }
+
+    // Habitaciones
+    if (
+      hab &&
+      Number(p.hab || 0) < Number(hab)
+    ) {
+      return false;
+    }
+
+    // Baños
+    if (
+      ban &&
+      Number(p.ban || 0) < Number(ban)
+    ) {
+      return false;
+    }
+
     return true;
   });
+
+  // Ordenamiento
+  if (order === 'price-asc') {
+    filtered.sort(
+      (a, b) =>
+        Number(a.precio || 0) -
+        Number(b.precio || 0)
+    );
+  }
+
+  if (order === 'price-desc') {
+    filtered.sort(
+      (a, b) =>
+        Number(b.precio || 0) -
+        Number(a.precio || 0)
+    );
+  }
+
+  if (order === 'recent') {
+    filtered.sort(
+      (a, b) =>
+        new Date(b.created_at || 0) -
+        new Date(a.created_at || 0)
+    );
+  }
+
+  return filtered;
 }
 
 function renderProps() {
@@ -2561,6 +2867,7 @@ renderAsesores();
 document.getElementById('stat-props').textContent = myProps.length + '+';
 
 initLocationSearch();
+
 // Nav scroll effect
 window.addEventListener('scroll', () => {
   const nav = document.querySelector('nav');
