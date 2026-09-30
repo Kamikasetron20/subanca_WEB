@@ -2297,45 +2297,7 @@ async function removeExistingImage(propertyId, imageIndex) {
     prop.imagen = newCover;
 
     // Actualizar la vista previa del panel.
-    const preview =
-      document.getElementById('img-preview');
-
-    if (preview) {
-
-      preview.innerHTML =
-        updatedImages.map((url, index) => `
-
-          <div class="img-preview-item ${
-            newCover === url ? 'is-cover' : ''
-          }">
-
-            <img
-              src="${url}"
-              alt="Imagen ${index + 1}"
-            >
-
-            <button
-              type="button"
-              class="btn-cover-img"
-              onclick="selectCoverImage('${propertyId}', ${index})"
-            >
-              ${newCover === url
-                ? '★ Portada'
-                : '☆ Portada'}
-            </button>
-
-            <button
-              type="button"
-              class="btn-remove-img"
-              onclick="removeExistingImage('${propertyId}', ${index})"
-            >
-              ×
-            </button>
-
-          </div>
-
-        `).join('');
-    }
+    renderImagePreview(propertyId);
 
     // Recargar catálogo público desde Supabase.
     await loadProperties();
@@ -2355,23 +2317,6 @@ async function removeExistingImage(propertyId, imageIndex) {
     alert(
       'No fue posible eliminar la imagen.'
     );
-  }
-}
-
-// ===== MOBILE MENU =====
-function toggleMobileMenu() {
-  // Simple implementation
-  const links = document.querySelector('.nav-links');
-  if (links) {
-    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-    links.style.flexDirection = 'column';
-    links.style.position = 'absolute';
-    links.style.top = '68px';
-    links.style.left = '0';
-    links.style.width = '100%';
-    links.style.background = 'rgba(26,39,68,0.98)';
-    links.style.padding = '16px 5%';
-    links.style.gap = '16px';
   }
 }
 
