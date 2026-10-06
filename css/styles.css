@@ -2630,3 +2630,159 @@ transform:
     }
   
   }
+
+  /* =========================================================
+   FE-01 — FUNDACIÓN MOBILE FIRST
+   Su Banca Inmobiliaria
+========================================================= */
+
+/* BASE RESPONSIVE */
+
+html {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+/* ELEMENTOS MULTIMEDIA */
+
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+/* CONTROLES TÁCTILES */
+
+button,
+a,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* EVITAR QUE TEXTOS LARGOS ROMPAN EL LAYOUT */
+
+h1,
+h2,
+h3,
+h4,
+p,
+a,
+span {
+  overflow-wrap: break-word;
+}
+
+/* FORMULARIOS */
+
+input,
+select,
+textarea,
+button {
+  max-width: 100%;
+}
+
+/* CONTENEDORES */
+
+section {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* ACCESIBILIDAD — FOCO */
+
+:focus-visible {
+  outline: 3px solid rgba(200, 167, 91, 0.75);
+  outline-offset: 3px;
+}
+
+/* REDUCIR ANIMACIONES SI EL USUARIO LO SOLICITA */
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+}
+
+/* =========================================================
+   FE-01 — BREAKPOINTS
+========================================================= */
+
+/* MOBILE BASE
+   < 768px
+*/
+
+@media (max-width: 767px) {
+
+  section {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+}
+
+/* TABLET
+   768px — 1023px
+*/
+
+@media (min-width: 768px) and (max-width: 1023px) {
+
+  section {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+}
+
+/* DESKTOP
+   >= 1024px
+*/
+
+@media (min-width: 1024px) {
+
+  section {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+}
+
+/* =========================================================
+   FE-01 — TOUCH TARGETS
+========================================================= */
+
+@media (max-width: 767px) {
+
+  button,
+  .nav-menu-btn,
+  .search-btn,
+  .filter-btn,
+  .submit-btn,
+  .nav-cta,
+  .nav-links a,
+  .mobile-menu a {
+    min-height: 44px;
+  }
+
+}
