@@ -2786,3 +2786,124 @@ section {
   }
 
 }
+
+/* =========================================================
+   FE-02 — HEADER + HERO MOBILE
+   Su Banca Inmobiliaria
+========================================================= */
+
+@media (max-width: 767px) {
+
+  /* =========================
+     HEADER
+  ========================= */
+
+  nav {
+    top: 10px;
+    left: 12px;
+    right: 12px;
+    width: auto;
+    min-height: 58px;
+    padding: 6px 10px 6px 12px;
+    border-radius: 18px;
+  }
+
+  .nav-logo {
+    gap: 8px;
+  }
+
+  .nav-logo img {
+    height: 42px !important;
+    width: auto;
+    max-width: 150px;
+  }
+
+  .nav-menu-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    font-size: 22px;
+  }
+
+  /* =========================
+     HERO
+  ========================= */
+
+  .hero {
+    min-height: auto;
+
+    padding:
+      120px
+      20px
+      56px;
+
+    align-items: flex-start;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  /* =========================
+     BADGE
+  ========================= */
+
+  .hero-badge {
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    padding: 6px 12px;
+    margin-bottom: 18px;
+  }
+
+  /* =========================
+     TITULAR
+  ========================= */
+
+  .hero h1 {
+    font-size: clamp(42px, 11vw, 54px);
+    line-height: 0.98;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+  }
+
+  /* =========================
+     DESCRIPCIÓN
+  ========================= */
+
+  .hero p {
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 100%;
+    margin-bottom: 28px;
+  }
+
+  /* =========================
+     ESTADÍSTICAS
+  ========================= */
+
+  .hero-stats {
+    gap: 18px;
+    margin-bottom: 32px;
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .hero-stat {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .hero-stat strong {
+    font-size: 25px;
+    line-height: 1;
+  }
+
+  .hero-stat span {
+    display: block;
+    font-size: 9px;
+    line-height: 1.35;
+    letter-spacing: 0.8px;
+    margin-top: 5px;
+  }
+
+}
