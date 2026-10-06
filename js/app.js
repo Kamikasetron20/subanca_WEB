@@ -1288,8 +1288,11 @@ ${Array.isArray(p.imagenes) && p.imagenes.length > 0
     </div>
 
     <a
-      href="https://wa.me/57${asesor.cel}"
+      href="https://wa.me/57${asesor.cel}?text=${encodeURIComponent(
+        `Hola, estoy interesado en la propiedad "${p.nombre}"${p.zona ? ` ubicada en ${p.zona}` : ''}. Quisiera recibir más información.`
+      )}"
       target="_blank"
+      rel="noopener noreferrer"
       class="modal-whatsapp"
     >
       💬 Contactar por WhatsApp
@@ -1331,8 +1334,39 @@ function renderAsesores() {
 // ===== CONTACT =====
 function submitContact(e) {
   e.preventDefault();
-  document.getElementById('contact-success').style.display = 'block';
-  setTimeout(() => { document.getElementById('contact-success').style.display = 'none'; }, 5000);
+
+  const form = e.target;
+
+  const nombre = form.querySelector('input[type="text"]').value.trim();
+  const telefono = form.querySelector('input[type="tel"]').value.trim();
+  const email = form.querySelector('input[type="email"]').value.trim();
+  const interes = form.querySelector('select').value;
+  const mensaje = form.querySelector('textarea').value.trim();
+
+  const texto =
+    `Hola, soy ${nombre}.\n\n` +
+    `Teléfono: ${telefono}\n` +
+    `Email: ${email || 'No suministrado'}\n` +
+    `Estoy interesado en: ${interes}\n\n` +
+    `Mensaje: ${mensaje || 'Sin mensaje adicional.'}`;
+
+  const whatsappUrl =
+    `https://wa.me/573132211683?text=${encodeURIComponent(texto)}`;
+
+  window.open(whatsappUrl, '_blank');
+
+  const success = document.getElementById('contact-success');
+
+  success.textContent =
+    '✅ Hemos preparado su solicitud. Se abrirá WhatsApp para continuar el contacto.';
+
+  success.style.display = 'block';
+
+  setTimeout(() => {
+    success.style.display = 'none';
+  }, 5000);
+
+  form.reset();
 }
 
 // ===== PANEL =====
@@ -2863,7 +2897,7 @@ function toggleMobileMenu(){
 // ===== INIT =====
 // ===== INIT =====
 renderProps();
-renderAsesores();
+// renderAsesores(); // US-14: la web ya no muestra el equipo de asesores
 document.getElementById('stat-props').textContent = myProps.length + '+';
 
 initLocationSearch();

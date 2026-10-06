@@ -366,30 +366,23 @@ appearance: none;
 }
 
 .search-field {
-
   display: flex;
-
   flex-direction: column;
-
   gap: 10px;
-
   min-width: 0;
 }
 
-.search-field::after {
+.search-field:has(select) {
+  position: relative;
+}
 
+.search-field:has(select)::after {
   content: '⌄';
-
   position: absolute;
-
   right: 18px;
-
   bottom: 18px;
-
   font-size: 14px;
-
   color: var(--text-muted);
-
   pointer-events: none;
 }
 
@@ -867,7 +860,7 @@ border-radius: 999px;
   );
 }
 .panel-header-logo { display:flex; align-items:center; gap:12px; position:relative; z-index:1; margin-bottom:10px; }
-.panel-header h2 { font-family:'Playfair Display',serif; font-size:22px; color:white; margin-bottom:4px; position:relative;z-index:1; }
+.panel-header h2 { font-family:'Cormorant Garamond',serif; font-size:22px; color:white; margin-bottom:4px; position:relative;z-index:1; }
 .panel-header .subtitle { color:rgba(255,255,255,0.55); font-size:13px; position:relative;z-index:1; }
 .panel-body { padding: 36px 40px; }
 .panel-login { max-width: 400px; margin: 0 auto; }
@@ -1932,7 +1925,7 @@ transform:
 }
 
 .footer-brand-title{
-  font-family:'Playfair Display',serif;
+  font-family:'Cormorant Garamond',serif;
   color:white;
   font-size:17px;
   font-weight:600;
@@ -2149,4 +2142,491 @@ transform:
     border-color: var(--gold);
     box-shadow: 0 0 0 3px rgba(198, 166, 92, .20);
     transform: translateY(-3px);
+  }
+
+  /* =========================================================
+   US-15 — CTA Servicios inmobiliarios
+   ========================================================= */
+
+.services-cta {
+  margin-top: 42px;
+  padding: 28px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  border-radius: 10px;
+}
+
+.services-cta h3 {
+  margin: 0 0 7px;
+  color: var(--white);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.services-cta p {
+  margin: 0;
+  max-width: 680px;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.services-cta-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 22px;
+  border: 1px solid var(--gold);
+  border-radius: 6px;
+
+  background: var(--gold);
+  color: var(--navy);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+
+  transition: all 0.2s ease;
+}
+
+.services-cta-btn:hover {
+  background: transparent;
+  color: var(--gold);
+}
+
+@media (max-width: 700px) {
+  .services-cta {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 24px 20px;
+    gap: 20px;
+  }
+
+  .services-cta h3 {
+    font-size: 22px;
+  }
+
+  .services-cta-btn {
+    width: 100%;
+  }
+}
+
+/* =========================================
+   US-16 · RESPALDO INSTITUCIONAL Y GREMIAL
+========================================= */
+
+#aliados {
+  background: var(--white);
+}
+
+.allies-block {
+  margin-top: 48px;
+}
+
+.allies-heading {
+  margin-bottom: 28px;
+}
+
+.allies-heading h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+
+.allies-heading p {
+  max-width: 700px;
+  color: var(--text-muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* GRID DE ALIADOS */
+
+.allies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.ally-card {
+  background: var(--white);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 18px;
+  padding: 30px 24px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.ally-card:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(201, 168, 76, 0.35);
+
+  box-shadow:
+    0 14px 35px rgba(15, 23, 42, 0.08);
+}
+
+/* CONTENEDOR DE LOGO */
+
+.ally-logo {
+  width: 100%;
+  height: 110px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 22px;
+}
+
+.ally-logo img {
+  max-width: 190px;
+  max-height: 82px;
+
+  width: auto;
+  height: auto;
+
+  object-fit: contain;
+
+  display: block;
+}
+
+/* NOMBRE */
+
+.ally-card h4 {
+  color: var(--navy);
+
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+
+  line-height: 1.4;
+
+  margin-bottom: 8px;
+}
+
+.ally-card p {
+  color: var(--text-muted);
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  margin: 0;
+}
+
+/* =========================================
+   IDENTIFICACIÓN Y CREDENCIALES
+========================================= */
+
+.compliance-block {
+  margin-top: 64px;
+}
+
+.compliance-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.compliance-card {
+  background: var(--cream);
+
+  border: 1px solid rgba(201, 168, 76, 0.18);
+
+  border-radius: 14px;
+
+  padding: 22px 24px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.compliance-label {
+  font-size: 11px;
+  font-weight: 600;
+
+  color: var(--gold-dark);
+
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+}
+
+.compliance-card strong {
+  color: var(--navy);
+
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 768px) {
+
+  .allies-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .ally-card {
+    padding: 26px 20px;
+  }
+
+  .ally-logo {
+    height: 95px;
+  }
+
+  .ally-logo img {
+    max-width: 180px;
+    max-height: 72px;
+  }
+
+  .compliance-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* =========================================================
+   US-17 — NOSOTROS / IDENTIDAD CORPORATIVA
+   ========================================================= */
+
+   #nosotros {
+    background: var(--cream);
+  }
+  
+  .about-intro {
+    max-width: 1100px;
+    margin: 42px auto 0;
+    display: grid;
+    grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.8fr);
+    gap: 42px;
+    align-items: stretch;
+  }
+  
+  .about-intro-content {
+    padding: 34px;
+    background: var(--white);
+    border: 1px solid rgba(16, 42, 67, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(16, 42, 67, 0.05);
+  }
+  
+  .about-intro-content h3 {
+    margin: 0 0 18px;
+    color: var(--navy);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+  
+  .about-intro-content p {
+    margin: 0 0 16px;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  
+  .about-intro-content p:last-child {
+    margin-bottom: 0;
+  }
+  
+  .about-location {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 30px;
+    background: var(--navy);
+    color: var(--white);
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(16, 42, 67, 0.12);
+  }
+  
+  .about-location-icon {
+    flex-shrink: 0;
+    font-size: 25px;
+    line-height: 1;
+  }
+  
+  .about-location strong {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .about-location span {
+    display: block;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .about-values {
+    max-width: 1100px;
+    margin: 28px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .about-value {
+    padding: 30px 26px;
+    background: var(--white);
+    border: 1px solid rgba(16, 42, 67, 0.08);
+    border-radius: 14px;
+    text-align: left;
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  
+  .about-value:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 26px rgba(16, 42, 67, 0.08);
+  }
+  
+  .about-value-icon {
+    width: 42px;
+    height: 42px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(201, 168, 76, 0.12);
+    color: var(--gold);
+    font-size: 18px;
+    font-weight: 600;
+  }
+  
+  .about-value h3 {
+    margin: 0 0 10px;
+    color: var(--navy);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+    font-weight: 600;
+  }
+  
+  .about-value p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  
+  .about-method {
+    max-width: 1100px;
+    margin: 28px auto 0;
+    padding: 30px 34px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 40px;
+    align-items: center;
+    background: var(--white);
+    border-top: 3px solid var(--gold);
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(16, 42, 67, 0.05);
+  }
+  
+  .about-method .section-label {
+    margin-bottom: 10px;
+  }
+  
+  .about-method h3 {
+    margin: 0;
+    color: var(--navy);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  
+  .about-method > p {
+    margin: 0;
+    color: var(--text);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+  
+  
+  /* -------------------------
+     US-17 — Responsive
+     ------------------------- */
+  
+  @media (max-width: 900px) {
+  
+    .about-intro {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  
+    .about-values {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+  
+    .about-method {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+  
+  }
+  
+  @media (max-width: 600px) {
+  
+    .about-intro {
+      margin-top: 30px;
+    }
+  
+    .about-intro-content {
+      padding: 25px 22px;
+    }
+  
+    .about-intro-content h3 {
+      font-size: 26px;
+    }
+  
+    .about-location {
+      padding: 24px 22px;
+    }
+  
+    .about-values {
+      margin-top: 18px;
+    }
+  
+    .about-value {
+      padding: 24px 22px;
+    }
+  
+    .about-method {
+      margin-top: 18px;
+      padding: 25px 22px;
+    }
+  
+    .about-method h3 {
+      font-size: 25px;
+    }
+  
   }
